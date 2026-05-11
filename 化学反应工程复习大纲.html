@@ -87,15 +87,77 @@ table.tbl.formula-ref td:first-child{text-align:center}
 ul,ol{margin:.3rem 0 .3rem 1.5rem}
 li{margin:.15rem 0}
 hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
+/* ── 浮动目录 ── */
+#toc-toggle{
+  position:fixed;bottom:20px;right:20px;z-index:999;
+  width:48px;height:48px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;
+  font-size:1.4rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25);
+  transition:transform .2s;
+}
+#toc-toggle:hover{transform:scale(1.1)}
+#toc-panel{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:998;
+  background:rgba(0,0,0,.4);display:none;
+}
+#toc-panel.show{display:block}
+#toc-box{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(92vw,400px);max-height:80vh;background:#fff;border-radius:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column;
+}
+#toc-header{
+  padding:12px 16px;background:linear-gradient(135deg,#1a5276,#2980b9);
+  color:#fff;font-weight:700;font-size:1rem;display:flex;justify-content:space-between;align-items:center;
+}
+#toc-close{background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer;padding:0 4px}
+#toc-search{
+  margin:8px 12px;padding:6px 10px;border:1px solid #ccc;border-radius:6px;font-size:.9rem;outline:none;
+}
+#toc-list{
+  overflow-y:auto;flex:1;padding:4px 0 12px;
+}
+.toc-item{
+  display:block;padding:6px 16px;text-decoration:none;color:#333;font-size:.88rem;
+  border-left:3px solid transparent;transition:all .15s;
+}
+.toc-item:hover{background:#eaf2f8;color:#2980b9;border-left-color:#2980b9}
+.toc-item.h2{font-weight:700;color:#1a5276;padding-left:16px}
+.toc-item.h3{padding-left:28px;font-weight:600}
+.toc-item.h4{padding-left:40px;font-weight:400;color:#555}
+.toc-item.highlight{background:#fff3cd;border-left-color:#f39c12}
+
+/* 回到顶部按钮 */
+#back-top{
+  position:fixed;bottom:80px;right:20px;z-index:999;
+  width:40px;height:40px;border-radius:50%;border:none;
+  background:#fff;color:#2980b9;font-size:1.1rem;cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);display:none;
+  transition:opacity .2s;
+}
+#back-top.show{display:block}
+
 @media(max-width:600px){
   body{font-size:15px}
   .content{padding:0 .6rem 3rem}
   h2.ch{font-size:1.15rem}
   table.tbl{font-size:.8rem}
+  #toc-toggle{bottom:16px;right:16px;width:44px;height:44px;font-size:1.2rem}
+  #back-top{bottom:70px;right:16px}
 }
 </style>
 </head>
 <body>
+<button id="toc-toggle" onclick="toggleTOC()" title="目录导航">☰</button>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+<div id="toc-panel" onclick="if(event.target===this)toggleTOC()">
+<div id="toc-box">
+  <div id="toc-header">📑 目录导航 <button id="toc-close" onclick="toggleTOC()">✕</button></div>
+  <input type="text" id="toc-search" placeholder="搜索章节..." oninput="filterTOC(this.value)">
+  <div id="toc-list"></div>
+</div>
+</div>
+
 <div class="content">
 
 <div class="hdr">
@@ -144,9 +206,86 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <p><b>本质：</b>化学反应工程就是在研究这四件事的相互作用。实验室小瓶子里可以忽略三传，但放大到工厂就必须考虑了，否则会出大问题。</p>
 </div>
 
+<!-- ═══════════════ 第1章 ═══════════════ -->
+<h2 class="ch">第1章 绪论</h2>
+<p class="hint">本章核心：这门课研究什么？怎么研究？（★ 了解即可，主要出选择/判断题）</p>
+
+<h3 class="sec">1.1 化学反应工程的定义与任务 ★</h3>
+<div class="concept">
+<h4>🔵 化学反应工程是什么？</h4>
+<p><b>考试定义：</b>化学反应工程是研究化学反应工程问题的一门工程学科，它运用化学反应动力学和传递过程原理，研究工业规模化学反应过程的规律，为反应器的开发、设计、放大和操作优化提供理论基础。</p>
+<p><b>大白话：</b>实验室里做一个化学反应很简单，烧杯里一倒就行。但要放大到工厂里年产几万吨，就需要考虑：反应多快？需要多大的反应器？温度怎么控制？催化剂怎么选？怎么保证安全？——这些就是化学反应工程要回答的问题。</p>
+<p><b>核心任务：</b></p>
+<ul>
+<li><b>开发：</b>从实验室小试到工厂大生产的全过程</li>
+<li><b>设计：</b>确定反应器的型式、尺寸和操作条件</li>
+<li><b>优化：</b>在保证产量的前提下降低成本、提高收率、减少副产物</li>
+<li><b>放大：</b>解决"放大效应"——小试成功的条件放到大生产不一定行</li>
+</ul>
+</div>
+
+<h3 class="sec">1.2 "三传一反" ★★</h3>
+<div class="concept">
+<h4>🔴 三传一反</h4>
+<p><b>考试定义：</b>三传一反是指<b>动量传递</b>（流体流动与混合）、<b>热量传递</b>（温度分布与控制）、<b>质量传递</b>（浓度分布与扩散）与<b>化学反应动力学</b>在反应器内的耦合过程，是化学反应工程分析和设计反应器的基本理论框架。</p>
+<p><b>大白话：</b>工厂里的反应器，反应物在里面不是安安静静反应的——液体在流动（<b>动量传递</b>），反应会放热或吸热（<b>热量传递</b>），反应物和产物浓度不均匀会扩散（<b>质量传递</b>）。这"三传"加上化学反应本身的快慢（<b>反应动力学</b>），合起来就是"三传一反"。</p>
+<p><b>本质：</b>化学反应工程就是在研究这四件事的相互作用。实验室小瓶子里可以忽略三传，但放大到工厂就必须考虑了，否则会出大问题。</p>
+<p><b>★ 各章对应关系：</b></p>
+<ul>
+<li>第2章 → 反应动力学（"一反"）</li>
+<li>第3章 → 三传耦合下的反应器设计（三传+一反的工程化）</li>
+<li>第4章 → 动量传递偏差的量化（非理想流动）</li>
+<li>第5章 → 催化剂（改变反应动力学）+ 传质控制</li>
+</ul>
+</div>
+
+<h3 class="sec">1.3 化学反应工程的发展简史 ★</h3>
+<div class="concept">
+<h4>🔵 发展简史（选择题可能考）</h4>
+<p><b>大白话版本：</b></p>
+<ul>
+<li><b>1930s-1940s：</b>工业合成氨（Haber-Bosch工艺）的需求催生了反应工程学科。高压、高温、催化剂——这三样东西的结合需要系统研究。</li>
+<li><b>1950s：</b>Denbigh、Toor等人开始用数学模型描述反应器，"化学反应工程"这个名字正式确立。</li>
+<li><b>1960s-1970s：</b>计算机技术引入，可以数值求解复杂的反应器模型。</li>
+<li><b>1980s至今：</b>计算流体力学（CFD）、微观反应器、过程强化等新技术发展。</li>
+</ul>
+<p><b>★ 考试记住：</b>化学反应工程 = 动力学 + 传递过程 + 数学模型 + 工程放大。</p>
+</div>
+
+<h3 class="sec">1.4 研究方法 ★★</h3>
+<div class="concept">
+<h4>🔴 化学反应工程的研究方法</h4>
+<p><b>考试定义：</b>化学反应工程的基本研究方法是<b>数学模型法</b>，即将复杂的反应过程分解为动力学和传递过程两部分，分别建立数学方程，再通过耦合求解来预测和优化反应器性能。同时结合<b>实验验证</b>和<b>相似放大</b>。</p>
+<p><b>大白话：</b>面对一个复杂的工业反应过程，我们先把它拆成几块来研究：反应本身有多快（动力学实验），物料怎么流动（流体力学），温度怎么分布（传热），浓度怎么变化（传质）。然后用数学公式把每一块描述出来，组合在一起就是"数学模型"。最后用模型来预测反应器的性能，再用实验验证模型对不对。</p>
+<p><b>两种研究路线：</b></p>
+<ul>
+<li><b>经验放大法（老方法）：</b>先小试→中试→大生产，一步一步放大，每步都做实验。可靠但费时费钱。</li>
+<li><b>数学模型法（现代方法）：</b>先建立数学模型→用计算机模拟→关键点做实验验证→直接放大。快速但需要可靠的动力学数据。</li>
+</ul>
+<p><b>★ 考试关键词：</b>数学模型法、相似原理、放大效应。</p>
+</div>
+
+<h3 class="sec">1.5 反应器分类 ★</h3>
+<table class="tbl">
+<tr><th>分类依据</th><th>类型</th><th>特点</th></tr>
+<tr><td>操作方式</td><td>间歇式</td><td>分批投料、反应、出料；非稳态</td></tr>
+<tr><td></td><td>连续式</td><td>连续进料、出料；稳态操作</td></tr>
+<tr><td></td><td>半连续式</td><td>部分组分连续加入，部分一次投入</td></tr>
+<tr><td>流动模式</td><td>平推流（PFR）</td><td>无返混，管式</td></tr>
+<tr><td></td><td>全混流（CSTR）</td><td>返混最大，搅拌釜式</td></tr>
+<tr><td></td><td>非理想流动</td><td>介于两者之间</td></tr>
+<tr><td>相态</td><td>均相反应器</td><td>单一相态（气相或液相）</td></tr>
+<tr><td></td><td>非均相反应器</td><td>多相态（如气-固催化）</td></tr>
+<tr><td>温度条件</td><td>等温</td><td>反应器内温度均匀</td></tr>
+<tr><td></td><td>绝热</td><td>与外界无热交换</td></tr>
+<tr><td></td><td>非等温</td><td>有换热装置</td></tr>
+</table>
+
+<p><b>→ 空时/停留时间/反应时间的区别见</b><a href="#sec-space-time"><b>第3章（连续反应器核心概念）</b></a></p>
+
 <!-- ═══════════════ 第2章 ═══════════════ -->
 <h2 class="ch">第2章 均相反应动力学基础</h2>
-<p class="hint">本章核心：学会描述化学反应的"快慢"，建立反应速率方程。</p>
+<p class="hint">本章核心：学会描述化学反应的"快慢"，建立反应速率方程。→ 对应"三传一反"中的"一反"。</p>
 
 <h3 class="sec">2.1 均相反应与反应速率</h3>
 
@@ -313,26 +452,37 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <div class="eq">$$kt = \ln\frac{C_{A0}}{C_A} = \ln\frac{1}{1-x_A}$$</div>
 <p><b>图像特征：</b>$\ln C_A$ 对 $t$ 作图得直线，斜率为 $-k$。半衰期 $t_{1/2}=\ln 2/k=0.693/k$（与初始浓度无关！）。</p>
 
-<h4 class="sub">二级反应（恒容，$C_{A0}=C_{B0}$ 或 $2A\to$ 产物）★★★</h4>
-<p>速率方程：$-r_A = -\dfrac{dC_A}{dt} = kC_A^2$</p>
-<p><b>推导：</b>分离变量：</p>
-<div class="eq">$$-\frac{dC_A}{C_A^2} = k\,dt$$</div>
-<div class="eq">$$-\int_{C_{A0}}^{C_A}C_A^{-2}\,dC_A = \int_0^t k\,dt$$</div>
-<div class="eq">$$\left[\frac{1}{C_A}\right]_{C_{A0}}^{C_A} = kt$$</div>
-<div class="eq">$$kt = \frac{1}{C_A} - \frac{1}{C_{A0}} = \frac{C_{A0}-C_A}{C_{A0}\cdot C_A}$$</div>
-<p>用转化率表示：$C_A = C_{A0}(1-x_A)$，代入得：</p>
-<div class="eq">$$kt = \frac{x_A}{C_{A0}(1-x_A)}$$</div>
-<p><b>图像特征：</b>$1/C_A$ 对 $t$ 作图得直线，斜率为 $k$。半衰期 $t_{1/2}=1/(kC_{A0})$（与初始浓度成反比！）。</p>
+<h4 class="sub">二级反应（恒容）★★★</h4>
+<p>对反应 $aA + bB \to$ 产物，速率方程 $-r_A = kC_AC_B$，恒容下 $C_B = C_{B0} - \dfrac{b}{a}(C_{A0}-C_A)$。</p>
+<p>根据初始浓度是否满足计量系数比，分为两种情况：</p>
 
-<h4 class="sub">二级反应（恒容，$C_{A0}\neq C_{B0}$，$A+B\to$ 产物）★★★</h4>
-<p>速率方程：$-r_A = kC_AC_B$，其中 $C_B = C_{B0}-C_{A0}+C_A$（恒容物料衡算）</p>
-<p><b>推导：</b></p>
-<div class="eq">$$-\frac{dC_A}{C_A(C_{B0}-C_{A0}+C_A)} = k\,dt$$</div>
-<p>用部分分式拆分 $\dfrac{1}{C_A(C_{B0}-C_{A0}+C_A)}$，积分后得：</p>
+<p><b>① 恒容等计量比（$C_{B0}/C_{A0} = b/a$，即两种反应物恰好按计量比投料）：</b></p>
+<p>此时 $C_B = \dfrac{b}{a}C_A$，代入速率方程：</p>
+<div class="eq">$$-r_A = kC_A \cdot \frac{b}{a}C_A = \frac{bk}{a}C_A^2$$</div>
+<p>令 $k' = \dfrac{bk}{a}$，就退化为形式上跟 $2A\to$ 产物一样的二级反应：</p>
+<div class="eq">$$\boxed{kt = \frac{a}{b}\left(\frac{1}{C_A} - \frac{1}{C_{A0}}\right) = \frac{a}{b} \cdot \frac{x_A}{C_{A0}(1-x_A)}}$$</div>
+<p>半衰期：$t_{1/2} = \dfrac{a}{bkC_{A0}}$（与初始浓度成反比）。</p>
+<p><b>特殊情况：</b>若 $a=b$（如 $A+B\to$ 产物），则 $C_{B0}=C_{A0}$ 时公式简化为 $kt = 1/C_A - 1/C_{A0}$。</p>
+
+<p><b>② 恒容非等计量比（$C_{B0}/C_{A0} \neq b/a$，投料比偏离计量比）：</b></p>
+<p>设 $M = C_{B0}/C_{A0}$（初始浓度比），则 $C_B = C_{A0}(M - \dfrac{b}{a}) + \dfrac{b}{a}C_A$。令 $\Delta = C_{B0} - \dfrac{b}{a}C_{A0}$（初始时刻 $B$ 相对于计量比的过量或不足）：</p>
+<div class="eq">$$kt = \frac{a}{b\Delta}\ln\frac{C_{A0}\cdot C_B}{C_{B0}\cdot C_A} = \frac{a}{b(C_{B0}-\frac{b}{a}C_{A0})}\ln\frac{C_{A0}\cdot C_B}{C_{B0}\cdot C_A}$$</div>
+<p>用转化率表示（$C_A = C_{A0}(1-x_A)$，$C_B = C_{B0} - \dfrac{b}{a}C_{A0}x_A$）：</p>
+<div class="eq">$$kt = \frac{a}{b\Delta}\ln\frac{1-x_B}{1-x_A} \cdot \frac{M}{M-\frac{b}{a}x_A}$$</div>
+<p><b>简化情形（$a=b=1$）：</b></p>
 <div class="eq">$$kt = \frac{1}{C_{B0}-C_{A0}}\ln\frac{C_{A0}\cdot C_B}{C_{B0}\cdot C_A}$$</div>
-<p><b>注意：</b>这里对数内必须是 $\dfrac{C_{A0}C_B}{C_{B0}C_A}$，不能写反；如果写成倒数，前面的分母就要同步改成 $C_{A0}-C_{B0}$，否则符号会错。</p>
-<p>用转化率表示：</p>
-<div class="eq">$$kt = \frac{1}{C_{B0}-C_{A0}}\ln\frac{1-x_B}{1-x_A}$$</div>
+<p><b>注意：</b>对数内必须是 $\dfrac{C_{A0}C_B}{C_{B0}C_A}$，不能写反；如果写成倒数，前面的分母就要同步改成 $C_{A0}-C_{B0}$，否则符号会错。</p>
+
+<div class="concept">
+<h4>🔴 二级反应等计量比 vs 非等计量比 速记</h4>
+<table class="tbl">
+<tr><th>条件</th><th>特征</th><th>积分式形式</th></tr>
+<tr><td>等计量比<br>$C_{B0}/C_{A0}=b/a$</td><td>$C_B=(b/a)C_A$，始终成比例</td><td>$kt = \frac{a}{b}\left(\frac{1}{C_A}-\frac{1}{C_{A0}}\right)$<br>（形式同简单二级）</td></tr>
+<tr><td>非等计量比<br>$C_{B0}/C_{A0}\neq b/a$</td><td>$C_B\neq(b/a)C_A$，$A$先耗完</td><td>$kt = \frac{a}{b\Delta}\ln\frac{C_{A0}C_B}{C_{B0}C_A}$<br>（对数形式）</td></tr>
+</table>
+<p><b>大白话：</b>等计量比就像两个人按完美比例搭伙干活，始终同步，所以速率方程能简化成一个物种的形式。非等计量比就像一个人带多了一个人带少了，跑得快的那个会先"落单"，速率关系变得复杂，只能用对数。</p>
+<p><b>考试判断：</b>拿到题先看投料比是否等于计量系数比。相等→直接用简单式；不等→必须用对数式。</p>
+</div>
 
 <div class="concept">
 <h4>🔴 积分法的完整操作流程</h4>
@@ -467,18 +617,58 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 </div>
 
 <h4 class="sub">平行反应 ★★★</h4>
-<p>$A\xrightarrow{k_1}P,\; A\xrightarrow{k_2}S$：</p>
-<div class="eq">$$\varphi_P = \frac{k_1}{k_1+k_2}, \quad S_P = \frac{k_1}{k_2}$$</div>
+<p>$A\xrightarrow{k_1}P,\; A\xrightarrow{k_2}S$：其中 $k_1$ 是生成目的产物 P 的反应速率常数，$k_2$ 是生成副产物 S 的反应速率常数。</p>
+
+<p><b>推导（等反应级数时）：</b></p>
+<p>两个反应平行进行，各自速率：</p>
+<div class="eq">$$r_P = k_1 C_A^n, \quad r_S = k_2 C_A^n$$</div>
+<p>A的总消耗速率（两个反应都消耗A）：</p>
+<div class="eq">$$-r_A = r_P + r_S = (k_1+k_2)C_A^n$$</div>
+<p>瞬时收率（A消耗掉的里面有多少变成了P）：</p>
+<div class="eq">$$\varphi_P = \frac{r_P}{-r_A} = \frac{k_1 C_A^n}{(k_1+k_2)C_A^n} = \boxed{\frac{k_1}{k_1+k_2}}$$</div>
+<p><b>★ 关键：</b>当两个反应级数相同时，$C_A^n$ 约掉了，收率与浓度无关，只能靠温度（活化能）来调控。</p>
+<p>瞬时选择性（生成P的速率 vs 生成S的速率）：</p>
+<div class="eq">$$S_P = \frac{r_P}{r_S} = \frac{k_1 C_A^n}{k_2 C_A^n} = \boxed{\frac{k_1}{k_2}}$$</div>
+
+<p><b>推导（不同级数时，如 $r_P=k_1C_A^{\alpha_1}$，$r_S=k_2C_A^{\alpha_2}$）：</b></p>
+<div class="eq">$$\varphi_P = \frac{r_P}{-r_A} = \frac{k_1 C_A^{\alpha_1}}{k_1 C_A^{\alpha_1}+k_2 C_A^{\alpha_2}} = \frac{k_1 C_A^{\alpha_1-\alpha_2}}{k_1 C_A^{\alpha_1-\alpha_2}+k_2}$$</div>
+<p>此时收率<b>与浓度有关</b>：$\alpha_1>\alpha_2$ 时高浓度有利（选PFR），$\alpha_1<\alpha_2$ 时低浓度有利（选CSTR）。</p>
 
 <p class="hint">图：平行反应中P的瞬时选择性随转化率的变化。当 $E_1>E_2$ 时，高温有利于P；反之低温有利。</p>
 <p>级数相等时，收率<b>与浓度无关</b>，只能靠调温度来改选择性。$E_1>E_2$则升温有利于P。</p>
 
 <h4 class="sub">串联反应 ★★★</h4>
-<p>$A\xrightarrow{k_1}P\xrightarrow{k_2}S$，P的浓度先升后降，存在<b>最佳反应时间</b>。</p>
-<p><b>平推流中P的浓度公式：</b></p>
-<div class="eq">$$C_P = \frac{k_1 C_{A0}}{k_1-k_2}\left(e^{-k_2 t}-e^{-k_1 t}\right)$$</div>
-<p><b>全混流中P的浓度公式：</b></p>
-<div class="eq">$$C_P = \frac{k_1\tau C_{A0}}{(k_1\tau+1)(k_2\tau+1)}$$</div>
+<p>$A\xrightarrow{k_1}P\xrightarrow{k_2}S$：$k_1$ 是 A→P 的速率常数，$k_2$ 是 P→S 的速率常数。P的浓度先升后降，存在<b>最佳反应时间</b>。</p>
+
+<p><b>推导（平推流/PFR/间歇）：</b></p>
+<p>A的速率方程：$-r_A=-dC_A/dt=k_1C_A$，初始条件 $C_A(0)=C_{A0}$，解出：</p>
+<div class="eq">$$C_A = C_{A0}e^{-k_1 t}$$</div>
+<p>P的速率方程：$dC_P/dt = k_1C_A - k_2C_P$（A生成P，P再生成S），代入 $C_A$：</p>
+<div class="eq">$$\frac{dC_P}{dt} = k_1C_{A0}e^{-k_1 t} - k_2C_P$$</div>
+<p>这是一阶线性ODE，初始条件 $C_P(0)=0$，用积分因子法求解：</p>
+<div class="eq">$$C_P = e^{-k_2 t}\int_0^t k_1C_{A0}e^{-k_1 t} \cdot e^{k_2 t}\,dt = k_1C_{A0}e^{-k_2 t}\int_0^t e^{(k_2-k_1)t}\,dt$$</div>
+<p>当 $k_1 \neq k_2$ 时：</p>
+<div class="eq">$$\int_0^t e^{(k_2-k_1)t}\,dt = \frac{e^{(k_2-k_1)t}-1}{k_2-k_1}$$</div>
+<div class="eq">$$C_P = k_1C_{A0}e^{-k_2 t} \cdot \frac{e^{(k_2-k_1)t}-1}{k_2-k_1} = \frac{k_1C_{A0}}{k_2-k_1}\left(e^{-k_1 t}-e^{-k_2 t}\right)$$</div>
+<p>或写成等价形式：</p>
+<div class="eq">$$\boxed{C_P = \frac{k_1C_{A0}}{k_1-k_2}\left(e^{-k_2 t}-e^{-k_1 t}\right)}$$</div>
+<p><b>注意：</b>两种写法结果一样，关键是分子分母的符号要匹配。</p>
+
+<p><b>P的最大浓度和最优时间：</b></p>
+<p>对 $C_P$ 求导令 $dC_P/dt=0$：</p>
+<div class="eq">$$\frac{dC_P}{dt} = \frac{k_1C_{A0}}{k_2-k_1}(-k_1e^{-k_1 t}+k_2e^{-k_2 t}) = 0$$</div>
+<div class="eq">$$k_1 e^{-k_1 t} = k_2 e^{-k_2 t}$$</div>
+<p>两边取对数：</p>
+<div class="eq">$$\ln k_1 - k_1 t = \ln k_2 - k_2 t$$</div>
+<div class="eq">$$\boxed{t_{opt} = \frac{\ln(k_1/k_2)}{k_1-k_2}}$$</div>
+<p>代回 $C_P$ 表达式得最大浓度：</p>
+<div class="eq">$$\boxed{\frac{(C_P)_{max}}{C_{A0}} = \left(\frac{k_1}{k_2}\right)^{k_2/(k_2-k_1)}}$$</div>
+
+<p><b>推导（全混流/CSTR）：</b></p>
+<p>CSTR中浓度均匀等于出口浓度。对P做全釜衡算：</p>
+<div class="eq">$$\tau = \frac{C_P}{k_1C_A-k_2C_P}$$</div>
+<p>A的衡算：$C_A = C_{A0}/(1+k_1\tau)$，联立解出：</p>
+<div class="eq">$$\boxed{C_P = \frac{k_1\tau C_{A0}}{(1+k_1\tau)(1+k_2\tau)}}$$</div>
 
 <p class="hint">图5：串联反应 $A\xrightarrow{k_1}P\xrightarrow{k_2}S$ 的浓度变化。P先升后降（红色三角标记最大值点），A持续下降，S持续上升。关键：P存在最大浓度，反应太久反而S更多。</p>
 
@@ -496,7 +686,22 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 
 <!-- ═══════════════ 第3章 ═══════════════ -->
 <h2 class="ch">第3章 均相反应过程</h2>
-<p class="hint">本章核心：学会计算反应器的大小（体积），以及如何选择反应器。</p>
+<p class="hint">本章核心：第2章告诉你"反应有多快"，这一章告诉你"需要多大的反应器"。学会计算反应器体积、对比不同反应器的效率、选择最优反应器。→ 整门课的<b>计算核心</b>，占考试60%以上。</p>
+
+<div class="concept">
+<h4 id="sec-space-time">🔴 空时、停留时间、反应时间的区别（常考！★★★）</h4>
+<p><b>空时 $τ$：</b>= 反应器体积 $V$ / 进料体积流量 $v_0$。表示"按进料速度，需要多长时间能装满反应器"。</p>
+<p><b>空速 $SV$：</b>= 1/τ = 单位时间通过单位反应器体积的物料体积。</p>
+<p><b>停留时间 $t$：</b>某一流体微元从进入反应器到离开反应器实际经历的时间。</p>
+<p><b>反应时间：</b>从反应开始到达到某一转化率所需的时间。</p>
+<p><b>★ 关系：</b></p>
+<ul>
+<li>对平推流（恒容），三者相等：τ = t = 反应时间</li>
+<li>对全混流，停留时间有分布，空时等于平均停留时间</li>
+<li>对间歇反应器，空时无意义，反应时间 = 操作时间 - 非生产时间</li>
+<li><b>恒容时平推流反应时间、空时、停留时间三者相等！</b></li>
+</ul>
+</div>
 
 <h3 class="sec">3.1 三种理想反应器</h3>
 <table class="tbl">
@@ -568,6 +773,12 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <div class="eq">$$\boxed{t = C_{A0}\int_0^{x_A}\frac{dx_A}{(-r_A)}}$$</div>
 
 <p><b>② 平推流反应器（PFR）推导：</b></p>
+<p><b>符号说明：</b></p>
+<ul>
+<li>$F_A$：A 的<b>摩尔流量</b>（mol/s），即单位时间内通过某一截面的 A 的物质的量。$F_A = C_A \cdot v$（浓度×体积流量）。</li>
+<li>$F_{A0}$：A 的<b>初始摩尔流量</b>（mol/s），即反应器入口处 A 的摩尔流量。</li>
+<li>$dF_A$：在微元段 $dV$ 内，A 的摩尔流量的<b>变化量</b>。因为反应消耗 A，所以 $dF_A < 0$（A 越走越少）。</li>
+</ul>
 <p>对 PFR 取一个微元段 $dV$，在该微元内做 A 的物料衡算（稳态）：</p>
 <p>进入的 A − 离开的 A − 反应消耗的 A = 0</p>
 <div class="eq">$$F_A - (F_A + dF_A) - (-r_A)\cdot dV = 0$$</div>
@@ -580,6 +791,22 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <div class="eq">$$\boxed{\tau = \frac{V}{v_0} = C_{A0}\int_0^{x_A}\frac{dx_A}{(-r_A)}}$$</div>
 <p><b>所以间歇和PFR公式完全一样——本质上都是"累积消耗=总量变化"的物料衡算，只不过间歇是对时间积分，PFR是对体积积分。</b></p>
 
+<div class="concept">
+<h4>🔴 变容（非恒容）条件下的设计方程</h4>
+<p><b>核心结论：设计方程的形式不变！</b>不管恒容还是变容，$V = F_{A0}\int_0^{x_A}\frac{dx_A}{-r_A}$ 这个公式完全一样。变容只影响浓度怎么算。</p>
+<p><b>恒容</b>：$C_A = C_{A0}(1-x_A)$</p>
+<p><b>变容（有体积膨胀/收缩）</b>：</p>
+<div class="eq">$$C_A = C_{A0}\cdot\frac{1-x_A}{1+\varepsilon_A\,x_A}$$</div>
+<p>其中 $\varepsilon_A$ 是膨胀因子，$1+\varepsilon_A x_A = V/V_0$（体积膨胀比）。</p>
+<p><b>推导思路：</b></p>
+<ul>
+<li>物料衡算那一步 $F_{A0}dx_A = (-r_A)\cdot dV$ <b>不依赖恒容假设</b>，因为 $F_A = F_{A0}(1-x_A)$ 这个关系是从转化率定义来的，跟体积变不变没关系。</li>
+<li>变容时体积流量 $v$ 随转化率变化：$v = v_0(1+\varepsilon_A x_A)$，所以浓度表达式变了。</li>
+<li>但设计方程积分式里你要积的是 $\frac{dx_A}{-r_A}$，$-r_A$ 里包含了浓度项，浓度已经用变容公式替换了，所以积分式外面的形式不需要改。</li>
+</ul>
+<p><b>一句话总结：</b>变容不改设计方程的"壳"，只改里面 $-r_A$ 的浓度表达。看到变容题，先写出 $C_A = C_{A0}(1-x_A)/(1+\varepsilon_A x_A)$，然后直接代入同一个积分式。</p>
+</div>
+
 <p><b>③ 全混流反应器（CSTR）推导：</b></p>
 <p>对整个 CSTR 做 A 的物料衡算（稳态）：</p>
 <p>进入的 A − 离开的 A − 反应消耗的 A = 0</p>
@@ -591,6 +818,20 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <div class="eq">$$\boxed{\tau = \frac{V}{v_0} = \frac{C_{A0}x_A}{(-r_A)\Big|_{出口}}}$$</div>
 <p><b>大白话：</b>PFR 是"边流边反应"，浓度沿管长连续变，所以要积分把每一段加起来。CSTR 是"全锅搅匀"，整个釜内浓度直接等于出口浓度，所以一步代数方程搞定，不用积分。</p>
 <p><b>考试关键：</b>看到"间歇/PFR"就想到积分；看到"CSTR"就想到出口浓度代入。</p>
+
+<p><b>不同级数反应在CSTR中的具体公式（推导）：</b></p>
+<p>一级反应 $-r_A=kC_A$，$C_A=C_{A0}(1-x_A)$：</p>
+<div class="eq">$$\tau = \frac{C_{A0}x_A}{kC_A} = \frac{C_{A0}x_A}{kC_{A0}(1-x_A)} = \boxed{\frac{x_A}{k(1-x_A)}}$$</div>
+
+<p>二级反应 $-r_A=kC_A^2$，$C_A=C_{A0}(1-x_A)$：</p>
+<div class="eq">$$\tau = \frac{C_{A0}x_A}{kC_A^2} = \frac{C_{A0}x_A}{kC_{A0}^2(1-x_A)^2} = \boxed{\frac{x_A}{kC_{A0}(1-x_A)^2}}$$</div>
+
+<p><b>★ 对比PFR：</b></p>
+<ul>
+<li>一级CSTR：$\tau=x_A/[k(1-x_A)]$；一级PFR：$\tau=\ln(1/(1-x_A))/k$</li>
+<li>二级CSTR：$\tau=x_A/[kC_{A0}(1-x_A)^2]$；二级PFR：$\tau=x_A/[kC_{A0}(1-x_A)]$</li>
+<li>CSTR分母多一个 $(1-x_A)$（二级还多一个 $C_{A0}$），所以同转化率下CSTR总是需要更大体积</li>
+</ul>
 </div>
 
 <div class="concept">
@@ -606,72 +847,588 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 
 <h3 class="sec">3.3 组合反应器 ★★</h3>
 
-<h4 class="sub">N个全混釜串联</h4>
+<h4 class="sub">3.3.1 平推流反应器的串联、并联或并串联 ★★★</h4>
 
-<p class="hint">图6：N个等体积CSTR串联的E(θ)曲线。N越大，曲线越窄越集中于θ=1，趋近于平推流（红线）。</p>
-<p>一级反应：$\displaystyle\frac{C_{AN}}{C_{A0}} = \frac{1}{(1+k\tau)^N}$</p>
-<p><b>重要结论：</b>$N\to\infty$ 时，N个全混釜串联的性能趋近于平推流。</p>
+<p><b>① PFR串联：</b></p>
+<p>N个PFR串联，各段体积 $V_1, V_2, \cdots, V_N$，若各段温度相同：</p>
+<div class="eq">$$\frac{V}{F_{A0}}=\int_{0}^{x_{A1}}\frac{dx}{\left(-r_{A}\right)_{1}}+\int_{x_{A1}}^{x_{A2}}\frac{dx}{\left(-r_{A}\right)_{2}}+\cdots +\int_{x_{A,N-1}}^{x_{A}}\frac{dx}{\left(-r_{A}\right)_{N}}=\int_{0}^{x_{A}}\frac{dx}{\left(-r_{A}\right)}$$</div>
+<p><b>★ 核心结论：</b>N个平推流反应器串联，其总体积为 $V$，最终转化率与一个具有体积为 $V$ 的<b>单个</b>平推流反应器<b>完全相同</b>。因为积分上下限加起来就是 $0 \to x_A$，跟分几段没关系。</p>
+<p><b>大白话：</b>把一根长管子切成N段串起来，和一根完整长管子效果一样——平推流不分段。</p>
+<p><b>但如果各段温度不同</b>（比如第一段高温、第二段低温），那各段速率不同，积分不能合并，这时串联的意义在于<b>分段控温</b>。</p>
+
+<p><b>② PFR并联：</b></p>
+<p>两个PFR并联，总进料 $v_0$ 分成两股 $v_1$、$v_2$，分别通过体积 $V_1$、$V_2$ 的反应器后汇合。</p>
+<p><b>★ 效率最高的条件：</b>每个分支的空时相同，即 $\tau_1 = \tau_2$（也等价于 $V_1/F_{A1} = V_2/F_{A2}$）。</p>
+<ul>
+<li>若 $\tau_1 = \tau_2$，则两支出口转化率相同，总效果最优</li>
+<li>若 $\tau_1 \neq \tau_2$，转化率低的那支拖后腿，整体效果变差</li>
+</ul>
+<p><b>大白话：</b>并联就像分流两条生产线，每条线干的活要一样多（空时相同），效率才最高。一条快一条慢，快的那条白干了。</p>
+
+<p><b>③ PFR并串联：</b>既有并联又有串联的组合。对每个反应器分别写出设计方程，然后根据连接关系（出口浓度=下一段入口浓度）逐步求解。</p>
 
 <div class="concept">
-<h4>🔴 N个全混釜串联</h4>
-<p><b>大白话：</b>一个全混流反应器返混太大效率低，那我用N个串起来呢？每个釜的返混还是最大，但整体来看，后面的釜不会和第一个釜的料混合——返混被"限制"在每个釜内部了。</p>
-<p><b>核心结论：</b>$N$ 越大，整体越接近平推流。$N\to\infty$ 时就是平推流。</p>
+<h4>🔴 PFR串联 vs 并联 速记</h4>
+<ul>
+<li><b>串联：</b>体积可加，效果=单个大PFR（同温时）；不同温时意义在于分段控温</li>
+<li><b>并联：</b>流量分流；$\tau_1=\tau_2$ 时效率最高</li>
+<li><b>串联：</b>浓度逐步降低；<b>并联：</b>各支浓度变化独立</li>
+</ul>
 </div>
 
-<h4 class="sub">循环反应器</h4>
-<p>循环比 $\beta$ 越小 → 越像平推流；$\beta$ 越大 → 越像全混流。</p>
+<h4 class="sub">3.3.2 具有相同或不同体积的N个全混釜的串联 ★★★</h4>
+
+<p><b>（一）N个等体积CSTR串联（一级反应）</b></p>
+<p>一级不可逆反应 $-r_A = kC_A$，每个釜的体积相同、空时相同 $\tau$。先从CSTR设计方程推导单釜结果，再推广到N釜串联。</p>
+
+<p><b>单釜推导（为什么 $C_{A1}/C_{A0} = 1/(1+k\tau)$）：</b></p>
+<p>CSTR设计方程（全釜物料衡算，出口浓度=釜内浓度）：</p>
+<div class="eq">$$\tau = \frac{C_{A0}-C_{A1}}{(-r_A)_1}$$</div>
+<p>代入一级反应速率 $(-r_A)_1 = kC_{A1}$：</p>
+<div class="eq">$$\tau = \frac{C_{A0}-C_{A1}}{kC_{A1}}$$</div>
+<p>两边乘 $kC_{A1}$：</p>
+<div class="eq">$$k\tau C_{A1} = C_{A0} - C_{A1}$$</div>
+<p>移项整理：</p>
+<div class="eq">$$C_{A1}(1+k\tau) = C_{A0}$$</div>
+<div class="eq">$$\boxed{\frac{C_{A1}}{C_{A0}} = \frac{1}{1+k\tau}}$$</div>
+<p>同理，对第2釜，以 $C_{A1}$ 为进料浓度，$C_{A2}$ 为出口浓度：</p>
+<div class="eq">$$\tau = \frac{C_{A1}-C_{A2}}{kC_{A2}} \implies \frac{C_{A2}}{C_{A1}} = \frac{1}{1+k\tau}$$</div>
+<p>……</p>
+<p>第N釜：</p>
+<div class="eq">$$\frac{C_{AN}}{C_{A,N-1}} = \frac{1}{1+k\tau}$$</div>
+<p><b>左右连乘：</b>左边中间项全部约掉，只剩首尾：</p>
+<div class="eq">$$\boxed{\frac{C_{AN}}{C_{A0}} = \frac{1}{(1+k\tau)^N}}$$</div>
+
+<p><b>★ N→∞ 时的极限：</b></p>
+<p>设总空时 $\tau_t = N\tau$，则 $\tau = \tau_t/N$：</p>
+<div class="eq">$$\frac{C_{AN}}{C_{A0}} = \frac{1}{\left(1+k\dfrac{\tau_t}{N}\right)^N}$$</div>
+<p><b>极限推导：</b>利用数学极限 $\displaystyle\lim_{N\to\infty}\left(1+\frac{x}{N}\right)^N = e^x$，令 $x=k\tau_t$：</p>
+<div class="eq">$$\lim_{N\to\infty}\left(1+\frac{k\tau_t}{N}\right)^N = e^{k\tau_t}$$</div>
+<div class="eq">$$\therefore \frac{C_{AN}}{C_{A0}} \xrightarrow{N\to\infty} \frac{1}{e^{k\tau_t}} = e^{-k\tau_t}$$</div>
+
+<p><b>$e^{-k\tau_t}$ 就是平推流对一级反应的结果，推导如下：</b></p>
+<p>PFR设计方程（恒容）：</p>
+<div class="eq">$$\tau_t = C_{A0}\int_0^{x_A}\frac{dx_A}{-r_A}$$</div>
+<p>一级反应 $-r_A=kC_A$，恒容 $C_A=C_{A0}(1-x_A)$，代入：</p>
+<div class="eq">$$\tau_t = C_{A0}\int_0^{x_A}\frac{dx_A}{kC_{A0}(1-x_A)} = \frac{1}{k}\int_0^{x_A}\frac{dx_A}{1-x_A}$$</div>
+<div class="eq">$$\tau_t = \frac{1}{k}\left[-\ln(1-x_A)\right]_0^{x_A} = \frac{-\ln(1-x_A)}{k} = \frac{1}{k}\ln\frac{1}{1-x_A}$$</div>
+<p>整理得：</p>
+<div class="eq">$$k\tau_t = \ln\frac{C_{A0}}{C_A}$$</div>
+<div class="eq">$$\boxed{\frac{C_A}{C_{A0}} = e^{-k\tau_t} \quad \text{（PFR一级反应）}}$$</div>
+<p>所以 $N\to\infty$ 时CSTR串联的结果 $e^{-k\tau_t}$，和PFR一级反应的结果完全一致。</p>
+<p><b>★ 核心结论：</b>$N$ 越大，等体积CSTR串联越接近平推流。$N=1$ 是全混流，$N\to\infty$ 是平推流。</p>
 
 <div class="concept">
-<h4>🔵 循环比 $\beta$</h4>
-<p><b>考试定义：</b>循环比是指循环物流量与新鲜进料流量之比，常用 $\beta$ 表示。循环比大小影响反应器入口浓度、温度及流动特性。</p>
-<p><b>大白话：</b>把出口的产物拿一部分返回去和新鲜料混合，再送进反应器。</p>
-<p><b>作用：</b>$\beta$ 小（少循环）→ 入口浓度高 → 像平推流；$\beta$ 大（多循环）→ 入口浓度接近出口 → 像全混流。</p>
+<h4>🔴 N个等体积CSTR串联的记忆口诀</h4>
+<p><b>一级反应：</b>$C_{AN}/C_{A0} = 1/(1+k\tau)^N$，总空时 $\tau_t = N\tau$</p>
+<p><b>极限：</b>$N\to\infty$ → $e^{-k\tau_t}$（= 平推流）</p>
+<p><b>大白话：</b>一个CSTR返混最大，效率最低；把它拆成N个小CSTR串起来，每个釜的返混只在自己内部，整体返混被削弱，N越多越像管式反应器（PFR）。</p>
+</div>
+
+<p><b>（二）两个不同体积CSTR串联——最优体积比 ★★★</b></p>
+<p>两个CSTR串联，出口转化率 $x_A$ 已定（即 $C_{A2}$ 已知），求使总空时最小的 $C_{A1}$：</p>
+<div class="eq">$$\tau = \tau_1 + \tau_2 = \frac{C_{A0}-C_{A1}}{(-r_A)_1} + \frac{C_{A1}-C_{A2}}{(-r_A)_2}$$</div>
+<p>$\tau$ 对 $C_{A1}$ 求导，令 $d\tau/dC_{A1} = 0$，解出最优 $C_{A1}$。</p>
+
+<p><b>例题：</b>一级反应 $-r_A = C_A$，两个串联CSTR，最终 $x_A = 90\%$。求使总空时最小的第一个釜出口浓度。</p>
+<p><b>解：</b></p>
+<div class="eq">$$\tau = \frac{C_{A0}}{C_{A1}} - 1 + \frac{C_{A1}}{C_{A2}} - 1$$</div>
+<p>对 $C_{A1}$ 求导令其为零：</p>
+<div class="eq">$$\frac{d\tau}{dC_{A1}} = \frac{-C_{A0}}{C_{A1}^2} + \frac{1}{C_{A2}} = 0$$</div>
+<div class="eq">$$C_{A1} = \sqrt{C_{A0} \cdot C_{A2}}$$</div>
+<p>代入 $C_{A2} = 0.1C_{A0}$：</p>
+<div class="eq">$$C_{A1} = \sqrt{C_{A0} \times 0.1C_{A0}} = \sqrt{0.1}\,C_{A0} = 0.316\,C_{A0}$$</div>
+<p>$x_{A1} = 1 - 0.316 = 68.4\%$</p>
+<p>$\tau_1 = \frac{C_{A0} - 0.316C_{A0}}{0.316C_{A0}} = 2.16$（时间单位）</p>
+<p>$\tau_2 = \frac{0.316C_{A0} - 0.1C_{A0}}{0.1C_{A0}} = 2.16$（时间单位）</p>
+<p><b>★ 结论：</b>一级反应两个CSTR串联，总空时最小时 $\tau_1 = \tau_2$（两个釜大小相同），且 $C_{A1} = \sqrt{C_{A0} \cdot C_{A2}}$。</p>
+
+<p><b>（三）不同级数反应的N个CSTR串联</b></p>
+<p>对于非一级反应，不能简单连乘。每个釜要单独用设计方程：</p>
+<div class="eq">$$\tau_i = \frac{C_{A,i-1} - C_{Ai}}{(-r_A)_i}$$</div>
+<p>逐釜求解，或者用<b>图解法</b>（在 $(-r_A)$ vs $C_A$ 图上画操作线阶梯）。</p>
+
+<p><b>图解法：</b></p>
+<ul>
+<li>横轴 $C_A$，纵轴 $(-r_A)$</li>
+<li>画出速率曲线 $(-r_A) = f(C_A)$</li>
+<li>从 $C_{A0}$ 开始，画斜率为 $-1/\tau_1$ 的直线交曲线于 $C_{A1}$</li>
+<li>再从 $C_{A1}$ 画斜率为 $-1/\tau_2$ 的直线交曲线于 $C_{A2}$</li>
+<li>每个"阶梯"就是一个釜</li>
+</ul>
+
+<h4 class="sub">3.3.3 不同型式反应器的串联 ★★</h4>
+<p>CSTR和PFR混合串联时，对每个反应器<b>分别写设计方程</b>，然后用"前一段出口 = 后一段入口"串起来。</p>
+
+<p><b>核心规则：</b></p>
+<ul>
+<li>CSTR → 代数方程：$\tau_i = \dfrac{C_{A,i-1}-C_{Ai}}{(-r_A)_i}$</li>
+<li>PFR → 积分方程：$\tau_i = C_{A0}\displaystyle\int_{x_{A,i-1}}^{x_{Ai}}\dfrac{dx_A}{(-r_A)}$</li>
+</ul>
+
+<p><b>例题：</b>一级反应 $-r_A=kC_A$，$k=0.1$ min⁻¹，$C_{A0}=1$ mol/L。先经CSTR（$\tau_1=10$ min），再经PFR（$\tau_2=10$ min），求最终转化率。</p>
+<p><b>解：</b></p>
+<p>Step 1：CSTR出口浓度</p>
+<div class="eq">$$\tau_1 = \frac{C_{A0}-C_{A1}}{kC_{A1}} \implies 10 = \frac{1-C_{A1}}{0.1C_{A1}}$$</div>
+<div class="eq">$$C_{A1} = \frac{C_{A0}}{1+k\tau_1} = \frac{1}{1+0.1\times10} = 0.5 \text{ mol/L}$$</div>
+<p>Step 2：PFR入口浓度 = CSTR出口浓度 = 0.5 mol/L。一级反应PFR：</p>
+<div class="eq">$$\tau_2 = \frac{1}{k}\ln\frac{C_{A1}}{C_{A2}} \implies 10 = \frac{1}{0.1}\ln\frac{0.5}{C_{A2}}$$</div>
+<div class="eq">$$\ln\frac{0.5}{C_{A2}} = 1 \implies C_{A2} = \frac{0.5}{e} = 0.184 \text{ mol/L}$$</div>
+<p>最终转化率 $x_A = 1 - 0.184 = 81.6\%$</p>
+
+<p><b>★ 对比：</b>如果两个都用CSTR（$\tau_1=\tau_2=10$ min）：$C_{A2}=1/(1+1)^2=0.25$，$x_A=75\%$。如果两个都用PFR（$\tau=20$ min）：$C_{A2}=e^{-2}=0.135$，$x_A=86.5\%$。CSTR+PFR混合方案（81.6%）介于两者之间。</p>
+
+<p><b>大白话：</b>CSTR先"打底"（快速把浓度降下来），PFR再"精修"（高浓度段积分效率高）。这种组合在工业上很常见——先用便宜的搅拌釜做粗活，再用管式反应器做精活。</p>
+
+<div class="concept">
+<h4>🔴 不同反应器串联的解题套路</h4>
+<p><b>就三步：</b></p>
+<ol>
+<li>判断每个反应器是CSTR还是PFR</li>
+<li>CSTR写 $\tau = (C_{A,i-1}-C_{Ai})/(-r_A)_i$；PFR写 $\tau = C_{A0}\int dx_A/(-r_A)$</li>
+<li>前一段出口浓度 = 后一段入口浓度，逐段往后推</li>
+</ol>
+</div>
+
+<h4 class="sub">3.3.4 循环反应器 ★★★</h4>
+<p><b>考试定义：</b>循环反应器是将平推流反应器出口的部分产物返回入口，与新鲜进料混合后再进入反应器的操作方式。</p>
+<p><b>目的：</b>①提高原料利用率；②控制反应物的合适浓度，以便控制温度、转化率或收率。</p>
+<p><b>循环比：</b>$\beta = \dfrac{\text{循环物流量}}{\text{新鲜进料流量}}$</p>
+
+<p><b>关键结论：</b></p>
+<ul>
+<li>$\beta = 0$：无循环 → 纯平推流</li>
+<li>$\beta \to \infty$：无限循环 → 全混流（因为出口不断返回混合，釜内浓度趋于均匀）</li>
+</ul>
+<p><b>★ 考试重点：</b>循环比是连接PFR和CSTR的桥梁。$R=0$ 时是PFR，$R=\infty$ 时是CSTR。</p>
+
+<div class="concept">
+<h4>🔵 循环反应器的物料衡算</h4>
+<p>定义 $\alpha = v_0/v_1$（新鲜进料/总进料），对混合点做物料衡算：</p>
+<div class="eq">$$v_1 C_{A1} = v_0 C_{A0} + \beta v_0 C_{A\beta}$$</div>
+<p>其中 $C_{A\beta}$ 是循环流的浓度（= 出口浓度 $C_{Af}$）。</p>
+<p><b>大白话：</b>就像煮火锅，把锅底的老汤（出口产物）舀一勺回去和新菜（新鲜进料）一起煮。循环比越大，老汤比例越高，整锅味道越均匀（越像CSTR）。</p>
+</div>
+
+<h4 class="sub">3.3.5 半连续操作的反应器 ★★</h4>
+<p><b>考试定义：</b>半连续（半间歇）操作是指反应器内物料的加入或取出是连续的，但反应器内的另一部分物料是一次性投入的。兼具间歇和连续反应器的特点。</p>
+<p><b>大白话：</b>一半是间歇（料已经在锅里了），一半是连续（有料在持续加进去或持续拿出来）。</p>
+
+<p><b>两种典型操作方式：</b></p>
+
+<p><b>① 反应物逐渐加入（加料型）：</b></p>
+<p>场景：A已经在釜里了，B通过管道持续滴加。</p>
+<ul>
+<li><b>目的：</b>控制B的浓度始终维持在低水平，抑制副反应。</li>
+<li><b>举例：</b>氯化反应中，如果Cl₂浓度太高会生成多氯代副产物。缓慢加入Cl₂，让其一进入就被A消耗掉，始终保持低Cl₂浓度。</li>
+<li><b>物料衡算：</b>体积随时间变化（因为B不断加入），所以是变容问题。</li>
+</ul>
+<div class="eq">$$\frac{d(VC_A)}{dt} = v_B C_{B,in} \cdot 0 - (-r_A) \cdot V$$</div>
+<p>（B加入的A为0，A被反应消耗）</p>
+
+<p><b>② 产物逐渐移出（移出型）：</b></p>
+<p>场景：反应生成气态产物，通过顶部不断排出。</p>
+<ul>
+<li><b>目的：</b>推动可逆反应正向进行（勒夏特列原理——移走产物，平衡正移）。</li>
+<li><b>举例：</b>酯化反应不断移走水，推动反应向生成酯的方向进行。</li>
+<li><b>物料衡算：</b>体积随时间减小（因为产物被移走）。</li>
+</ul>
+
+<p><b>③ 惰性稀释型：</b></p>
+<p>场景：在间歇反应器中加入惰性溶剂，降低反应物浓度，控制反应速率和温度。</p>
+
+<div class="concept">
+<h4>🔴 半连续操作 vs 间歇 vs 连续的对比</h4>
+<table class="tbl">
+<tr><th></th><th>间歇</th><th>半连续</th><th>连续</th></tr>
+<tr><td>加料方式</td><td>一次全部投入</td><td>部分连续加入</td><td>全部连续加入</td></tr>
+<tr><td>出料方式</td><td>一次全部排出</td><td>可连续取出</td><td>全部连续排出</td></tr>
+<tr><td>体积</td><td>恒定</td><td>变化</td><td>恒定</td></tr>
+<tr><td>稳态/非稳态</td><td>非稳态</td><td>非稳态</td><td>稳态</td></tr>
+<tr><td>适用场景</td><td>小批量、多品种</td><td>需控制浓度/推平衡</td><td>大规模连续生产</td></tr>
+</table>
+<p><b>考试重点：</b>半连续操作的设计方程通常没有解析解，需要数值积分或图解法。但考试一般只考"为什么要用半连续"和"属于哪种类型"，不考具体设计计算。</p>
+</div>
+
+<div class="concept">
+<h4>🔴 3.3 组合反应器 速记总表</h4>
+<table class="tbl">
+<tr><th>组合方式</th><th>关键结论</th><th>考试重点</th></tr>
+<tr><td>PFR串联</td><td>效果=单个大PFR（同温）</td><td>分段控温的意义</td></tr>
+<tr><td>PFR并联</td><td>$\tau_1=\tau_2$ 时效率最高</td><td>分流要均匀</td></tr>
+<tr><td>N个等CSTR串联</td><td>$C_{AN}/C_{A0}=1/(1+k\tau)^N$</td><td>$N\to\infty$ 趋近PFR</td></tr>
+<tr><td>两个CSTR最优</td><td>$C_{A1}=\sqrt{C_{A0}\cdot C_{A2}}$，$\tau_1=\tau_2$</td><td>求导优化</td></tr>
+<tr><td>不同型式串联</td><td>逐段分别用CSTR/PFR方程</td><td>前段出口=后段入口</td></tr>
+<tr><td>循环反应器</td><td>$\beta=0$→PFR，$\beta\to\infty$→CSTR</td><td>循环比的物理意义</td></tr>
+<tr><td>半连续操作</td><td>控制浓度/推动平衡</td><td>操作目的</td></tr>
+</table>
 </div>
 
 <h3 class="sec">3.4 反应器选择原则 ★★★</h3>
+<p class="hint">核心问题：知道反应有多快了（第2章），知道反应器怎么算了（3.1-3.3），那么"该选哪种反应器"？</p>
+
+<p><b>核心工具：</b>画 $1/(-r_A)$ vs $x_A$ 图（也叫Levenspiel图）。曲线下面积 = 所需体积。</p>
+
+<h4 class="sub">一、单一反应的反应器选择</h4>
+
+<p><b>什么是单一反应？</b>只有一个反应发生（没有副产物），或者虽然有多个反应但我们只关心总转化率。比如：</p>
+<ul>
+<li>$A \to P$（一级不可逆）</li>
+<li>$2A \to P$（二级不可逆）</li>
+<li>$A \rightleftharpoons P$（一级可逆）</li>
+</ul>
+
+<p><b>什么是"正级数反应"？</b>反应速率随浓度升高而加快（级数 $n>0$）。比如一级反应 $-r_A=kC_A$，浓度越高反应越快。</p>
+
+<div class="concept">
+<h4>🔴 单一正级数反应：为什么PFR更优？</h4>
+<p><b>画图法（Levenspiel图）：</b></p>
+<p>横轴 $x_A$，纵轴 $1/(-r_A)$：</p>
+<ul>
+<li>正级数反应（如一级 $-r_A=kC_A$）：浓度降低→速率降低→$1/(-r_A)$ 升高。所以曲线<b>单调递增</b>（左低右高）。</li>
+</ul>
+<p><b>PFR体积：</b>$V_{PFR}=F_{A0}\int_0^{x_A}\frac{dx_A}{(-r_A)}$ = 曲线<b>下方的面积</b>。</p>
+<p><b>CSTR体积：</b>$V_{CSTR}=F_{A0}\cdot\frac{x_A}{(-r_A)\big|_{出口}}$ = 以出口处的 $1/(-r_A)$ 为高度、$x_A$ 为宽度的<b>矩形面积</b>。</p>
+<p>因为曲线单调递增，矩形面积 > 曲线下面积，所以 $V_{CSTR} > V_{PFR}$。<b>PFR更省体积！</b></p>
+
+<p><b>大白话：</b>PFR前段保持高浓度→反应快→"吃了红利"。CSTR一进去就被稀释到出口低浓度→全程在低速下工作→费体积。</p>
+
+<p><b>举例：</b>一级反应 $k=0.1$ min⁻¹，$C_{A0}=1$ mol/L，要求 $x_A=0.9$。</p>
+<p><b>PFR空时公式来源（见3.2.2节）：</b>对一级不可逆恒容反应，PFR设计方程 $\tau = C_{A0}\int_0^{x_A}\frac{dx_A}{-r_A}$。代入 $-r_A = kC_A = kC_{A0}(1-x_A)$，得：</p>
+<div class="eq">$$\tau_{PFR} = C_{A0}\int_0^{x_A}\frac{dx_A}{kC_{A0}(1-x_A)} = \frac{1}{k}\int_0^{x_A}\frac{dx_A}{1-x_A} = \frac{1}{k}\ln\frac{1}{1-x_A}$$</div>
+<p>代入 $k=0.1$，$x_A=0.9$：$\tau_{PFR} = \frac{1}{0.1}\ln\frac{1}{0.1} = 10 \times 2.3026 = 23.03$ min</p>
+<p><b>CSTR空时公式来源（见3.2.3节）：</b>CSTR设计方程 $\tau = \frac{C_{A0}x_A}{-r_A\big|_{出口}}$。出口处 $C_A = C_{A0}(1-x_A)$，所以 $-r_A = kC_A = kC_{A0}(1-x_A)$，代入得：</p>
+<div class="eq">$$\tau_{CSTR} = \frac{C_{A0}x_A}{kC_{A0}(1-x_A)} = \frac{x_A}{k(1-x_A)}$$</div>
+<p>代入 $k=0.1$，$x_A=0.9$：$\tau_{CSTR} = \frac{0.9}{0.1 \times 0.1} = 90$ min</p>
+<p><b>对比：</b>$\frac{\tau_{CSTR}}{\tau_{PFR}} = \frac{90}{23.03} \approx 3.9$，即同样条件下CSTR需要的体积是PFR的 <b>3.9倍</b>。且转化率越高差距越大（$x_A=0.5$时倍率仅1.44，$x_A=0.99$时倍率达21.5）！</p>
+
+<p><b>特殊情况——先PFR后CSTR：</b></p>
+<p>如果 $1/(-r_A)$ vs $x_A$ 曲线<b>先降后升</b>（比如某些自催化反应），那么最优方案是：先用PFR把反应推到最低点（$1/(-r_A)$ 最小处），再接一个CSTR。这时候CSTR在"最低速率"处工作，反而比纯PFR更优。</p>
+<p><b>大白话：</b>就像开车上山——先走平路（PFR高速段），再走陡坡（CSTR兜底）。如果先走陡坡再走平路就亏了。</p>
+</div>
+
+<h4 class="sub">二、平行反应的反应器选择</h4>
+
+<div class="concept">
+<h4>🔴 平行反应：高浓度有利于目的产物</h4>
+<p><b>什么是平行反应？</b>同一反应物同时走两条路，一条生成目的产物P，一条生成副产物S：</p>
+<div class="eq">$$A \xrightarrow{k_1} P \quad \text{（目的）}, \qquad A \xrightarrow{k_2} S \quad \text{（副产）}$$</div>
+<p><b>举例：</b>醋酸分解：</p>
+<ul>
+<li>$CH_3COOH \xrightarrow{k_1} CH_2=CO + H_2O$（目的产物：乙烯酮）</li>
+<li>$CH_3COOH \xrightarrow{k_2} CH_4 + CO_2$（副产物：甲烷+二氧化碳）</li>
+</ul>
+<p><b>关键：</b>选择性取决于两条路线的速率比 $r_P/r_S$。如果级数相同（都是一级），选择性 $= k_1/k_2$，跟浓度无关——这时候只能靠<b>调温度</b>（$E_1>E_2$ 则升温有利）。</p>
+<p>但如果级数不同呢？比如 $r_P=k_1C_A^2$，$r_S=k_2C_A$：</p>
+<div class="eq">$$\frac{r_P}{r_S} = \frac{k_1}{k_2}\cdot C_A$$</div>
+<p>$C_A$ 越高 → 选择性越好！<b>高浓度有利于目的产物。</b></p>
+<p><b>选反应器：</b>平推流保持高浓度（前段浓度高），CSTR一进去就稀释到出口低浓度。所以<b>PFR更优</b>。</p>
+
+<p><b>反之：</b>如果 $r_P=k_1C_A$，$r_S=k_2C_A^2$（副反应级数更高），那么低浓度有利 → <b>CSTR更优</b>（因为CSTR全程低浓度）。</p>
+
+<p><b>记忆口诀：</b>目的产物级数高 → 高浓度好 → 选PFR。副产物级数高 → 低浓度好 → 选CSTR。</p>
+</div>
+
+<h4 class="sub">三、串联反应的反应器选择</h4>
+
+<div class="concept">
+<h4>🔴 串联反应：PFR总是优于CSTR</h4>
+<p><b>什么是串联反应？</b>A先变成P，P再变成S（像接力赛）：</p>
+<div class="eq">$$A \xrightarrow{k_1} P \xrightarrow{k_2} S$$</div>
+<p><b>举例：</b></p>
+<ul>
+<li>氯化反应：$CH_4 \to CH_3Cl \to CH_2Cl_2 \to CHCl_3 \to CCl_4$（每多氯一步就多一个副产物）</li>
+<li>氧化反应：苯氧化→苯酚→进一步氧化→开环分解（目的产物苯酚如果停留太久就烧没了）</li>
+</ul>
+<p><b>关键：</b>P的浓度先升后降，存在<b>最佳反应时间</b>。反应时间太短→P还没生成多少；反应时间太长→P继续变成S了。</p>
+<p><b>为什么PFR总是更好？</b></p>
+<ul>
+<li>PFR：每个分子停留时间相同（= 空时），可以在最佳时间精确停止。</li>
+<li>CSTR：停留时间有分布！有的分子待了很久（P全变成S了），有的分子刚进去就出来（A还没反应完）。平均效果被"待太久的分子"拖累。</li>
+</ul>
+<p><b>大白话：</b>PFR像高考——所有学生同时开考同时交卷，时间控制精准。CSTR像自助餐——有人吃两小时（P都消化了），有人吃五分钟（还没尝到菜），整体体验参差不齐。</p>
+<p><b>结论：</b>不管 $k_1/k_2$ 是多少，串联反应中PFR的中间产物P的收率总是 ≥ CSTR。</p>
+</div>
+
+<h4 class="sub">四、复合反应操作选择总结</h4>
 <table class="tbl">
-<tr><th>反应类型</th><th>选择原则</th></tr>
-<tr><td>单一正级数反应</td><td>$1/(-r_A)$ 随 $x_A$ 单调递增 → 平推流更优</td></tr>
-<tr><td>平行反应</td><td>瞬时收率 $\varphi_P$ 随 $C_A$ 增大而增大 → 平推流更优</td></tr>
-<tr><td>串联反应</td><td><b>平推流总是优于全混流</b></td></tr>
+<tr><th>反应类型</th><th>浓度策略</th><th>选反应器</th><th>原因</th></tr>
+<tr><td>单一正级数</td><td>保持高浓度</td><td><b>PFR</b></td><td>PFR前段高浓度→速率快→省体积</td></tr>
+<tr><td>单一负级数</td><td>保持低浓度</td><td><b>CSTR</b></td><td>CSTR全程低浓度→对负级数反而有利</td></tr>
+<tr><td>平行反应（目的级数高）</td><td>高浓度</td><td><b>PFR</b></td><td>高浓度提高选择性</td></tr>
+<tr><td>平行反应（副产级数高）</td><td>低浓度</td><td><b>CSTR</b></td><td>低浓度抑制副反应</td></tr>
+<tr><td>串联反应</td><td>精确控制时间</td><td><b>PFR</b></td><td>停留时间均匀→P不被过度反应</td></tr>
+<tr><td>单一先快后慢</td><td>先快后慢</td><td><b>PFR+CSTR</b></td><td>PFR吃前段红利，CSTR兜底</td></tr>
 </table>
 
-<h4 class="sub">复合反应的操作方法选择 ★★★</h4>
+<h4 class="sub">复合反应的浓度与温度策略 ★★★</h4>
 <p>对于 $A+B\xrightarrow{k_1}P$（目的），$A+B\xrightarrow{k_2}S$（副产），选择性比 $r_P/r_S = (k_1/k_2)\cdot C_A^{\alpha_1-\alpha_2}\cdot C_B^{\beta_1-\beta_2}$。</p>
 <p><b>浓度策略：</b></p>
 <ul>
-<li>$\alpha_1>\alpha_2$ 且 $\beta_1>\beta_2$：$C_A$、$C_B$ 都高有利（选平推流）</li>
-<li>$\alpha_1>\alpha_2$ 且 $\beta_1<\beta_2$：$C_A$ 高、$C_B$ 低有利</li>
-<li>$\alpha_1<\alpha_2$ 且 $\beta_1>\beta_2$：$C_A$ 低、$C_B$ 高有利</li>
-<li>$\alpha_1<\alpha_2$ 且 $\beta_1<\beta_2$：$C_A$、$C_B$ 都低有利（选全混流）</li>
+<li>$\alpha_1>\alpha_2$ 且 $\beta_1>\beta_2$：$C_A$、$C_B$ 都高有利（选PFR）</li>
+<li>$\alpha_1>\alpha_2$ 且 $\beta_1<\beta_2$：$C_A$ 高、$C_B$ 低有利（如PFR中A过量）</li>
+<li>$\alpha_1<\alpha_2$ 且 $\beta_1>\beta_2$：$C_A$ 低、$C_B$ 高有利（如CSTR中缓慢加入A）</li>
+<li>$\alpha_1<\alpha_2$ 且 $\beta_1<\beta_2$：$C_A$、$C_B$ 都低有利（选CSTR）</li>
 </ul>
-<p><b>温度策略：</b>$E_1>E_2$ → 升温有利于P；$E_1<E_2$ → 降温有利于P；$E_1\approx E_2$ → 调温度没用。</p>
+<p><b>温度策略：</b></p>
+<ul>
+<li>$E_1>E_2$（目的反应活化能更大）→ <b>升温有利于P</b>（目的反应提速更多）</li>
+<li>$E_1<E_2$（副反应活化能更大）→ <b>降温有利于P</b>（副反应被压制更多）</li>
+<li>$E_1\approx E_2$ → 调温度没用，只能靠浓度调控</li>
+</ul>
+<p><b>大白话：</b>浓度管"谁跑得快"（级数高的对浓度更敏感），温度管"谁对温度更敏感"（活化能大的对温度更敏感）。两个工具配合使用。</p>
 
-<h3 class="sec">3.5 非等温过程 ★★</h3>
-<div class="eq">$$T = T_0 + \frac{(-\Delta H_r)C_{A0}}{\rho C_v}(x_A-x_{A0})$$</div>
-<p><b>热稳定性判据：</b>$\dfrac{dQ_r}{dT} > \dfrac{dQ_G}{dT}$</p>
+<h3 class="sec">3.5 非等温过程 ★★★★（PPT第3章单独一节！含3.6搅拌釜流动与传热）</h3>
+<p class="hint">前面3.1-3.4都假设等温（反应器内温度均匀），但实际放热/吸热反应会让温度变化。温度变了→k变了→速率变了→需要重新算。PPT第3章将热稳定性（3.6搅拌釜中的流动与传热）作为独立小节，含完整的热量平衡、多稳态、着火熄灭、热失控判据，考试常出综合题。</p>
+<p><b>PPT补充：</b>搅拌釜中的流动与传热问题——搅拌的作用是使反应器内温度和浓度均匀化，但搅拌功率、叶轮型式、盘管换热等都会影响传热效率。考试通常只考CSTR的热量平衡方程：$Q_G = (-r_A)V(-\Delta H_r)$，$Q_R = UA(T-T_m) + \rho c_p v_0(T-T_0)$。</p>
+
+<h4 class="sub">绝热温升</h4>
+<p><b>什么是绝热操作？</b>反应器与外界没有热交换（不加热也不冷却），反应放出的热量全部用来升高物料温度。</p>
+<p>对绝热、恒容间歇/PFR反应器做热量衡算：</p>
+<div class="eq">$$T - T_0 = \frac{(-\Delta H_r)C_{A0}}{\rho c_p}\cdot x_A = \lambda \cdot x_A$$</div>
+<p>其中 $\lambda = \dfrac{(-\Delta H_r)C_{A0}}{\rho c_p}$ 称为<b>绝热温升</b>，物理意义是：A完全转化时（$x_A=1$）温度升高多少。</p>
 
 <div class="concept">
-<h4>🔴 全混流反应器的热稳定性</h4>
-<p><b>考试定义：</b>热稳定性是指反应器在受到微小温度扰动后，能否通过热量移除与反应放热之间的调节恢复到原稳定操作状态的能力。对放热反应，稳定条件通常要求移热速率随温度变化的斜率大于放热速率随温度变化的斜率。</p>
-<p><b>大白话：</b>放热反应在全混流里可能出现"温度失控"——温度升高→反应加快→放热更多→温度继续升高→……恶性循环，最后飞温爆炸。</p>
-<p><b>稳定性判据：</b>移热速率对温度的变化率 > 放热速率对温度的变化率。意思是：温度稍微升高时，移热能力增加得比放热快，能把温度拉回来。</p>
+<h4>🔴 绝热温升的理解</h4>
+<ul>
+<li>$(-\Delta H_r)$ 大 → 反应放热多 → $\lambda$ 大 → 温升明显</li>
+<li>$C_{A0}$ 大 → 反应物浓度高 → 放热总量多 → $\lambda$ 大</li>
+<li>$\rho c_p$ 大 → 物料热容大（像水）→ 温升小 → $\lambda$ 小</li>
+</ul>
+<p><b>举例：</b>$(-\Delta H_r)=100$ kJ/mol，$C_{A0}=2$ mol/L，$\rho=1000$ g/L，$c_p=4.2$ J/(g·°C)：</p>
+<div class="eq">$$\lambda = \frac{100000 \times 2}{1000 \times 4.2} = 47.6\text{°C}$$</div>
+<p>即A完全转化时温升约48°C。如果反应器操作温度是80°C，出口就是128°C——温差很大，k会变化几十倍！</p>
+<p><b>★ 关键：</b>绝热操作时，转化率和温度耦合在一起：$T=T_0+\lambda x_A$。设计方程里的k不再是常数，要用阿伦尼乌斯方程 $k=k_0e^{-E/RT}$ 代入，变成 $k(x_A)$。这时候积分通常没有解析解，需要数值积分。</p>
+</div>
 
-<p class="hint">图：放热反应在CSTR中的热量衡算。红线是放热曲线（S形），蓝线是移热曲线（直线）。交点为操作点，斜率条件决定是否稳定。</p>
+<h4 class="sub">放热反应在CSTR中的热稳定性 ★★★</h4>
+
+<div class="concept">
+<h4>🔴 放热曲线与移热曲线</h4>
+<p>CSTR在稳态操作时，放热速率 = 移热速率。把两者都画成温度T的函数：</p>
+<p><b>放热速率 $Q_G$：</b></p>
+<div class="eq">$$Q_G(T) = (-r_A) \cdot V \cdot (-\Delta H_r) = \frac{C_{A0}x_A}{\tau}\cdot(-\Delta H_r)$$</div>
+<p>由于 $x_A$ 随T升高而增大（k增大→转化率升高），但到了高转化率增长变慢，所以 $Q_G$ vs $T$ 是一条<b>S形曲线</b>（先慢升、再快升、再慢升趋于平台）。</p>
+<p><b>移热速率 $Q_R$：</b></p>
+<div class="eq">$$Q_R(T) = \rho c_p v_0(T-T_0) + UA(T-T_m)$$</div>
+<p>第一项是物料带走的热量，第二项是冷却盘管移走的热量。两者都与 $(T-T_0)$ 成正比，所以 $Q_R$ vs $T$ 是一条<b>直线</b>。</p>
+
+<p><b>操作点 = 两条线的交点。</b>S形曲线和直线可能有1个或3个交点。</p>
+</div>
+
+<div class="concept">
+<h4>🔴 多稳态与热稳定性判据（必考！）</h4>
+<p><b>三种交点情况：</b></p>
+<ul>
+<li><b>1个交点：</b>操作唯一确定，要么在低温（转化率低），要么在高温（转化率高）</li>
+<li><b>3个交点：</b>存在<b>多稳态</b>——上下两个是稳定操作点，中间一个是不稳定操作点</li>
+</ul>
+<p><b>★ 稳定性判据：</b>在操作点处，移热曲线的斜率 > 放热曲线的斜率：</p>
+<div class="eq">$$\boxed{\frac{dQ_R}{dT} > \frac{dQ_G}{dT} \quad \text{（稳定条件）}}$$</div>
+<p><b>大白话：</b>温度稍微升高时，移热能力增加得比放热快，能把温度拉回来→稳定。反过来，如果温度升高时放热增加得更快→温度越升越高→失控→不稳定。</p>
+
+<p><b>着火与熄灭：</b></p>
+<ul>
+<li>当冷却能力不足（移热直线变平）时，直线和S形曲线从3个交点变成1个交点——操作点突然从低温跳到高温，这就是<b>着火</b>（点火）。</li>
+<li>反过来，如果降低进料温度 $T_0$，操作点突然从高温跳到低温——这就是<b>熄灭</b>。</li>
+<li>着火温度 ≠ 熄灭温度（有<b>滞后现象</b>）。</li>
+</ul>
+
+<p><b>考试套路：</b>给出放热曲线和移热直线的图，问你哪些操作点稳定、哪些不稳定、着火温度是多少。判断方法：在交点处看斜率，移热斜率大=稳定。</p>
+</div>
+
+<h4 class="sub">变温操作的反应器设计</h4>
+<div class="concept">
+<h4>🔴 变温PFR设计</h4>
+<p>变温时k随位置变化（沿管长温度在变），设计方程改为：</p>
+<div class="eq">$$\frac{V}{F_{A0}} = \int_0^{x_A}\frac{dx_A}{(-r_A)(T, C_A)}$$</div>
+<p>其中 $(-r_A)$ 同时依赖于转化率（浓度）和温度。需要联立热量衡算：</p>
+<div class="eq">$$\frac{dT}{dV} = \frac{(-\Delta H_r)(-r_A) - \frac{UA}{V}(T-T_m)}{F_{A0}\sum C_{pi}}$$</div>
+<p>两个ODE联立数值求解。</p>
+
+<p><b>活化能对反应器选择的影响：</b></p>
+<ul>
+<li><b>高温有利的反应（$E$ 大）：</b>升温使k增大很多 → 用PFR前段保持高温</li>
+<li><b>可逆放热反应（$E_{正}>E_{逆}$）：</b>高温有利于速率但不利于平衡 → 最优温度是"先高后低"，PFR天然适合（前段高温高转化率，后段温度下降推动平衡正移）</li>
+<li><b>CSTR等温操作：</b>整个釜在同一温度下，不能实现"先高后低"</li>
+</ul>
 </div>
 
 <!-- ═══════════════ 第4章 ═══════════════ -->
 <h2 class="ch">第4章 非理想流动</h2>
-<p class="hint">本章核心：实际反应器和理想模型的差距有多大？如何量化？</p>
+<p class="hint">本章核心：第3章假设反应器是"理想"的（完美平推流或完美全混流），但现实中不是。这一章告诉你实际和理想的差距有多大、怎么量化、怎么预测实际转化率。→ 主要考概念和计算（RTD相关）。</p>
+
+<div class="concept">
+<h4>🔴 第4章核心逻辑（一句话串起来）</h4>
+<p>条件相同，平推流与全混流反应结果不同，说明流体的流动模式对反应有影响。实际反应器的返混程度<b>介于平推流与全混流之间</b>。我们用<b>停留时间分布（RTD）</b>来量化这种偏差，再用<b>流动模型</b>来预测实际转化率。</p>
+</div>
 
 <h3 class="sec">4.1 停留时间分布 ★★★</h3>
+
+<h4 class="sub">4.1.1 非理想流动与停留时间分布</h4>
+
+<div class="concept">
+<h4>🔴 生活中的非理想流动现象（PPT重点！）</h4>
+<ul>
+<li><b>淋浴时水温不均（返混）：</b>热水与冷水在管道中混合不充分，出水温度忽高忽低。</li>
+<li><b>高速公路堵车（沟流/短路）：</b>部分车辆通过应急车道快速通行（短路），而主车道车辆滞留（死区）。</li>
+<li><b>洗衣机脱水时衣物分布不均（流速分布）：</b>衣物偏向一侧，导致脱水不平衡和噪音。</li>
+<li><b>吸管喝珍珠奶茶（颗粒沉降）：</b>珍珠沉底，吸管底部浓度远高于上部。</li>
+</ul>
+<p><b>大白话：</b>理想反应器假设每个分子都"规规矩矩"排队走，但实际情况是有的走捷径（短路）、有的原地打转（死区）、有的快有的慢（流速不均）。这些偏差就是非理想流动。</p>
+</div>
+
+<div class="concept">
+<h4>🔴 非理想流动的典型类型</h4>
+<table class="tbl">
+<tr><th>类型</th><th>现象</th><th>后果</th></tr>
+<tr><td><b>死角（死区）</b></td><td>反应器内存在物料停滞不动的区域</td><td>有效体积减小，实际空时变短，转化率下降</td></tr>
+<tr><td><b>短路（沟流）</b></td><td>部分物料未充分反应就直接从入口窜到出口</td><td>出口转化率大幅降低，产品质量不均</td></tr>
+<tr><td><b>流速分布不均</b></td><td>管中心流速快，壁面流速慢（层流）或径向速度分布不均匀</td><td>不同流体微元停留时间不同，产生RTD</td></tr>
+<tr><td><b>循环流/涡流</b></td><td>搅拌不均匀导致局部涡旋</td><td>部分物料反复循环，停留时间延长</td></tr>
+</table>
+<p><b>记忆口诀：</b>死区占地方，短路跑得快，流速不均匀，涡流打转转。</p>
+</div>
+
+<div class="concept">
+<h4>🔴 产生停留时间分布的原因（4条！必背！）</h4>
+<ol>
+<li><b>物料的流动速率不均匀：</b>管中心流速快、壁面流速慢（层流抛物线分布），导致不同径向位置的分子停留时间不同。</li>
+<li><b>分子扩散、湍流分布：</b>分子的布朗运动和湍流脉动导致轴向和径向的浓度混合，使停留时间产生波动。</li>
+<li><b>强制对流：</b>搅拌、泵送等外力引起的宏观流动，使物料在反应器内产生不均匀的循环。</li>
+<li><b>有死角、短路：</b>反应器结构原因导致部分物料滞留（死角）或快速通过（短路）。</li>
+</ol>
+<p><b>大白话：</b>分子走得有快有慢（流速不均）、会乱窜（扩散湍流）、被搅来搅去（强制对流）、还有堵住和抄近道的（死角短路）——这四个原因加在一起，就造成了停留时间分布。</p>
+</div>
+
+<div class="concept">
+<h4>🔴 三种流动模式的对比</h4>
+<table class="tbl">
+<tr><th>流动模式</th><th>停留时间</th><th>RTD</th><th>返混</th></tr>
+<tr><td>平推流</td><td>全部相同</td><td>$E(t)=\delta(t-\tau)$（脉冲）</td><td>无</td></tr>
+<tr><td>全混流</td><td>指数分布</td><td>$E(t)=\frac{1}{\bar t}e^{-t/\bar t}$</td><td>最大</td></tr>
+<tr><td>非理想流动</td><td>介于两者之间</td><td>介于脉冲和指数之间</td><td>介于0和最大之间</td></tr>
+</table>
+<p><b>★ 关键认识：</b>一种流动对应着一定的停留时间分布，但<b>一种停留时间分布可能对应着不同的流动</b>。RTD不能唯一确定流动状态。</p>
+</div>
 
 <div class="concept">
 <h4>🔴 停留时间分布（RTD）</h4>
 <p><b>考试定义：</b>停留时间分布是指流体微元在反应器内停留时间长短的概率分布，用于描述实际流动偏离理想流动的程度。常用停留时间分布密度函数 $E(t)$ 和累计分布函数 $F(t)$ 表示。</p>
 <p><b>大白话：</b>每个分子在反应器里待的时间不一样长。有的分子运气好，走直线很快就出去了；有的分子到处打转，待很久才出去。停留时间分布就是描述"各种停留时间的分子各占多少比例"。</p>
-<p><b>$E(t)$ 的含义：</b>$E(t)dt$ = 停留时间在 $t$ 到 $t+dt$ 的分子所占比例。</p>
-<p><b>$F(t)$ 的含义：</b>停留时间小于 $t$ 的分子占多少比例。</p>
+<p><b>$E(t)$ —— 停留时间分布密度函数：</b></p>
+<ul>
+<li>定义：出口流体中停留时间为 $t$ 的流体微元所占的分率</li>
+<li>$E(t)dt$ = 停留时间在 $t$ 到 $t+dt$ 的分子所占比例</li>
+<li>性质：$E(t)\geq 0$，$\int_0^\infty E(t)dt = 1$</li>
+</ul>
+<p><b>$F(t)$ —— 停留时间分布函数（累计分布）：</b></p>
+<ul>
+<li>定义：出口流体中停留时间<b>小于</b> $t$ 的流体微元所占的分率</li>
+<li>$F(t)=\int_0^t E(t)dt$</li>
+<li>$E(t)=\dfrac{dF(t)}{dt}$</li>
+<li>$F(0)=0$，$F(\infty)=1$</li>
+</ul>
+<p><b>E(t) 的性质：</b></p>
+<ul>
+<li>$E(t)=0$（$t<0$）：不可能有负的停留时间</li>
+<li>$E(t)>0$（$t\geq 0$）：有流体微元以停留时间 $t$ 离开</li>
+<li>对平推流：$E(t)=\delta(t-\tau)$（所有分子停留时间相同）</li>
+<li>对全混流：$E(t)=\frac{1}{\bar t}e^{-t/\bar t}$</li>
+</ul>
+</div>
+
+<h4 class="sub">4.1.1 停留时间分布的数字特征 ★★★</h4>
+
+<p><b>1) 平均停留时间 $\bar{t}$：</b></p>
+<p>所有流体微元在反应器内停留时间的加权平均值，是 $E(t)$ 曲线的分布中心（数学期望）：</p>
+<div class="eq">$$\bar{t} = \frac{\int_0^\infty t\,E(t)\,dt}{\int_0^\infty E(t)\,dt} = \int_0^\infty t\,E(t)\,dt$$</div>
+<p>恒容时：$\bar{t} = V/v_0 = \tau$（空时）</p>
+
+<p><b>2) 方差 $\sigma_t^2$：</b></p>
+<p>表示停留时间分布的分散程度：</p>
+<div class="eq">$$\sigma_t^2 = \int_0^\infty (t-\bar{t})^2 E(t)\,dt = \int_0^\infty t^2 E(t)\,dt - \bar{t}^2$$</div>
+<p>方差越大→分布越宽→越偏离平推流：</p>
+<ul>
+<li>平推流：$\sigma_t^2 = 0$（无分散，全部停留时间相同）</li>
+<li>全混流：$\sigma_t^2 = \bar{t}^2$（分散最大）</li>
+</ul>
+
+<p><b>3) 无量纲方差 $\sigma_\theta^2$：</b></p>
+<p>用对比时间 $\theta = t/\bar{t}$ 表示的无因次方差：</p>
+<div class="eq">$$\sigma_\theta^2 = \frac{\sigma_t^2}{\bar{t}^2}$$</div>
+<p><b>★ 判断标准：</b></p>
+<ul>
+<li>$\sigma_\theta^2 = 0$：平推流</li>
+<li>$\sigma_\theta^2 = 1$：全混流</li>
+<li>$0 < \sigma_\theta^2 < 1$：非理想流动，越接近0越像平推流</li>
+</ul>
+
+<div class="concept">
+<h4>🔴 年龄分布函数（PPT补充！）</h4>
+<p>除了出口的停留时间分布，还可以用<b>年龄分布</b>描述<b>器内</b>流体的状态：</p>
+<ul>
+<li><b>年龄分布密度函数 $I(t)$</b>：器内停留时间恰好为 $t$ 的流体微元所占比例</li>
+<li><b>年龄分布函数 $y(t)$</b>：器内停留时间小于 $t$ 的流体微元所占比例</li>
+</ul>
+<div class="eq">$$I(t) = \frac{dy(t)}{dt}, \quad y(t) = \int_0^t I(t)\,dt$$</div>
+<p>$y(0)=0$，$y(\infty)=1$</p>
+<p><b>$E(t)$ 和 $I(t)$ 的区别：</b></p>
+<ul>
+<li>$E(t)$ 描述的是<b>出口</b>流体的年龄（已离开反应器的分子）</li>
+<li>$I(t)$ 描述的是<b>器内</b>流体的年龄（还在反应器里的分子）</li>
+<li>对平推流：两者相同（所有分子同时进出）</li>
+<li>对全混流：$I(t)=1/\bar{t}$（常数，器内各年龄的分子比例相同）</li>
+</ul>
+</div>
+
+<h4 class="sub">4.1.2 停留时间分布的实验测定 ★★★</h4>
+<p>通过<b>物理示踪法</b>测定：在稳定流动系统入口处注入示踪剂（无化学反应活性的物质），在出口检测浓度随时间的变化。</p>
+<p>根据示踪剂输入方式不同，主要分为两种：</p>
+
+<p><b>① 脉冲示踪法（最常考！）：</b></p>
+<p>在 $t=0$ 瞬间在入口注入 $M$ 克示踪剂，然后恢复纯进料。</p>
+<div class="eq">$$E(t) = \frac{C_A(t)}{C_0} = \frac{C_A(t)}{M/v_0} = \frac{v_0 C_A(t)}{M}$$</div>
+<p><b>验证（一致性检验）：</b></p>
+<div class="eq">$$\int_0^\infty E(t)\,dt = \frac{v_0}{M}\int_0^\infty C_A\,dt = 1$$</div>
+<p>即：$\sum C_{Ai}\Delta t = M/v_0 = C_0$。如果不等于1，说明实验数据有问题（有死角、短路、示踪剂未完全回收等）。</p>
+<p><b>数据处理步骤：</b></p>
+<ol>
+<li>计算 $C_0 = M/v_0$</li>
+<li>作一致性检验：$\sum C_{Ai}\Delta t \approx C_0$</li>
+<li>$\bar{t} = \sum t_i C_{Ai}\Delta t / \sum C_{Ai}\Delta t$</li>
+<li>$\sigma_t^2 = \sum t_i^2 C_{Ai}\Delta t / \sum C_{Ai}\Delta t - \bar{t}^2$</li>
+</ol>
+
+<p><b>② 阶跃示踪法：</b></p>
+<p>在 $t=0$ 瞬间将进料切换为含示踪剂 $C_{A0}$ 的第二流体，保持流动模式不变。</p>
+<div class="eq">$$F(t) = \frac{C_A(t)}{C_{A0}}$$</div>
+<p>阶跃示踪法直接测得的是累计分布函数 $F(t)$，而非 $E(t)$。</p>
+<p>平均停留时间：</p>
+<div class="eq">$$\bar{t} = \frac{\int_0^{C_{A0}} t\,dC_A}{C_{A0}} = \frac{\sum_{i=1}^N t_i \Delta C_{Ai}}{C_{A0}}$$</div>
+
+<div class="concept">
+<h4>🔴 两种示踪法对比</h4>
+<table class="tbl">
+<tr><th></th><th>脉冲示踪法</th><th>阶跃示踪法</th></tr>
+<tr><td>输入方式</td><td>$t=0$ 瞬间注入 $M$ 量示踪剂</td><td>$t=0$ 起持续切换为含示踪剂的流体</td></tr>
+<tr><td>直接测得</td><td>$E(t) = C_A/C_0$</td><td>$F(t) = C_A/C_{A0}$</td></tr>
+<tr><td>再推导</td><td>$F(t)=\int_0^t E(t)dt$</td><td>$E(t)=dF(t)/dt$</td></tr>
+<tr><td>实验难度</td><td>较难（瞬间注入要求高）</td><td>较易（切换阀门即可）</td></tr>
+<tr><td>数据量</td><td>瞬间样品，数据量大</td><td>连续采样，数据量少</td></tr>
+<tr><td>一致性检验</td><td>$\sum C_{Ai}\Delta t = M/v_0$</td><td>$\bar{t} = \sum t_i\Delta C_{Ai}/C_{A0}$</td></tr>
+</table>
+</div>
+
+<div class="concept">
+<h4>🔴 脉冲示踪法一致性检验不满足时的原因</h4>
+<p>如果 $\int_0^\infty E(t)dt \neq 1$（即 $\sum C_{Ai}\Delta t \neq M/v_0$），可能原因：</p>
+<ol>
+<li>示踪剂有化学反应或被吸附（被消耗了）</li>
+<li>示踪剂未完全回收（有死角滞留）</li>
+<li>流量测量不准确</li>
+<li>输入示踪剂改变了定常态操作</li>
+</ol>
 </div>
 
 <table class="tbl">
@@ -679,12 +1436,14 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <tr><td>$E(t)$</td><td>$\delta(t-\tau)$</td><td>$\frac{1}{\bar t}e^{-t/\bar t}$</td></tr>
 <tr><td>$F(t)$</td><td>阶跃函数</td><td>$1-e^{-t/\bar t}$</td></tr>
 <tr><td>方差 $\sigma^2$</td><td>$0$</td><td>$\bar t^2$</td></tr>
+<tr><td>$\sigma_\theta^2$</td><td>$0$</td><td>$1$</td></tr>
 </table>
 
 <div class="concept">
 <h4>🔵 平推流和全混流的停留时间分布</h4>
-<p><b>平推流：</b>所有分子停留时间都是 $\tau$，没有例外。方差为0。</p>
-<p><b>全混流：</b>指数分布。有的分子刚进去就出来了（$t\approx 0$），有的待很久。方差为 $\bar t^2$（很大，说明分布很宽）。</p>
+<p><b>平推流：</b>所有分子停留时间都是 $\tau$，没有例外。方差为0。$E(t)=\delta(t-\tau)$ 是一个脉冲函数。</p>
+<p><b>全混流：</b>指数分布。有的分子刚进去就出来了（$t\approx 0$），有的待很久。方差为 $\bar t^2$（很大，说明分布很宽）。$E(t)=\frac{1}{\bar t}e^{-t/\bar t}$，$F(t)=1-e^{-t/\bar t}$。</p>
+<p><b>$E(t)$ 和 $F(t)$ 的关系：</b>$E(t)$ 是密度（像概率密度），$F(t)$ 是累计（像累计概率）。$F(t)=\int_0^t E(t)dt$，$E(t)=dF(t)/dt$。</p>
 
 <p class="hint">图：PFR的E(t)是脉冲（所有分子停留时间相同），CSTR的E(t)是指数衰减（有快有慢）。</p></div>
 
@@ -702,20 +1461,76 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 
 <h3 class="sec">4.2 流动模型 ★★★</h3>
 
-<h4 class="sub">多级串联全混流模型</h4>
-<p>$\sigma_\theta^2 = 1/N$。$N=1$ → 全混流；$N\to\infty$ → 平推流。</p>
+<h4 class="sub">多级串联全混流模型 ★★★</h4>
+<p>用N个等体积CSTR串联来模拟实际反应器的非理想流动。推导如下：</p>
+<p>N个等体积CSTR串联，无量纲方差：</p>
+<div class="eq">$$\sigma_\theta^2 = \frac{\sigma_t^2}{\bar{t}^2} = \frac{1}{N}$$</div>
+<p><b>推导思路：</b>每个CSTR的停留时间分布为指数分布 $E_i(t)=\frac{1}{\tau}e^{-t/\tau}$，方差为 $\tau^2$。N个串联后总方差为各釜方差之和（独立同分布）：$\sigma_t^2 = N\tau^2$。总平均停留时间 $\bar{t}=N\tau$，所以：</p>
+<div class="eq">$$\sigma_\theta^2 = \frac{N\tau^2}{(N\tau)^2} = \frac{1}{N}$$</div>
+<p><b>★ 关键结论：</b></p>
+<ul>
+<li>$N=1$：$\sigma_\theta^2=1$ → 全混流</li>
+<li>$N\to\infty$：$\sigma_\theta^2\to0$ → 平推流</li>
+<li>反过来：$N=1/\sigma_\theta^2$，从实验数据的方差可以反推N</li>
+</ul>
 
-<h4 class="sub">轴向扩散模型</h4>
-<p>$Pe = uL/D_a$。$Pe\to 0$ → 全混流；$Pe\to\infty$ → 平推流。</p>
+<h4 class="sub">轴向扩散模型 ★★</h4>
+<p><b>核心思想：</b>在平推流的基础上，叠加一个轴向的"反向扩散"来模拟返混。扩散系数 $D_a$（轴向有效扩散系数）越大，返混越强。</p>
+<p><b>物理方程：</b>对管式反应器取微元段做物料衡算，同时考虑<b>对流</b>和<b>轴向扩散</b>：</p>
+<div class="eq">$$D_a\frac{d^2C_A}{dz^2} - u\frac{dC_A}{dz} - (-r_A) = 0$$</div>
+<p>$u$ = 表观流速，$z$ = 轴向位置，$D_a$ = 轴向有效扩散系数。</p>
+
+<p><b>两个无量纲数：</b></p>
+<ul>
+<li><b>Peclet准数 $Pe = uL/D_a$：</b>对流速率/扩散速率</li>
+<li><b>Damköhler数 $Da = kL/u$（一级反应）：</b>反应速率/对流速率</li>
+</ul>
+
+<p><b>Pe的极限行为：</b></p>
+<ul>
+<li>$Pe\to\infty$（无扩散）：方程退化为 $-udC_A/dz - (-r_A)=0$ → 平推流</li>
+<li>$Pe\to 0$（扩散极强）：方程退化为 $D_a d^2C_A/dz^2 - (-r_A)=0$ → 全混流</li>
+</ul>
+
+<p><b>方差与Pe的关系：</b></p>
+<div class="eq">$$\sigma_\theta^2 = \frac{2}{Pe} - \frac{2}{Pe^2}(1-e^{-Pe}) \quad \text{（闭-闭容器）}$$</div>
+<p><b>简化（$Pe$ 较大，即低返混时）：</b></p>
+<div class="eq">$$\sigma_\theta^2 \approx \frac{2}{Pe}$$</div>
+
+<div class="concept">
+<h4>🔴 边界条件（开放-开放容器 vs 闭-闭容器）</h4>
+<p><b>★ 关键区别：</b></p>
+<table class="tbl">
+<tr><th>容器类型</th><th>入口条件</th><th>出口条件</th><th>适用场景</th></tr>
+<tr><td>闭-闭容器</td><td>无扩散进入</td><td>无扩散离开</td><td>反应器两端有均流板（脉冲示踪法的理想情况）</td></tr>
+<tr><td>开-开容器</td><td>有扩散进出</td><td>有扩散进出</td><td>管式反应器直接接入管道</td></tr>
+<tr><td>闭-开容器</td><td>无扩散进入</td><td>有扩散离开</td><td>反应器入口有均流板，出口无</td></tr>
+</table>
+<p><b>考试记住：</b>脉冲示踪法的实验条件接近"闭-闭容器"，对应 $\sigma_\theta^2 = 2/Pe - 2/Pe^2(1-e^{-Pe})$。</p>
+</div>
 
 <div class="concept">
 <h4>🔵 Peclet准数 $Pe$</h4>
-<p><b>考试定义：</b>Peclet准数是表征对流传递与轴向扩散传递相对强弱的无量纲数，常用于轴向扩散模型。$Pe$ 越大，轴向扩散越弱，流动越接近平推流；$Pe$ 越小，返混越强。</p>
+<p><b>考试定义：</b>Peclet准数是表征对流传递与轴向扩散传递相对强弱的无量纲数。$Pe$ 越大，轴向扩散越弱，流动越接近平推流；$Pe$ 越小，返混越强。</p>
 <p><b>大白话：</b>$Pe$ 衡量的是"对流"和"扩散"哪个占主导。</p>
 <ul>
 <li>$Pe$ 大 → 对流主导 → 像平推流（物料整体往前推）</li>
 <li>$Pe$ 小 → 扩散主导 → 像全混流（物料到处乱窜）</li>
 </ul>
+</div>
+
+<div class="concept">
+<h4>🔴 串联模型 vs 轴向扩散模型 对比</h4>
+<table class="tbl">
+<tr><th></th><th>串联模型（N级CSTR）</th><th>轴向扩散模型</th></tr>
+<tr><td>核心参数</td><td>$N$（串联级数）</td><td>$Pe$（Peclet准数）</td></tr>
+<tr><td>物理模型</td><td>离散化：N个CSTR串联</td><td>连续化：在PFR上叠加扩散</td></tr>
+<tr><td>适用范围</td><td>大偏差（$N$ 较小，返混强）</td><td>小偏差（$Pe$ 较大，接近PFR）</td></tr>
+<tr><td>$\sigma_\theta^2$</td><td>$1/N$</td><td>$2/Pe$（小偏差时）</td></tr>
+<tr><td>极限</td><td>$N=1$→CSTR，$N\to\infty$→PFR</td><td>$Pe=0$→CSTR，$Pe\to\infty$→PFR</td></tr>
+<tr><td>互相换算</td><td colspan="2">小偏差时：$N \approx Pe/2$</td></tr>
+</table>
+<p><b>考试判断：</b>如果方差很大（$\sigma_\theta^2 > 0.5$，返混严重）→用串联模型。如果方差很小（$\sigma_\theta^2 < 0.1$，接近平推流）→用轴向扩散模型。中间情况两个都行。</p>
 </div>
 
 <div class="concept">
@@ -743,7 +1558,7 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 
 <!-- ═══════════════ 第5章 ═══════════════ -->
 <h2 class="ch">第5章 催化剂与催化动力学基础</h2>
-<p class="hint">本章核心：固体催化剂如何加速气相反应？</p>
+<p class="hint">本章核心：前面四章都在讲均相反应，这一章扩展到<b>非均相催化反应</b>（气-固相）。催化剂怎么加速反应？反应速率方程长什么样？→ 主要考概念（吸附、L-H方程）和简答题。</p>
 
 <h3 class="sec">5.1 物理吸附 vs 化学吸附 ★★★</h3>
 <table class="tbl">
@@ -766,7 +1581,30 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <p><b>在催化中的角色：</b>化学吸附是催化反应的关键步骤——反应物先化学吸附到催化剂表面，在表面上反应，然后产物脱附离开。</p>
 </div>
 
-<h3 class="sec">5.2 催化剂的物理结构 ★★</h3>
+<h3 class="sec">5.2 催化剂的基本知识 ★</h3>
+<div class="concept">
+<h4>🔴 催化剂的性能参数</h4>
+<p><b>催化剂三要素：</b></p>
+<ul>
+<li><b>活性：</b>催化剂加速化学反应的能力，通常用转化率或反应速率来衡量。</li>
+<li><b>选择性：</b>催化剂使反应朝目的产物方向进行的能力。</li>
+<li><b>稳定性：</b>催化剂在反应条件下保持活性和选择性的时间长度（寿命）。</li>
+</ul>
+<p><b>★ 考试记住：</b>好的催化剂 = 高活性 + 高选择性 + 长寿命。</p>
+</div>
+
+<div class="concept">
+<h4>🔵 催化剂的制备方法（了解即可）</h4>
+<ul>
+<li><b>沉淀法：</b>将含活性组分的盐溶液加沉淀剂，生成沉淀后干燥、焙烧。最常用。</li>
+<li><b>浸渍法：</b>将载体浸泡在含活性组分的溶液中，干燥后焙烧。适合负载型催化剂。</li>
+<li><b>共沉淀法：</b>多种金属盐同时沉淀，得到混合氧化物催化剂。</li>
+<li><b>溶胶-凝胶法：</b>制备高比表面积催化剂。</li>
+</ul>
+<p><b>催化剂的再生：</b>中毒的催化剂可以通过适当方法恢复活性。物理吸附的杂质可以蒸馏除去；化学吸附的毒物需要高温处理；积碳的催化剂可以通过燃烧除去。</p>
+</div>
+
+<h3 class="sec">5.3 催化剂的物理结构 ★★</h3>
 <div class="concept">
 <h4>🔴 催化剂的物理结构参数（必知！）</h4>
 <p><b>考试定义：</b>催化剂的物理结构是指催化剂颗粒及其孔结构的几何和物理特征，主要包括比表面积、孔容、孔隙率、平均孔径、孔径分布、颗粒密度和堆积密度等参数，这些参数影响活性位数量和内扩散阻力。</p>
@@ -786,29 +1624,26 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 
 <div class="concept">
 <h4>🔵 孔的分类与影响</h4>
-<p><b>考试定义：</b>按孔径大小，催化剂孔通常分为微孔（&lt;2 nm）、中孔（2–50 nm）和大孔（&gt;50 nm）。孔结构影响催化剂比表面积、反应物扩散阻力以及有效利用率。</p>
 <ul>
 <li><b>微孔（&lt; 2 nm）：</b>贡献绝大部分表面积，但可能造成内扩散阻力</li>
 <li><b>中孔（2-50 nm）：</b>最重要的反应场所，兼顾表面积和扩散</li>
 <li><b>大孔（&gt; 50 nm）：</b>主要起传质通道作用</li>
 </ul>
-<p><b>内扩散影响：</b>孔太小→反应物进不去/产物出不来→有效因子 $\eta<1$。催化剂设计时要平衡表面积和孔径。</p>
-<p><b>难点拆解：外扩散 vs 内扩散怎么分？</b></p>
-<ul>
-<li><b>外扩散：</b>反应物从主体气流穿过颗粒外面的边界层，到达催化剂外表面。像人先走到楼门口。</li>
-<li><b>内扩散：</b>反应物再钻进催化剂孔道，到达内部活性位。像人进楼后还要走楼道找房间。</li>
-<li><b>表面反应：</b>真正发生化学反应的那一步。像进房间后才开始办事。</li>
-</ul>
-<p><b>判断控制步骤：</b>如果加强搅拌/提高流速后速率明显增大，多半是外扩散控制；如果减小催化剂颗粒直径后速率明显增大，多半是内扩散控制；如果这些传质条件怎么改速率都不太变，才更可能是表面反应控制。</p>
+<p><b>★ 催化剂设计的核心矛盾：</b>孔小→表面积大→活性位多→但扩散阻力大→内扩散限制。孔大→扩散容易→但表面积小→活性位少。需要平衡。</p>
 </div>
 
-<h3 class="sec">5.3 四种吸附等温线方程 ★★★</h3>
-<p class="hint">考试常考Langmuir，但其他三种也常作为对比题出现。</p>
+<h3 class="sec">5.4 吸附等温线方程 ★★★</h3>
+<p class="hint">考试常考Langmuir，但其他三种也常作为对比题出现。四种等温线的核心区别在于假设不同。</p>
 
-<h4 class="sub">① Langmuir等温线（最常考！）</h4>
+<h4 class="sub">① Langmuir等温线（最常考！）★★★</h4>
 <div class="eq">$$\theta = \frac{KP}{1+KP}$$</div>
 <p><b>三个假设：</b>表面均匀、单层吸附、吸附分子间无相互作用</p>
-<p><b>物理意义：</b>$\theta$ 是表面覆盖率，$K$ 是吸附平衡常数。低压时 $\theta\approx KP$（线性），高压时 $\theta\to 1$（饱和）。</p>
+<p><b>物理意义：</b>$\theta$ 是表面覆盖率，$K$ 是吸附平衡常数。</p>
+<ul>
+<li>低压时 $\theta\approx KP$（线性，表面很空，多加压就多吸附）</li>
+<li>高压时 $\theta\to 1$（饱和，表面占满了，再加压也没用）</li>
+</ul>
+<p><b>推导思路：</b>吸附速率 = 脱附速率（平衡时）。吸附速率 $\propto P(1-\theta)$（压力×空位比例），脱附速率 $\propto \theta$（已吸附比例）。平衡时：$k_a P(1-\theta) = k_d\theta$，令 $K=k_a/k_d$，解出 $\theta=KP/(1+KP)$。</p>
 <p><b>适用：</b>化学吸附，理想情况</p>
 
 <h4 class="sub">② Freundlich等温线 ★★</h4>
@@ -827,13 +1662,13 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <p><b>适用：</b>物理吸附、比表面积测量</p>
 
 <h4 class="sub">④ Temkin等温线 ★★</h4>
-<p><b>考试定义：</b>Temkin吸附等温线是假设吸附热随表面覆盖率近似线性下降而建立的经验型吸附等温式，常用于描述中等覆盖率范围内的化学吸附。</p>
-<div class="eq">$$\theta = \frac{RT}{\Delta H}\ln(K_0 P)$$</div>
-<p>或写作 $q = a\ln(bP)$</p>
+<div class="eq">$$\theta = \frac{RT}{\Delta H}\ln(K_0 P) \quad \text{或} \quad q = a\ln(bP)$$</div>
 <p><b>特点：</b>假设吸附热随覆盖率线性下降（$\Delta H = \Delta H_0 - \alpha\theta$）。中等覆盖率范围内拟合较好。</p>
 <p><b>大白话：</b>吸附热不是常数——先吸附的分子占据最有利的位置（吸附热大），后面的分子只能吸附在较差的位置（吸附热小）。像抢座位，先来的人抢到最好的位子。</p>
 <p><b>适用：</b>化学吸附、不均匀表面</p>
 
+<div class="concept">
+<h4>🔴 四种等温线对比表（必背！）</h4>
 <table class="tbl">
 <tr><th>等温线</th><th>方程</th><th>假设</th><th>适用范围</th></tr>
 <tr><td>Langmuir</td><td>$\theta=\frac{KP}{1+KP}$</td><td>均匀表面、单层、无相互作用</td><td>化学吸附（理想）</td></tr>
@@ -841,22 +1676,7 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <tr><td>BET</td><td>$\frac{P}{V(P_0-P)}=\frac{1}{V_mC}+\frac{C-1}{V_mC}\frac{P}{P_0}$</td><td>多层吸附</td><td>比表面积测量</td></tr>
 <tr><td>Temkin</td><td>$q=a\ln(bP)$</td><td>吸附热线性下降</td><td>化学吸附、中等覆盖率</td></tr>
 </table>
-
-<h3 class="sec">5.4 Langmuir吸附等温线 ★★★</h3>
-<div class="eq">$$\theta = \frac{KP}{1+KP}$$</div>
-
-
-<p class="hint">图：Langmuir等温吸附曲线。低压时 $\theta\approx KP$（线性），高压时 $\theta\to 1$（饱和）。K越大，曲线越快达到饱和。</p>
-
-<div class="concept">
-<h4>🔴 Langmuir吸附等温线通俗理解</h4>
-<p><b>考试定义：</b>Langmuir吸附等温线是在表面均匀、单分子层吸附、吸附分子间无相互作用等假设下建立的吸附平衡方程，常表示为 $\theta=\frac{KP}{1+KP}$，用于描述表面覆盖率与压力之间的关系。</p>
-<p><b>大白话：</b>描述"在一定压力下，催化剂表面有多少比例被分子占了"。</p>
-<ul>
-<li>$P$ 很大时 $\theta\to 1$：表面被占满了（饱和吸附），再加压也没用。</li>
-<li>$P$ 很小时 $\theta\approx KP$：表面空位很多，覆盖率正比于压力。</li>
-</ul>
-<p><b>三个假设：</b>(1)表面均匀（所有位点一样好）；(2)单层吸附（一层满了就满了）；(3)分子间无相互作用。</p>
+<p><b>考试技巧：</b>选择题常考"哪种等温线适用于什么情况"。记住：Langmuir=理想单层、Freundlich=不均匀经验、BET=多层测面积、Temkin=吸附热变化。</p>
 </div>
 
 <h3 class="sec">5.5 气-固相催化反应步骤 ★★★</h3>
@@ -876,7 +1696,50 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <li><b>内扩散：</b>产物从微孔"钻"出来</li>
 <li><b>外扩散：</b>产物从外表面"游"回气体主流</li>
 </ol>
-<p><b>控制步骤：</b>最慢的那一步决定了总速率。</p>
+<p><b>控制步骤：</b>最慢的那一步决定了总速率。就像木桶效应——最短的板决定了水位。</p>
+</div>
+
+<div class="concept">
+<h4>🔴 外扩散 vs 内扩散 vs 表面反应——怎么判断控制步骤？</h4>
+<p><b>难点拆解：</b></p>
+<ul>
+<li><b>外扩散：</b>反应物从主体气流穿过颗粒外面的边界层，到达催化剂外表面。像人先走到楼门口。</li>
+<li><b>内扩散：</b>反应物再钻进催化剂孔道，到达内部活性位。像人进楼后还要走楼道找房间。</li>
+<li><b>表面反应：</b>真正发生化学反应的那一步。像进房间后才开始办事。</li>
+</ul>
+<p><b>★ 实验判断方法（必记！）：</b></p>
+<ul>
+<li><b>加强搅拌/提高流速 → 速率明显增大：</b>说明外扩散控制（流速增大→边界层变薄→传质加快→速率增大）</li>
+<li><b>减小催化剂颗粒直径 → 速率明显增大：</b>说明内扩散控制（颗粒小→扩散路径短→内扩散阻力减小→速率增大）</li>
+<li><b>传质条件怎么改速率都不太变：</b>说明表面反应控制（扩散已经够快了，瓶颈在化学反应本身）</li>
+</ul>
+<p><b>考试套路：</b>题里出现"改变流速/颗粒大小后速率变化"→让你判断控制步骤。记住上面三条就够了。</p>
+</div>
+
+<div class="concept">
+<h4>🔴 有效因子（内扩散效率因子）★★★</h4>
+<p><b>考试定义：</b>有效因子 $\eta$ 是实际催化反应速率与消除内扩散阻力后的表面反应速率之比，表示催化剂内部活性位的利用程度。</p>
+<div class="eq">$$\eta = \frac{\text{实际反应速率}}{\text{无内扩散阻力时的反应速率}} = \frac{r_{实际}}{r_{表面}}$$</div>
+<p><b>物理意义：</b>由于内扩散阻力的存在，催化剂内部的浓度低于外表面浓度，导致内部的反应速率低于外表面。$\eta$ 反映了"催化剂内部有多少活性位真正被利用了"。</p>
+<ul>
+<li>$\eta = 1$：无内扩散阻力，所有活性位充分利用</li>
+<li>$\eta < 1$：有内扩散限制，内部活性位没有完全利用</li>
+<li>$\eta \to 0$：严重的内扩散限制，只有外表面一小层在反应</li>
+</ul>
+<p><b>影响因素：</b></p>
+<ul>
+<li><b>颗粒越大</b> → 扩散路径越长 → $\eta$ 越小</li>
+<li><b>反应速率越快</b>（k越大）→ 外层就消耗完了 → 内部更缺料 → $\eta$ 越小</li>
+<li><b>孔越小</b> → 扩散阻力越大 → $\eta$ 越小</li>
+</ul>
+<p><b>★ Thiele模数 $\phi$：</b>衡量反应速率与扩散速率的相对大小。</p>
+<div class="eq">$$\phi = L\sqrt{\frac{k}{D_{eff}}}$$</div>
+<p>$L$ = 特征长度（如半径），$k$ = 表面反应速率常数，$D_{eff}$ = 有效扩散系数。</p>
+<ul>
+<li>$\phi$ 小（扩散快、反应慢）→ $\eta \to 1$（反应控制）</li>
+<li>$\phi$ 大（扩散慢、反应快）→ $\eta \to 1/\phi$（扩散控制）</li>
+</ul>
+<p><b>大白话：</b>Thiele模数就像"排队买奶茶"——如果做奶茶的速度比排队的速度慢（$\phi$小），队伍排不满，所有人都能买到（$\eta\to1$）；如果做奶茶的速度比排队快得多（$\phi$大），队伍排得老长，里面的人等半天也买不到（$\eta$小）。</p>
 </div>
 
 <h3 class="sec">5.6 双曲线型速率方程（L-H方程） ★★★</h3>
@@ -909,19 +1772,125 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <p><b>考试写法：</b>看到“吸附强/弱”“表面覆盖”“产物抑制”，就从分母大小入手化简，不要硬背一堆结论，背多了你自己先糊。</p>
 </div>
 
-<h3 class="sec">5.7 催化剂失活 ★</h3>
-<p>中毒（暂时/永久）、烧结、积碳、磨损。</p>
+<h3 class="sec">5.7 气-固催化反应动力学方程的建立与判定 ★★★</h3>
+<p class="hint">这是教学大纲明确标注的重点+难点！考试综合题可能涉及。</p>
+
+<h4 class="sub">实验测定方法 ★★★（授课计划重点！）</h4>
+<div class="concept">
+<h4>🔴 积分反应器 vs 微分反应器</h4>
+<p><b>气-固催化反应速率实验测定</b>的两种主要装置：</p>
+<p><b>① 积分反应器：</b></p>
+<ul>
+<li>催化剂装填成固定床，反应物流经床层，床层进出口浓度差大（转化率高）</li>
+<li><b>操作：</b>改变空时（流量）或催化剂装量，测定不同条件下的出口转化率 $x_A$</li>
+<li><b>数据处理：</b>用积分形式的设计方程 $\tau = C_{A0}\int_0^{x_A} dx_A/(-r_A)$，假设速率方程形式，代入检验拟合效果</li>
+<li><b>优点：</b>可以直接得到转化率数据，适合确定反应级数</li>
+<li><b>缺点：</b>床层内浓度不均匀，不能直接获得反应速率值</li>
+</ul>
+<p><b>② 微分反应器：</b></p>
+<ul>
+<li>催化剂装量极少（或流量极大），使床层转化率很小（$\Delta x_A<5\%$），近似认为床层内浓度均匀</li>
+<li><b>操作：</b>测得的 $\Delta x_A$ 除以空时直接得到反应速率 $(-r_A) \approx C_{A0}\Delta x_A/\tau$</li>
+<li><b>优点：</b>直接测速率，数据直观，可以同时改变 $P_A$、$P_B$ 等条件</li>
+<li><b>缺点：</b>$\Delta x_A$ 太小时分析误差大，需要高精度分析仪器</li>
+</ul>
+<p><b>对比记忆：</b>积分反应器像看“总账”（整体转化率），微分反应器像看“流水”（瞬时速率）。工业上常先用积分反应器确定转化率趋势，再用微分反应器精确测定动力学参数。</p>
+</div>
+
+<h4 class="sub">双曲线速率方程的一般形式</h4>
+<p>基于Langmuir吸附理论，气-固催化反应的速率方程一般形式为：</p>
+<div class="eq">$$r = \frac{k\cdot f(P_A, P_B, \cdots)}{[1 + K_A P_A + K_B P_B + K_P P_P + \cdots]^n}$$</div>
+<p>其中 $k$ 是表面反应速率常数，$K_i$ 是各组分的吸附平衡常数，$n$ 取决于反应机理（表面反应为控制步骤时通常 $n=1$ 或 $2$）。</p>
 
 <div class="concept">
-<h4>🔵 催化剂失活</h4>
-<p><b>考试定义：</b>催化剂失活是指催化剂在使用过程中由于中毒、积碳、烧结、磨损或活性组分流失等原因，导致活性、选择性或稳定性随时间下降的现象。</p>
-<p><b>大白话：</b>催化剂用久了会"罢工"：</p>
+<h4>🔴 动力学方程的建立步骤（考试大题套路！）</h4>
+<ol>
+<li><b>假设反应机理：</b>反应物吸附 → 表面反应 → 产物脱附，哪一步是控制步骤？</li>
+<li><b>写出各步速率式：</b>吸附、表面反应、脱附各写一个速率方程</li>
+<li><b>利用平衡关系简化：</b>非控制步骤假设达到准平衡，用Langmuir等温式替换</li>
+<li><b>联立求解：</b>得到只含可测量量（$P_A$、$P_B$等）的速率方程</li>
+</ol>
+</div>
+
+<h4 class="sub">速率方程的判定方法（实验验证）</h4>
+<div class="concept">
+<h4>🔴 线性化法判定动力学方程</h4>
+<p>拿到一组 $(r, P_A, P_B)$ 的实验数据后，判断哪种速率方程合适：</p>
+<p><b>方法一：假设-验证法</b></p>
 <ul>
-<li><b>中毒：</b>杂质占了活性位，催化剂没法工作。</li>
-<li><b>烧结：</b>高温下活性组分聚集变大，表面积减少。</li>
-<li><b>积碳：</b>碳沉积覆盖了活性位。</li>
-<li><b>磨损：</b>机械力导致催化剂破碎。</li>
+<li>假设是某一种速率方程（如L-H单组分形式）</li>
+<li>将方程线性化（取倒数、取对数等）</li>
+<li>用实验数据作图，看是否得直线</li>
+<li>直线斜率和截距求出 $k$ 和 $K$</li>
+<li>用求出的 $k$、$K$ 回代预测其他数据点，看是否吻合</li>
 </ul>
+<p><b>方法二：不同压力下的极限行为</b></p>
+<ul>
+<li>低压区：$r$ vs $P$ 作图 → 如果是直线，则低压下退化为一级</li>
+<li>高压区：$r$ 趋于常数 → 零级（表面饱和）</li>
+<li>中压区：混合级数</li>
+</ul>
+</div>
+
+<h4 class="sub">参数推定（求 $k$ 和 $K$）</h4>
+<div class="concept">
+<h4>🔴 L-H方程参数的求法</h4>
+<p>对简化形式 $r = \dfrac{kK_A P_A}{1+K_A P_A}$（单组分，无产物抑制）：</p>
+<p>取倒数线性化：</p>
+<div class="eq">$$\frac{1}{r} = \frac{1}{kK_A}\cdot\frac{1}{P_A} + \frac{1}{k}$$</div>
+<p>以 $1/r$ 对 $1/P_A$ 作图得直线：</p>
+<ul>
+<li>斜率 $= 1/(kK_A)$</li>
+<li>截距 $= 1/k$</li>
+<li>从斜率和截距联立求出 $k$ 和 $K_A$</li>
+</ul>
+<p><b>验证：</b>用不同温度下的数据分别求 $k$，再用阿伦尼乌斯方程 $\ln k$ 对 $1/T$ 作图验证是否得直线，同时求出活化能 $E$ 和吸附热 $\Delta H$。</p>
+</div>
+
+<h3 class="sec">5.8 催化剂失活与再生 ★★</h3>
+
+<div class="concept">
+<h4>🔴 催化剂失活的四种原因（必背！）</h4>
+<p><b>考试定义：</b>催化剂失活是指催化剂在使用过程中由于中毒、积碳、烧结、磨损或活性组分流失等原因，导致活性、选择性或稳定性随时间下降的现象。</p>
+
+<table class="tbl">
+<tr><th>失活类型</th><th>原因</th><th>后果</th><th>可否再生</th></tr>
+<tr><td><b>中毒</b></td><td>原料中的杂质（S、As、Pb等）与活性位形成强化学键</td><td>活性位被永久/暂时占据，活性急剧下降</td><td>暂时中毒可再生；永久中毒不可</td></tr>
+<tr><td><b>积碳</b></td><td>有机物在高温下脱氢缩合，生成碳沉积覆盖活性位</td><td>孔道堵塞，活性位被覆盖，活性逐渐下降</td><td>可再生（烧碳）</td></tr>
+<tr><td><b>烧结</b></td><td>高温下活性组分的小颗粒聚集成大颗粒</td><td>比表面积减小，活性位减少</td><td>不可再生</td></tr>
+<tr><td><b>磨损</b></td><td>流体冲刷、颗粒碰撞等机械力</td><td>催化剂破碎，粉尘堵塞床层</td><td>不可再生</td></tr>
+</table>
+
+<p><b>大白话版：</b></p>
+<ul>
+<li><b>中毒：</b>像中毒一样——微量毒物（硫、砷等）把活性位"毒死"了。如果毒物和活性位结合不太牢（暂时中毒），可以通过高温处理让毒物脱附，活性恢复。如果结合太牢（永久中毒），催化剂就废了。</li>
+<li><b>积碳：</b>像厨房油烟——长期做饭油烟积累，灶台越来越脏。积碳可以通入空气/蒸汽在高温下"烧掉"（再生），恢复活性。</li>
+<li><b>烧结：</b>像冰淇淋化了再冻——本来是小颗粒（表面积大），高温下融化聚成大颗粒（表面积小），不可逆。</li>
+<li><b>磨损：</b>像沙子被水流冲——颗粒互相碰撞摩擦变碎了，不可逆。</li>
+</ul>
+</div>
+
+<div class="concept">
+<h4>🔴 催化剂再生方法</h4>
+<ul>
+<li><b>积碳再生：</b>通入含氧气体（空气）在适当温度下燃烧碳沉积。工业上最常用的再生方法。注意温度不能太高（防止烧结）。</li>
+<li><b>暂时中毒再生：</b>通入纯净原料或惰性气体，高温下让毒物脱附。</li>
+<li><b>化学洗涤：</b>用酸/碱溶液洗涤催化剂，溶解掉毒物（适用于某些无机毒物）。</li>
+</ul>
+<p><b>★ 不能再生的情况：</b>永久中毒（毒物与活性位形成极强化学键）、烧结（颗粒聚并不可逆）、磨损（物理破碎）。</p>
+</div>
+
+<div class="concept">
+<h4>🔵 催化剂寿命与经济性</h4>
+<p><b>考试定义：</b>催化剂寿命是指催化剂在满足生产要求的条件下能够使用的时间长度，通常以"运行小时数"或"每吨产品消耗的催化剂量"表示。</p>
+<p><b>影响寿命的因素：</b></p>
+<ul>
+<li>原料纯度（杂质多→中毒快）</li>
+<li>操作温度（温度高→烧结/积碳加快）</li>
+<li>空速（空速大→磨损加剧）</li>
+<li>催化剂本身的稳定性（制备方法、载体性质等）</li>
+</ul>
+<p><b>工业策略：</b>选择性中毒保护（在原料中故意加入少量无毒物质来"占住"最强的毒物位点）、定期再生、备用反应器轮换操作。</p>
 </div>
 
 <!-- ═══════════════ 公式速查 ═══════════════ -->
@@ -1453,6 +2422,106 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
 <p><b>💡 知识点：</b>$n>0$ 时PFR效率≥CSTR；$n<0$ 时CSTR反而更好；转化率越高差距越大</p>
 </div>
 
+<h3 class="sec">【题型二十】两个最优容积比CSTR串联 ★★★</h3>
+<div class="example">
+<p><b>例（PPT原题）：</b>应用两个按最优容积比串联的全混流釜进行不可逆的一级液相反应 $A\to P$，各釜容积和操作温度相同，$k=0.92$ h⁻¹，$v_0=5$ m³/h，要求最终转化率 $x_A=0.4$。求 $V_1$、$V_2$ 和总容积 $V$。</p>
+<p><b>解：</b></p>
+<p>最优条件：$\tau_1=\tau_2$（等体积），$C_{A1}=\sqrt{C_{A0}\cdot C_{A2}}$</p>
+<p>$C_{A2}=C_{A0}(1-0.4)=0.6C_{A0}$</p>
+<p>$C_{A1}=\sqrt{C_{A0}\times 0.6C_{A0}}=0.775C_{A0}$</p>
+<p>$\tau_1=\frac{C_{A0}-C_{A1}}{kC_{A1}}=\frac{C_{A0}(1-0.775)}{0.92\times 0.775C_{A0}}=\frac{0.225}{0.713}=0.316$ h</p>
+<p>$V_1=v_0\tau_1=5\times0.316=1.58$ m³</p>
+<p>$V_2=V_1=1.58$ m³（等体积）</p>
+<p>$V=V_1+V_2=3.16$ m³</p>
+<p><b>验证：</b>$\tau_2=\frac{0.775C_{A0}-0.6C_{A0}}{0.92\times 0.6C_{A0}}=\frac{0.175}{0.552}=0.317$ h ≈ $\tau_1$ ✓</p>
+<p><b>对比单个CSTR：</b>单个CSTR达到40%需 $\tau=0.4/(0.92\times0.6)=0.725$ h，$V=3.63$ m³。两个串联节省约13%。</p>
+<hr>
+<p><b>📌 本题所用公式：</b></p>
+<ul>
+<li>$C_{A1}=\sqrt{C_{A0}\cdot C_{A2}}$（两个CSTR最优中间浓度）</li>
+<li>$\tau_1=\tau_2$（等体积最优条件）</li>
+<li>$\tau=\frac{x_A}{k(1-x_A)}$（CSTR一级反应设计方程）</li>
+</ul>
+<p><b>📖 考查内容：</b>第3章 · 多釜串联 · 最优体积比</p>
+<p><b>💡 知识点：</b>一级反应两个CSTR串联最优时体积相等；用几何平均公式求中间浓度</p>
+</div>
+
+<h3 class="sec">【题型二十一】间歇反应器变容反应 ★★★</h3>
+<div class="example">
+<p><b>例（PPT原题）：</b>恒温恒压气相反应 $A\to 2P$，$-r_A=0.5C_A$ mol/(L·min)，$C_{A0}=2$ mol/L。若 $x_A=0.6$，求反应时间 $t$。</p>
+<p><b>解：</b></p>
+<p><b>Step 1：膨胀因子</b></p>
+<p>$\delta_A=(2-1)/1=1$（每消耗1mol A生成2mol P，总摩尔数翻倍）</p>
+<p><b>Step 2：浓度表达式</b></p>
+<div class="eq">$$C_A=\frac{C_{A0}(1-x_A)}{1+\varepsilon_A x_A}=\frac{2(1-0.6)}{1+1\times0.6}=\frac{0.8}{1.6}=0.5 \text{ mol/L}$$</div>
+<p><b>Step 3：设计方程</b></p>
+<p>间歇反应器设计方程：</p>
+<div class="eq">$$t=C_{A0}\int_0^{x_A}\frac{dx_A}{-r_A}=C_{A0}\int_0^{x_A}\frac{dx_A}{0.5C_A}$$</div>
+<p>代入 $C_A$ 表达式（$-r_A=0.5C_A$，所以 $1/(-r_A)=1/(0.5C_A)$）：</p>
+<div class="eq">$$t=2\int_0^{0.6}\frac{dx_A}{0.5\times\frac{2(1-x_A)}{1+x_A}}=2\int_0^{0.6}\frac{(1+x_A)dx_A}{(1-x_A)}$$</div>
+<div class="eq">$$=2\int_0^{0.6}\frac{1+x_A}{1-x_A}dx_A=2\int_0^{0.6}\left(\frac{2}{1-x_A}-1\right)dx_A$$</div>
+<div class="eq">$$=2\left[-2\ln(1-x_A)-x_A\right]_0^{0.6}=2\left[2\ln 2-0.6\right]=2\times0.773=1.546 \text{ min}$$</div>
+<p><b>注意：</b>这里 $-r_A=0.5C_A$ 中的 $C_A$ 是浓度（不是 $C_{A0}$），需要代入变容浓度表达式。</p>
+<hr>
+<p><b>📌 本题所用公式：</b></p>
+<ul>
+<li>$C_A=\frac{C_{A0}(1-x_A)}{1+\varepsilon_A x_A}$（变容反应浓度表达式）</li>
+<li>$t=C_{A0}\int_0^{x_A}\frac{dx_A}{-r_A}$（间歇反应器设计方程）</li>
+<li>$-r_A=0.5C_A$（一级反应速率方程）</li>
+</ul>
+<p><b>📖 考查内容：</b>第3章 · 间歇反应器设计 · 变容反应</p>
+<p><b>💡 知识点：</b>变容反应必须先把 $C_A$ 换成 $x_A$ 的表达式再积分；$\varepsilon_A=\delta_A\cdot y_{A0}$</p>
+</div>
+
+<h3 class="sec">【题型二十二】一级反应PFR vs CSTR直接对比 ★★★</h3>
+<div class="example">
+<p><b>例（PPT原题）：</b>一级反应 $A\to P$，$k=0.1$ min⁻¹，$\tau=10$ min，$C_{A0}=1$ mol/L。分别用PFR和CSTR计算A的转化率。</p>
+<p><b>解：</b></p>
+<p><b>PFR：</b></p>
+<div class="eq">$$x_A=1-e^{-k\tau}=1-e^{-0.1\times10}=1-e^{-1}=1-0.368=63.2\%$$</div>
+<p><b>CSTR：</b></p>
+<div class="eq">$$x_A=\frac{k\tau}{1+k\tau}=\frac{0.1\times10}{1+0.1\times10}=\frac{1}{2}=50\%$$</div>
+<p><b>对比：</b>PFR转化率(63.2%) > CSTR转化率(50%)，差距13.2个百分点。</p>
+<p><b>★ 为什么差这么多？</b>PFR全程保持高浓度→平均速率高；CSTR一进去就被稀释到出口浓度→全程低速。</p>
+<p><b>反问：</b>如果换成二级反应呢？差距会更大！因为二级反应对浓度更敏感（$-r_A=kC_A^2$）。</p>
+<hr>
+<p><b>📌 本题所用公式：</b></p>
+<ul>
+<li>PFR一级：$x_A=1-e^{-k\tau}$</li>
+<li>CSTR一级：$x_A=\frac{k\tau}{1+k\tau}$</li>
+</ul>
+<p><b>📖 考查内容：</b>第3章 · PFR与CSTR性能对比 · 一级反应</p>
+<p><b>💡 知识点：</b>同空时同条件下PFR转化率总是高于CSTR（正级数反应）；转化率越高差距越大</p>
+</div>
+
+<h3 class="sec">【题型二十三】轴向扩散模型预测转化率 ★★★</h3>
+<div class="example">
+<p><b>例：</b>一级不可逆反应 $A\to P$，$k=0.1$ min⁻¹，$\tau=10$ min，$C_{A0}=1$ mol/L。用轴向扩散模型，$Pe=10$（低返混），求转化率。</p>
+<p><b>解：</b></p>
+<p>轴向扩散模型对一级反应的解析解（闭-闭容器）：</p>
+<div class="eq">$$\frac{C_A}{C_{A0}}=\frac{4\alpha e^{Pe/2}}{(1+\alpha)^2 e^{\alpha Pe/2}-(1-\alpha)^2 e^{-\alpha Pe/2}}$$</div>
+<p>其中 $\alpha=\sqrt{1+4k\tau/Pe}=\sqrt{1+4\times1/10}=\sqrt{1.4}=1.183$</p>
+<div class="eq">$$\frac{C_A}{C_{A0}}=\frac{4\times1.183\times e^5}{(1+1.183)^2 e^{1.183\times5}-(1-1.183)^2 e^{-1.183\times5}}$$</div>
+<div class="eq">$$=\frac{4.732\times148.4}{4.765\times362.6-0.034\times0.00277}=\frac{702.2}{1728}=0.406$$</div>
+<p>$x_A=1-0.406=59.4\%$</p>
+<p><b>三种模型对比：</b></p>
+<table class="tbl">
+<tr><th>模型</th><th>$C_A/C_{A0}$</th><th>$x_A$</th></tr>
+<tr><td>PFR（$Pe\to\infty$）</td><td>$e^{-1}=0.368$</td><td>63.2%</td></tr>
+<tr><td>轴向扩散（$Pe=10$）</td><td>$0.406$</td><td>59.4%</td></tr>
+<tr><td>CSTR（$Pe=0$）</td><td>$0.5$</td><td>50%</td></tr>
+</table>
+<p><b>★ 结论：</b>$Pe=10$ 时转化率(59.4%)介于PFR(63.2%)和CSTR(50%)之间，说明有一定返混但不算严重。</p>
+<hr>
+<p><b>📌 本题所用公式：</b></p>
+<ul>
+<li>$\alpha=\sqrt{1+4Da/Pe}=\sqrt{1+4k\tau/Pe}$</li>
+<li>$\frac{C_A}{C_{A0}}=\frac{4\alpha e^{Pe/2}}{(1+\alpha)^2 e^{\alpha Pe/2}-(1-\alpha)^2 e^{-\alpha Pe/2}}$（轴向扩散模型解析解）</li>
+</ul>
+<p><b>📖 考查内容：</b>第4章 · 流动模型 · 轴向扩散模型预测转化率</p>
+<p><b>💡 知识点：</b>轴向扩散模型的解析解只对一级反应有闭合形式；非一级反应需要数值求解</p>
+</div>
+
 <h2 class="ch">🎯 考前复习优先级建议</h2>
 
 <h3 class="sec">★★★ 第一优先级（必会）</h3>
@@ -1616,8 +2685,219 @@ $\sigma_\theta^2=16.8/133.2=0.126$<br>
 $N=1/0.126=7.94$<br>
 <b>公式：</b>$\bar t=\frac{\sum t_iC_i}{\sum C_i}$，$\sigma_\theta^2=\sigma_t^2/\bar t^2$，$N=1/\sigma_\theta^2$　｜　<b>章节：</b>第4章 · 停留时间分布</div></div>
 
+<hr>
+<h2 class="ch">📋 期末考试重点标注（基于教学大纲+PPT+授课计划）</h2>
+
+<p class="hint">以下内容综合自三份原始文件，标注了每章的<b>重点</b>和<b>难点</b>（大纲表格明确标注的），以及期末考试的分值分配。</p>
+
+<div class="concept">
+<h4>🎯 期末考试分值分配（教学大纲明确规定）</h4>
+<table class="tbl">
+<tr><th>题型</th><th>分值</th><th>占比</th></tr>
+<tr><td>选择题</td><td>10分</td><td rowspan="3">40%</td></tr>
+<tr><td>判断题</td><td>10分</td></tr>
+<tr><td>简答题</td><td>20分</td></tr>
+<tr><td>简答题（综合）</td><td>10分</td><td rowspan="2">60%</td></tr>
+<tr><td>综合题（计算+分析）</td><td>50分</td></tr>
+</table>
+<p><b>★ 综合题占了一半分数！全是计算和反应器设计分析，这就是为什么你的计算题不能出错。</b></p>
+</div>
+
+<h3 class="sec">第一章 绪论（2学时）—— 了解即可 ★</h3>
+<ul>
+<li>化学反应工程的发展、范畴、任务</li>
+<li>研究的基本方法（数学模型法）</li>
+<li><b>不考计算</b>，选择题/判断题可能出1-2道概念</li>
+</ul>
+
+<h3 class="sec">第二章 均相反应动力学基础（10学时）—— 重点章 ★★★</h3>
+
+<div class="concept">
+<h4>🔴 大纲标注重点</h4>
+<p><b>重点：</b>单一反应动力学方程的建立和解析</p>
+<p><b>难点：</b>复合反应动力学方程的建立</p>
+<p><b>学时占比最高（10学时），授课计划安排了5次课+1次习题课</b></p>
+</div>
+
+<p><b>必考知识点：</b></p>
+<ul>
+<li><b>化学反应速率表示</b>：$-r_A$、$r_P$ 的定义和单位</li>
+<li><b>反应级数</b>：零级、一级、二级反应的积分式和微分式</li>
+<li><b>反应速率常数 $k$</b>：阿伦尼乌斯方程、活化能E的计算（两点法）</li>
+<li><b>单一反应动力学方程的建立</b>：从实验数据判断反应级数（半衰期法、积分法）</li>
+<li><b>复合反应</b>：平行反应、串联反应的速率方程和选择性</li>
+<li><b>收率、得率、选择性</b>：三者的定义和关系（得率=转化率×收率）</li>
+<li><b>膨胀因子 $\delta_A$</b> 和 <b>膨胀率 $\varepsilon_A$</b> 的定义和计算</li>
+</ul>
+
+<p><b>PPT重点补充：</b></p>
+<ul>
+<li>平行反应选择性：级数相同时靠温度调，$E_1 > E_2$ 则升温有利</li>
+<li>串联反应：P存在最大浓度，最佳反应时间的计算</li>
+</ul>
+
+<h3 class="sec">第三章 均相反应过程（8学时）—— 最重点章 ★★★★</h3>
+
+<div class="concept">
+<h4>🔴 大纲标注重点+难点（两者相同！）</h4>
+<p><b>重点 & 难点：</b>间歇反应器、全混流反应器、平推流反应器的<b>特性及计算</b>，反应器类型与操作方法的<b>评选</b></p>
+<p><b>大纲作业要求：</b>三种反应器的特性及计算</p>
+<p><b>授课计划安排：</b>4次课，涵盖设计方程、图解、组合反应器、变温操作、反应器选型</p>
+</div>
+
+<p><b>必考知识点：</b></p>
+<ul>
+<li><b>三种理想反应器的特征对比</b>：间歇 vs PFR vs CSTR（返混、浓度分布、适用场景）</li>
+<li><b>设计方程</b>（★★★必须背）：
+  <ul>
+  <li>间歇/PFR：$t=\tau = C_{A0}\int_0^{x_A}\frac{dx_A}{-r_A}$</li>
+  <li>CSTR：$\tau = \frac{C_{A0}x_A}{-r_A}\Big|_{出口}$</li>
+  </ul>
+</li>
+<li><b>不同级数反应的设计方程应用</b>：一级、二级反应在三种反应器中的计算</li>
+<li><b>变容反应</b>：膨胀因子、浓度表达式 $C_A = C_{A0}(1-x_A)/(1+\varepsilon_A x_A)$</li>
+<li><b>组合反应器</b>：PFR串联/并联、N个等体积CSTR串联（$C_{AN}/C_{A0}=1/(1+k\tau)^N$）、两个CSTR最优体积比</li>
+<li><b>循环反应器</b>：$\beta=0$→PFR，$\beta\to\infty$→CSTR</li>
+<li><b>变温操作</b>：活化能对反应器选择的影响</li>
+<li><b>反应器选型</b>：$1/(-r_A)$ vs $x_A$ 图判断PFR和CSTR优劣</li>
+</ul>
+
+<h3 class="sec">第四章 非理想流动（6学时）—— 重点章 ★★★</h3>
+
+<div class="concept">
+<h4>🔴 大纲标注重点+难点</h4>
+<p><b>重点 & 难点：</b>停留时间分布函数，非理想流动模型</p>
+<p><b>大纲作业要求：</b>停留时间分布函数</p>
+</div>
+
+<p><b>必考知识点：</b></p>
+<ul>
+<li><b>返混</b>的定义和产生原因</li>
+<li><b>停留时间分布（RTD）</b>：
+  <ul>
+  <li>密度函数 $E(t)$：$E(t)\geq 0$，$\int_0^\infty E(t)dt = 1$</li>
+  <li>分布函数 $F(t)$：$F(t) = \int_0^t E(t)dt$，$F(0)=0$，$F(\infty)=1$</li>
+  </ul>
+</li>
+<li><b>PFR的RTD</b>：$E(t) = \delta(t-\bar{t})$，$\sigma_\theta^2 = 0$</li>
+<li><b>CSTR的RTD</b>：$E(t) = \frac{1}{\bar{t}}e^{-t/\bar{t}}$，$\sigma_\theta^2 = 1$</li>
+<li><b>方差和无因次方差</b>的计算</li>
+<li><b>N级串联模型</b>：$N = 1/\sigma_\theta^2$，用模型预测转化率</li>
+<li><b>轴向分散模型</b>：贝克莱数Pe的含义</li>
+<li><b>微观混合 vs 宏观混合</b>（凝集流）：对不同级数反应转化率的影响</li>
+</ul>
+
+<p><b>PPT重点补充（重要概念填空题）：</b></p>
+<ul>
+<li>$E(t)$ 在 $t<0$ 时为0，$t>0$ 时非负</li>
+<li>$F(t)$ 在 $t=0$ 时为0，$t=\infty$ 时为1</li>
+<li>示踪剂输入方式：脉冲法、阶跃法、周期输入法</li>
+<li>PFR：$\sigma_\theta^2=0$；CSTR：$\sigma_\theta^2=1$</li>
+<li>非理想流动不一定是返混造成的，但返混造成了非理想流动</li>
+</ul>
+
+<h3 class="sec">第五章 催化剂与催化动力学基础（6学时）—— 重点章 ★★★</h3>
+
+<div class="concept">
+<h4>🔴 大纲标注重点+难点</h4>
+<p><b>重点：</b>双曲线反应速率式的解析，动力学方程的判定和参数的推定</p>
+<p><b>难点：</b>双曲线反应速率式的解析</p>
+</div>
+
+<p><b>必考知识点：</b></p>
+<ul>
+<li><b>催化剂性能</b>三要素：活性好、选择性高、寿命长（<b>选择性比活性更重要</b>）</li>
+<li><b>物理吸附 vs 化学吸附</b>对比（选择性、吸附层、可逆性、吸附热、活化能）</li>
+<li><b>气-固相催化反应步骤</b>：外扩散→内扩散→吸附→表面反应→脱附→内扩散→外扩散</li>
+<li><b>吸附等温线方程</b>：Langmuir型（必考）、Freundlich型、Temkin型</li>
+<li><b>L-H方程</b>的三种简化（产物吸附弱、反应物吸附强、反应物吸附弱）</li>
+<li><b>双曲线反应速率式</b>的推导和解析（大纲明确标注为重难点）</li>
+<li><b>动力学方程的判定和参数推定</b>（大纲明确标注为重点）</li>
+</ul>
+
+<div class="concept">
+<h4>🔴 期末考试 优先级排序（按大纲标注+学时分配+考试分值）</h4>
+<table class="tbl">
+<tr><th>优先级</th><th>内容</th><th>理由</th></tr>
+<tr><td><b>★★★★★</b></td><td>三种反应器的设计方程和计算</td><td>大纲重难点，综合题50分核心</td></tr>
+<tr><td><b>★★★★★</b></td><td>单一反应动力学方程建立和解析</td><td>大纲重点，计算题必考</td></tr>
+<tr><td><b>★★★★</b></td><td>反应器选型与操作方法评选</td><td>大纲重难点</td></tr>
+<tr><td><b>★★★★</b></td><td>停留时间分布函数</td><td>大纲重难点+作业重点</td></tr>
+<tr><td><b>★★★★</b></td><td>双曲线反应速率式解析</td><td>大纲重难点</td></tr>
+<tr><td><b>★★★</b></td><td>复合反应（平行/串联）动力学</td><td>大纲难点</td></tr>
+<tr><td><b>★★★</b></td><td>N个等CSTR串联+极限</td><td>授课计划专列一节</td></tr>
+<tr><td><b>★★★</b></td><td>膨胀因子/膨胀率计算</td><td>授课计划专列一节</td></tr>
+<tr><td><b>★★</b></td><td>催化剂物理/化学吸附对比</td><td>PPT有对比表</td></tr>
+<tr><td><b>★★</b></td><td>循环反应器/半连续操作</td><td>授课计划有但非重难点</td></tr>
+<tr><td><b>★</b></td><td>绪论（发展史/范畴）</td><td>仅1学时，选择题可能出</td></tr>
+</table>
+</div>
+
+<hr>
 <p style="text-align:center;color:#7f8c8d;font-size:.85rem;">祝考试顺利！ —— hackerx30</p>
 
 </div>
+<script>
+/* ── 自动生成目录 ── */
+(function(){
+  var list=document.getElementById('toc-list');
+  var items=[];
+  document.querySelectorAll('h2.ch,h3.sec,h4.sub').forEach(function(h,i){
+    var id='sec-'+i; h.id=id;
+    var cls=h.classList.contains('ch')?'h2':h.classList.contains('sec')?'h3':'h4';
+    var txt=h.textContent.replace(/^\s+/,'').substring(0,80);
+    var a=document.createElement('a');
+    a.className='toc-item '+cls; a.href='#'+id; a.textContent=txt;
+    a.dataset.search=(txt).toLowerCase();
+    a.onclick=function(){toggleTOC()};
+    list.appendChild(a);
+    items.push(a);
+  });
+  window._tocItems=items;
+})();
+
+/* ── 开关目录 ── */
+function toggleTOC(){
+  var p=document.getElementById('toc-panel');
+  p.classList.toggle('show');
+  if(p.classList.contains('show')){
+    document.getElementById('toc-search').value='';
+    filterTOC('');
+    document.getElementById('toc-search').focus();
+  }
+}
+
+/* ── 搜索过滤 ── */
+function filterTOC(q){
+  q=q.toLowerCase();
+  window._tocItems.forEach(function(a){
+    a.style.display=(!q||a.dataset.search.indexOf(q)!==-1)?'':'none';
+  });
+}
+
+/* ── 回到顶部按钮 + 高亮当前章节 ── */
+var bt=document.getElementById('back-top');
+window.addEventListener('scroll',function(){
+  bt.classList.toggle('show',window.scrollY>400);
+  highlightCurrent();
+},{passive:true});
+
+function highlightCurrent(){
+  var secs=document.querySelectorAll('h2.ch,h3.sec');
+  var scrollY=window.scrollY+80;
+  var current=null;
+  secs.forEach(function(s){if(s.offsetTop<=scrollY)current=s});
+  if(!current)return;
+  var id=current.id;
+  window._tocItems.forEach(function(a){
+    a.classList.toggle('highlight',a.getAttribute('href')==='#'+id);
+  });
+  /* 滚动目录面板让高亮项可见 */
+  var active=document.querySelector('#toc-list .highlight');
+  if(active&&document.getElementById('toc-panel').classList.contains('show')){
+    active.scrollIntoView({block:'nearest'});
+  }
+}
+</script>
 </body>
 </html>
