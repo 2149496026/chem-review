@@ -145,6 +145,37 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
   #toc-toggle{bottom:16px;right:16px;width:44px;height:44px;font-size:1.2rem}
   #back-top{bottom:70px;right:16px}
 }
+
+/* ═══════════ PPT分页样式 ═══════════ */
+.slide{display:none;padding:1rem 1.5rem 5rem;max-width:900px;margin:0 auto;min-height:100vh;box-sizing:border-box}
+.slide.active{display:block}
+/* 导航条 */
+#ppt-nav{position:fixed;bottom:0;left:0;right:0;z-index:997;background:#1a5276;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;box-shadow:0 -2px 10px rgba(0,0,0,.3);flex-wrap:wrap}
+#ppt-nav button{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:5px;font-size:.9rem;cursor:pointer;transition:all .2s}
+#ppt-nav button:hover{background:rgba(255,255,255,.3)}
+#ppt-nav button:active{transform:scale(.95)}
+#ppt-nav .page-indicator{color:#fff;font-size:.85rem;min-width:60px;text-align:center;white-space:nowrap}
+#ppt-nav .slide-title-nav{color:rgba(255,255,255,.7);font-size:.78rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mode-toggle{background:#e67e22!important;border-color:#e67e22!important}
+.slide-chapter{font-size:1.3rem;color:#1a5276;border-bottom:2px solid #2980b9;padding-bottom:.25rem;margin-bottom:.8rem}
+.slide h2.ch, .slide h2{font-size:1.25rem}
+@media(max-width:600px){
+  .slide{padding:.6rem .6rem 5rem;font-size:.85rem}
+  .slide h2.ch{font-size:1.1rem}
+  #ppt-nav{gap:4px;padding:6px 4px}
+  #ppt-nav button{padding:5px 8px;font-size:.75rem}
+  #ppt-nav .slide-title-nav{max-width:100px;font-size:.7rem}
+}
+/* 滚动模式下恢复原来显示 */
+body.scroll-mode .slide{display:block!important;min-height:auto;padding:0}
+body.scroll-mode .slide.active{display:block}
+body.scroll-mode #ppt-nav{display:none}
+body.scroll-mode .content{display:block}
+body.ppt-mode .content > *:not(.slide){display:none}
+body.ppt-mode .content .slide{display:none}
+body.ppt-mode .content .slide.active{display:block}
+/* 隐藏滚动条（PPT模式） */
+body.ppt-mode{overflow:hidden}
 </style>
 </head>
 <body>
@@ -2911,13 +2942,156 @@ function highlightCurrent(){
   var id=current.id;
   window._tocItems.forEach(function(a){
     a.classList.toggle('highlight',a.getAttribute('href')==='#'+id);
-  });
-  /* 滚动目录面板让高亮项可见 */
-  var active=document.querySelector('#toc-list .highlight');
-  if(active&&document.getElementById('toc-panel').classList.contains('show')){
-    active.scrollIntoView({block:'nearest'});
+<!-- ═══════════ PPT导航条 ═══════════ -->
+<div id="ppt-nav">
+<button id="btn-prev" title="上一页 (←键)">◀ 上一页</button>
+<span class="page-indicator" id="page-num">1/30</span>
+<button id="btn-next" title="下一页 (→键)">下一页 ▶</button>
+<button id="mode-toggle" title="切换滚动/翻页模式">📖 滚动</button>
+</div>
+
+<script>
+(function(){
+/* ── 自动切分slide ── */
+var content=document.querySelector('.content');
+if(!content)return;
+var nodes=[];
+var all=content.childNodes;
+var pages=[];
+var current=[];
+
+function isPageBreak(node){
+  if(node.nodeType!==1)return false;
+  var tag=node.tagName.toUpperCase();
+  if(tag==='H2'&&node.classList.contains('ch'))return true;
+  return false;
+}
+
+for(var i=0;i<all.length;i++){
+  var node=all[i];
+  if(isPageBreak(node)){
+    if(current.length>0){
+      pages.push(current);
+      current=[];
+    }
+  }
+  current.push(node);
+}
+if(current.length>0)pages.push(current);
+
+/* ── 创建slide容器 ── */
+var slides=[];
+var toc=[];
+for(var p=0;p<pages.length;p++){
+  var slide=document.createElement('section');
+  slide.className='slide'+(p===0?' active':'');
+  slide.setAttribute('data-page',p);
+  for(var j=0;j<pages[p].length;j++){
+    slide.appendChild(pages[p][j].cloneNode(true));
+  }
+  content.appendChild(slide);
+  slides.push(slide);
+  
+  /* 提取标题做导航 */
+  var h2=slide.querySelector('h2.ch, h2');
+  toc.push(h2?h2.textContent.replace(/^[0-9\s\.\-\[\]★🔷🔵🔴📖📝🧮🎯✏️]+/,'').trim().substring(0,30):('第'+(p+1)+'页'));
+}
+
+/* 清空原始内容（保留slide） */
+var origNodes=content.childNodes;
+for(var k=origNodes.length-1;k>=0;k--){
+  if(!origNodes[k].classList||!origNodes[k].classList.contains('slide')){
+    content.removeChild(origNodes[k]);
   }
 }
+
+/* ── 状态 ── */
+var currentPage=0;
+var totalPages=slides.length;
+var pptMode=true;
+
+var navBar=document.getElementById('ppt-nav');
+var btnPrev=document.getElementById('btn-prev');
+var btnNext=document.getElementById('btn-next');
+var pageNum=document.getElementById('page-num');
+var modeBtn=document.getElementById('mode-toggle');
+var body=document.body;
+
+function showPage(n){
+  if(n<0||n>=totalPages)return;
+  slides[currentPage].classList.remove('active');
+  currentPage=n;
+  slides[currentPage].classList.add('active');
+  pageNum.textContent=(currentPage+1)+'/'+totalPages;
+  window.scrollTo({top:0,behavior:'instant'});
+  /* 更新导航条标题 */
+  var titleEl=document.getElementById('slide-title-nav');
+  if(titleEl)titleEl.textContent=toc[currentPage];
+}
+
+function nextPage(){showPage(currentPage+1);}
+function prevPage(){showPage(currentPage-1);}
+
+btnPrev.addEventListener('click',prevPage);
+btnNext.addEventListener('click',nextPage);
+
+/* 键盘 */
+document.addEventListener('keydown',function(e){
+  if(!pptMode)return;
+  var tag=e.target.tagName.toUpperCase();
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextPage();}
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevPage();}
+  if(e.key==='Home'){e.preventDefault();showPage(0);}
+  if(e.key==='End'){e.preventDefault();showPage(totalPages-1);}
+});
+
+/* 触屏滑动 */
+var touchStartX=0,touchStartY=0;
+document.addEventListener('touchstart',function(e){
+  touchStartX=e.touches[0].clientX;
+  touchStartY=e.touches[0].clientY;
+},{passive:true});
+document.addEventListener('touchend',function(e){
+  if(!pptMode)return;
+  var dx=e.changedTouches[0].clientX-touchStartX;
+  var dy=e.changedTouches[0].clientY-touchStartY;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){
+    if(dx<0)nextPage();
+    else prevPage();
+  }
+});
+
+/* 模式切换 */
+modeBtn.addEventListener('click',function(){
+  pptMode=!pptMode;
+  if(pptMode){
+    body.classList.add('ppt-mode');
+    body.classList.remove('scroll-mode');
+    body.style.overflow='hidden';
+    navBar.style.display='flex';
+    showPage(currentPage);
+    modeBtn.textContent='📖 滚动';
+  }else{
+    body.classList.add('scroll-mode');
+    body.classList.remove('ppt-mode');
+    body.style.overflow='';
+    navBar.style.display='none';
+    for(var s=0;s<slides.length;s++)slides[s].style.display='block';
+    modeBtn.textContent='📄 翻页';
+  }
+});
+
+/* ── 初始化 ── */
+body.classList.add('ppt-mode');
+body.style.overflow='hidden';
+navBar.style.display='flex';
+showPage(0);
+pageNum.textContent='1/'+totalPages;
+
+console.log('PPT模式已启动，共'+totalPages+'页。← →翻页，按按钮切滚动模式。');
+})();
 </script>
+
 </body>
 </html>
