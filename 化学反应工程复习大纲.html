@@ -14,7 +14,45 @@ MathJax = {
   options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
 };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+/* ── 首屏优化 ── */
+body.loading .content{opacity:0}
+body.loaded .content{opacity:1;transition:opacity .25s}
+#loading-screen{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;
+  background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:sans-serif;color:#1a5276;
+}
+#loading-screen .spinner{
+  width:36px;height:36px;border:4px solid #e0e0e0;border-top:4px solid #2980b9;
+  border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+body.loaded #loading-screen{display:none}
+</style>
+</head>
+<body class="loading">
+<div id="loading-screen"><div class="spinner"></div><div>加载中…</div></div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  if('requestIdleCallback' in window){
+    requestIdleCallback(function(){
+      var s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      s.async=true;
+      s.onload=function(){document.body.classList.replace('loading','loaded')};
+      document.head.appendChild(s);
+    });
+  }else{
+    var s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+    s.async=true;
+    s.onload=function(){document.body.classList.replace('loading','loaded')};
+    document.head.appendChild(s);
+  }
+  setTimeout(function(){document.body.classList.replace('loading','loaded')},3000);
+});
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -145,40 +183,10 @@ hr{border:none;border-top:1px solid #ddd;margin:1.5rem 0}
   #toc-toggle{bottom:16px;right:16px;width:44px;height:44px;font-size:1.2rem}
   #back-top{bottom:70px;right:16px}
 }
-
-/* ═══════════ PPT分页样式 ═══════════ */
-.slide{display:none;padding:1rem 1.5rem 5rem;max-width:900px;margin:0 auto;min-height:100vh;box-sizing:border-box}
-.slide.active{display:block}
-/* 导航条 */
-#ppt-nav{position:fixed;bottom:0;left:0;right:0;z-index:997;background:#1a5276;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;box-shadow:0 -2px 10px rgba(0,0,0,.3);flex-wrap:wrap}
-#ppt-nav button{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:5px;font-size:.9rem;cursor:pointer;transition:all .2s}
-#ppt-nav button:hover{background:rgba(255,255,255,.3)}
-#ppt-nav button:active{transform:scale(.95)}
-#ppt-nav .page-indicator{color:#fff;font-size:.85rem;min-width:60px;text-align:center;white-space:nowrap}
-#ppt-nav .slide-title-nav{color:rgba(255,255,255,.7);font-size:.78rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#mode-toggle{background:#e67e22!important;border-color:#e67e22!important}
-.slide-chapter{font-size:1.3rem;color:#1a5276;border-bottom:2px solid #2980b9;padding-bottom:.25rem;margin-bottom:.8rem}
-.slide h2.ch, .slide h2{font-size:1.25rem}
-@media(max-width:600px){
-  .slide{padding:.6rem .6rem 5rem;font-size:.85rem}
-  .slide h2.ch{font-size:1.1rem}
-  #ppt-nav{gap:4px;padding:6px 4px}
-  #ppt-nav button{padding:5px 8px;font-size:.75rem}
-  #ppt-nav .slide-title-nav{max-width:100px;font-size:.7rem}
-}
-/* 滚动模式下恢复原来显示 */
-body.scroll-mode .slide{display:block!important;min-height:auto;padding:0}
-body.scroll-mode .slide.active{display:block}
-body.scroll-mode #ppt-nav{display:none}
-body.scroll-mode .content{display:block}
-body.ppt-mode .content > *:not(.slide){display:none}
-body.ppt-mode .content .slide{display:none}
-body.ppt-mode .content .slide.active{display:block}
-/* 隐藏滚动条（PPT模式） */
-body.ppt-mode{overflow:hidden}
 </style>
 </head>
-<body>
+<body class="loading">
+<div id="loading-screen"><div class="spinner"></div><div>加载中…</div></div>
 <button id="toc-toggle" onclick="toggleTOC()" title="目录导航">☰</button>
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
 <div id="toc-panel" onclick="if(event.target===this)toggleTOC()">
@@ -1943,7 +1951,6 @@ body.ppt-mode{overflow:hidden}
 </ul>
 <p><b>工业策略：</b>选择性中毒保护（在原料中故意加入少量无毒物质来"占住"最强的毒物位点）、定期再生、备用反应器轮换操作。</p>
 </div>
-
 <!-- ═══════════════ 公式速查 ═══════════════ -->
 <h2 class="ch">📋 核心公式速查表</h2>
 <table class="tbl formula-ref">
@@ -1961,6 +1968,136 @@ body.ppt-mode{overflow:hidden}
 <tr><td>$\theta = \dfrac{KP}{1+KP}$</td><td>5章</td><td>Langmuir等温线</td></tr>
 <tr><td>$r = \dfrac{kK_AP_A}{1+K_AP_A}$</td><td>5章</td><td>L-H速率方程</td></tr>
 </table>
+
+<!-- ═══════════════ 完整公式汇总 ═══════════════ -->
+<h2 class="ch">📐 完整公式汇总（按章节）</h2>
+<p class="hint">以下为第1-5章所有重要公式，标注用途与出处，不含推导过程。</p>
+
+<h3 class="sec">第1章 · 绪论</h3>
+<table class="tbl formula-ref">
+<tr><th>公式</th><th>用途</th></tr>
+<tr><td>$\text{空速 } SV = 1/\tau = v_0/V$</td><td>单位时间通过单位反应器体积的物料体积；$SV$ 越大，处理能力越强</td></tr>
+</table>
+
+<h3 class="sec">第2章 · 均相反应动力学基础</h3>
+<table class="tbl formula-ref">
+<tr><th>序号</th><th>公式</th><th>用途</th><th>小节</th></tr>
+<tr><td>2-1</td><td>$-r_A = -\dfrac{1}{V}\dfrac{dn_A}{dt}$</td><td>反应速率定义（一般形式）</td><td>2.1</td></tr>
+<tr><td>2-2</td><td>$-r_A = -\dfrac{dC_A}{dt}$</td><td>反应速率定义（恒容简化）</td><td>2.1</td></tr>
+<tr><td>2-3</td><td>$\dfrac{-r_A}{|a|} = \dfrac{-r_B}{|b|} = \dfrac{r_R}{r} = \dfrac{r_S}{s}$</td><td>各组分速率关系（按计量系数）</td><td>2.1</td></tr>
+<tr><td>2-4</td><td>$x_A = \dfrac{n_{A0}-n_A}{n_{A0}}$</td><td>转化率定义</td><td>2.1</td></tr>
+<tr><td>2-5</td><td>$x_A = \dfrac{F_{A0}-F_A}{F_{A0}}$</td><td>转化率定义（连续体系）</td><td>2.1</td></tr>
+<tr><td>2-6</td><td>$\delta_A = \dfrac{(p+s)-(a+b)}{a}$</td><td>膨胀因子定义（对 $aA+bB\to pP+sS$）</td><td>2.1</td></tr>
+<tr><td>2-7</td><td>$\varepsilon_A = y_{A0}\delta_A$</td><td>膨胀率定义（$y_{A0}$ 为A的初始摩尔分率）</td><td>2.1</td></tr>
+<tr><td>2-8</td><td>$C_A = C_{A0}\dfrac{1-x_A}{1+\varepsilon_A x_A}$</td><td>变容反应浓度-转化率关系</td><td>2.1</td></tr>
+<tr><td>2-9</td><td>$-r_A = k C_A^a C_B^b$（基元反应）</td><td>幂数型速率方程一般形式</td><td>2.2</td></tr>
+<tr><td>2-10</td><td>$n = \alpha + \beta$</td><td>总反应级数定义</td><td>2.2</td></tr>
+<tr><td>2-11</td><td>$[k] = [\text{浓度}]^{1-n}[\text{时间}]^{-1}$</td><td>速率常数 $k$ 的量纲</td><td>2.2</td></tr>
+<tr><td>2-12</td><td>$k = k_0 \exp\!\left(-\dfrac{E}{RT}\right)$</td><td><b>阿伦尼乌斯方程</b></td><td>2.2</td></tr>
+<tr><td>2-13</td><td>$\ln k = \ln k_0 - \dfrac{E}{R}\cdot\dfrac{1}{T}$</td><td>阿伦尼乌斯方程（对数线性形式）</td><td>2.2</td></tr>
+<tr><td>2-14</td><td>$\ln\dfrac{k_2}{k_1} = \dfrac{E}{R}\left(\dfrac{1}{T_1}-\dfrac{1}{T_2}\right)$</td><td>阿伦尼乌斯两点式（求活化能）</td><td>2.2</td></tr>
+<tr><td>2-15</td><td><b>$k_1 t_1 = k_2 t_2$</b></td><td><b>同转化率下k与t成反比</b>（间歇反应器高频套路）</td><td>2.2</td></tr>
+<tr><td>2-16</td><td>$\dfrac{d\ln k}{dT} = \dfrac{E}{RT^2}$</td><td>活化能的微分定义（活化能越大，k对温度越敏感）</td><td>2.2</td></tr>
+<tr><td>2-17</td><td>$-r_A = k_{A,p} P_A^\alpha P_B^\beta$</td><td>用分压表示的速率方程（气相反应）</td><td>2.2</td></tr>
+<tr><td>2-18</td><td>$-r_A = k_A C_{A0}^\alpha \dfrac{(1-x_A)^\alpha \left(C_{B0}-\frac{b}{a}C_{A0}x_A\right)^\beta}{(1+\varepsilon_A x_A)^{\alpha+\beta}}$</td><td>用转化率表示的反应速率（变容全形式）</td><td>2.2</td></tr>
+<tr><td>2-19</td><td>$C_{A0} - C_A = kt$</td><td><b>零级反应积分式</b>（恒容）</td><td>2.3</td></tr>
+<tr><td>2-20</td><td>$kt = C_{A0}x_A$</td><td>零级反应积分式（用转化率表示）</td><td>2.3</td></tr>
+<tr><td>2-21</td><td>$\ln\dfrac{C_{A0}}{C_A} = kt$ 即 $kt = \ln\dfrac{1}{1-x_A}$</td><td><b>一级反应积分式</b>（恒容）</td><td>2.3</td></tr>
+<tr><td>2-22</td><td>$t_{1/2} = \dfrac{\ln 2}{k} = \dfrac{0.693}{k}$</td><td>一级反应半衰期（<b>与初始浓度无关</b>）</td><td>2.3</td></tr>
+<tr><td>2-23</td><td>$kt = \dfrac{a}{b}\left(\dfrac{1}{C_A}-\dfrac{1}{C_{A0}}\right)$</td><td><b>二级反应积分式</b>（恒容等计量比投料 $C_{B0}/C_{A0}=b/a$）</td><td>2.3</td></tr>
+<tr><td>2-24</td><td>$kt = \dfrac{a}{b} \cdot \dfrac{x_A}{C_{A0}(1-x_A)}$</td><td>二级反应积分式（等计量比，用转化率表示）</td><td>2.3</td></tr>
+<tr><td>2-25</td><td>$t_{1/2} = \dfrac{a}{b k C_{A0}}$</td><td>二级反应半衰期（等计量比；<b>与初始浓度成反比</b>）</td><td>2.3</td></tr>
+<tr><td>2-26</td><td>$kt = \dfrac{a}{b\Delta}\ln\dfrac{C_{A0}C_B}{C_{B0}C_A}$</td><td>二级反应积分式（<b>非等计量比</b>，$\Delta = C_{B0}-\frac{b}{a}C_{A0}$）</td><td>2.3</td></tr>
+<tr><td>2-27</td><td>$kt = \dfrac{1}{C_{B0}-C_{A0}}\ln\dfrac{C_{A0}C_B}{C_{B0}C_A}$</td><td>二级反应积分式（非等计量比简化：$a=b=1$）</td><td>2.3</td></tr>
+<tr><td>2-28</td><td>$\ln\dfrac{C_A-C_{Ae}}{C_{A0}-C_{Ae}} = -(k+k')t$</td><td><b>一级可逆反应积分式</b>（$A \rightleftharpoons S$）</td><td>2.3</td></tr>
+<tr><td>2-29</td><td>$K = k/k'$</td><td>可逆反应平衡常数（速率常数之比）</td><td>2.3</td></tr>
+<tr><td>2-30</td><td>$\phi_P = \dfrac{n_P-n_{P0}}{n_{A0}-n_A}$</td><td>收率（目的产物生成量 / 反应物消耗量）</td><td>2.4</td></tr>
+<tr><td>2-31</td><td>$\varphi = \dfrac{dC_P}{-dC_A}$</td><td>瞬时收率</td><td>2.4</td></tr>
+<tr><td>2-32</td><td>$X_P = \dfrac{n_P-n_{P0}}{n_{A0}}$</td><td>得率（目的产物量 / 初始A量）</td><td>2.4</td></tr>
+<tr><td>2-33</td><td>$S_0 = \dfrac{n_P-n_{P0}}{n_S-n_{S0}}$</td><td>选择性（目的产物 / 副产物）</td><td>2.4</td></tr>
+<tr><td>2-34</td><td>$\varphi_P = \dfrac{k_1}{k_1+k_2}$</td><td>平行反应瞬时收率（<b>等级数时与浓度无关</b>）</td><td>2.4</td></tr>
+<tr><td>2-35</td><td>$S_P = \dfrac{k_1}{k_2}$</td><td>平行反应瞬时选择性（等级数时）</td><td>2.4</td></tr>
+<tr><td>2-36</td><td>$\varphi_P = \dfrac{k_1 C_A^{\alpha_1-\alpha_2}}{k_1 C_A^{\alpha_1-\alpha_2}+k_2}$</td><td>平行反应瞬时收率（<b>不同级数时与浓度有关</b>）</td><td>2.4</td></tr>
+<tr><td>2-37</td><td>$C_A = C_{A0}e^{-k_1 t}$</td><td>串联反应 $A\rightarrow P\rightarrow S$ 中A的浓度变化</td><td>2.4</td></tr>
+<tr><td>2-38</td><td>$C_P = \dfrac{k_1C_{A0}}{k_2-k_1}\left(e^{-k_1 t}-e^{-k_2 t}\right)$</td><td>串联反应中P的浓度变化（$k_1 \neq k_2$）</td><td>2.4</td></tr>
+<tr><td>2-39</td><td>$t_{opt} = \dfrac{\ln(k_1/k_2)}{k_1-k_2}$</td><td>串联反应<b>最优反应时间</b>（P最大时）</td><td>2.4</td></tr>
+<tr><td>2-40</td><td>$\dfrac{(C_P)_{max}}{C_{A0}} = \left(\dfrac{k_1}{k_2}\right)^{\frac{k_2}{k_2-k_1}}$</td><td>串联反应P的<b>最大浓度</b></td><td>2.4</td></tr>
+<tr><td>2-41</td><td>$C_P = \dfrac{k_1\tau C_{A0}}{(1+k_1\tau)(1+k_2\tau)}$</td><td>串联反应在CSTR中P的出口浓度</td><td>2.4</td></tr>
+<tr><td>2-42</td><td>$S_P = \dfrac{k_{01}}{k_{02}} e^{-(E_1-E_2)/RT}$</td><td>平行反应选择性温度依赖性（用于判断升温/降温有利）</td><td>2.4</td></tr>
+</table>
+
+<h3 class="sec">第3章 · 均相反应过程</h3>
+<table class="tbl formula-ref">
+<tr><th>序号</th><th>公式</th><th>用途</th><th>小节</th></tr>
+<tr><td>3-1</td><td>$\tau = V/v_0$</td><td><b>空时定义</b>（反应器体积/进料体积流量）</td><td>3.1</td></tr>
+<tr><td>3-2</td><td>$SV = 1/\tau$</td><td>空速定义（单位时间通过单位反应器体积的物料体积）</td><td>3.1</td></tr>
+<tr><td>3-3</td><td>$t = C_{A0}\displaystyle\int_0^{x_A}\dfrac{dx_A}{-r_A}$</td><td><b>间歇反应器设计方程</b>（恒容）</td><td>3.2</td></tr>
+<tr><td>3-4</td><td>$\tau = C_{A0}\displaystyle\int_0^{x_A}\dfrac{dx_A}{-r_A}$</td><td><b>PFR设计方程</b>（恒容；恒容时间歇=PFR）</td><td>3.2</td></tr>
+<tr><td>3-5</td><td>$\tau = \dfrac{C_{A0}x_A}{(-r_A)\big|_{出口}}$</td><td><b>CSTR设计方程</b>（代数方程，无需积分）</td><td>3.2</td></tr>
+<tr><td>3-6</td><td>$V = F_{A0}\displaystyle\int_0^{x_A}\dfrac{dx_A}{-r_A}$</td><td>PFR设计方程（用摩尔流量表示，恒容/变容通用）</td><td>3.2</td></tr>
+<tr><td>3-7</td><td>$C_A = C_{A0}(1-x_A)$</td><td>恒容浓度-转化率关系</td><td>3.2</td></tr>
+<tr><td>3-8</td><td>$v = v_0(1+\varepsilon_A x_A)$</td><td>变容体积流量-转化率关系</td><td>3.2</td></tr>
+<tr><td>3-9</td><td>$\tau_{PFR} = \dfrac{1}{k}\ln\dfrac{1}{1-x_A}$</td><td><b>PFR一级反应空时公式</b>（恒容）</td><td>3.2</td></tr>
+<tr><td>3-10</td><td>$\tau_{CSTR} = \dfrac{x_A}{k(1-x_A)}$</td><td><b>CSTR一级反应空时公式</b>（恒容）</td><td>3.2</td></tr>
+<tr><td>3-11</td><td>$\tau_{PFR} = \dfrac{x_A}{kC_{A0}(1-x_A)}$</td><td><b>PFR二级反应空时公式</b>（恒容等计量比）</td><td>3.2</td></tr>
+<tr><td>3-12</td><td>$\tau_{CSTR} = \dfrac{x_A}{kC_{A0}(1-x_A)^2}$</td><td><b>CSTR二级反应空时公式</b>（恒容等计量比）</td><td>3.2</td></tr>
+<tr><td>3-13</td><td>$\dfrac{V}{F_{A0}}=\int_{0}^{x_{A1}}\dfrac{dx}{(-r_A)_{1}}+\int_{x_{A1}}^{x_{A2}}\dfrac{dx}{(-r_A)_{2}}+\cdots$</td><td>PFR串联总体积（各段积分之和）</td><td>3.3</td></tr>
+<tr><td>3-14</td><td>$\dfrac{C_{AN}}{C_{A0}} = \dfrac{1}{(1+k\tau)^N}$</td><td><b>N个等体积CSTR串联</b>（一级反应）</td><td>3.3</td></tr>
+<tr><td>3-15</td><td>$\displaystyle\lim_{N\to\infty}\dfrac{1}{(1+k\tau_t/N)^N}= e^{-k\tau_t}$</td><td>$N\to\infty$ 时CSTR串联趋近PFR</td><td>3.3</td></tr>
+<tr><td>3-16</td><td>$C_{A1} = \sqrt{C_{A0}\cdot C_{A2}}$</td><td>两个CSTR串联最优体积比（一级反应，$\tau_1=\tau_2$）</td><td>3.3</td></tr>
+<tr><td>3-17</td><td>$\tau_i = \dfrac{C_{A,i-1}-C_{Ai}}{(-r_A)_i}$</td><td>CSTR逐釜设计方程（非一级反应串联通用）</td><td>3.3</td></tr>
+<tr><td>3-18</td><td>$v_1 C_{A1} = v_0 C_{A0} + \beta v_0 C_{Af}$</td><td>循环反应器混合点物料衡算（$\beta$=循环比）</td><td>3.3</td></tr>
+<tr><td>3-19</td><td>$T - T_0 = \dfrac{(-\Delta H_r)C_{A0}}{\rho c_p}\cdot x_A = \lambda x_A$</td><td><b>绝热温升</b>（$x_A=1$ 时温升为 $\lambda$）</td><td>3.5</td></tr>
+<tr><td>3-20</td><td>$Q_G = (-r_A)\cdot V\cdot(-\Delta H_r)$</td><td>CSTR放热速率</td><td>3.5</td></tr>
+<tr><td>3-21</td><td>$Q_R = \rho c_p v_0(T-T_0) + UA(T-T_m)$</td><td>CSTR移热速率（物料+冷却盘管）</td><td>3.5</td></tr>
+<tr><td>3-22</td><td>$\dfrac{dQ_R}{dT} > \dfrac{dQ_G}{dT}$</td><td>CSTR热稳定性判据（移热斜率 > 放热斜率）</td><td>3.5</td></tr>
+</table>
+
+<h3 class="sec">第4章 · 非理想流动</h3>
+<table class="tbl formula-ref">
+<tr><th>序号</th><th>公式</th><th>用途</th><th>小节</th></tr>
+<tr><td>4-1</td><td>$E(t) = \dfrac{v_0 C_A(t)}{M}$</td><td>脉冲示踪法求 $E(t)$（$M$=示踪剂注入量）</td><td>4.1</td></tr>
+<tr><td>4-2</td><td>$\displaystyle\int_0^\infty E(t)\,dt = 1$</td><td>$E(t)$ 归一化性质</td><td>4.1</td></tr>
+<tr><td>4-3</td><td>$F(t) = \displaystyle\int_0^t E(t)\,dt$</td><td>累计分布函数定义</td><td>4.1</td></tr>
+<tr><td>4-4</td><td>$E(t) = \dfrac{dF(t)}{dt}$</td><td>$E(t)$ 与 $F(t)$ 的关系</td><td>4.1</td></tr>
+<tr><td>4-5</td><td>$\bar{t} = \displaystyle\int_0^\infty t\,E(t)\,dt$</td><td>平均停留时间定义</td><td>4.1</td></tr>
+<tr><td>4-6</td><td>$\bar{t} = V/v_0 = \tau$（恒容）</td><td>恒容时平均停留时间=空时</td><td>4.1</td></tr>
+<tr><td>4-7</td><td>$\sigma_t^2 = \displaystyle\int_0^\infty (t-\bar{t})^2 E(t)\,dt = \int_0^\infty t^2 E(t)\,dt - \bar{t}^2$</td><td>方差定义（停留时间分散程度）</td><td>4.1</td></tr>
+<tr><td>4-8</td><td>$\sigma_\theta^2 = \dfrac{\sigma_t^2}{\bar{t}^2}$</td><td>无量纲方差；<b>平推流=0，全混流=1</b></td><td>4.1</td></tr>
+<tr><td>4-9</td><td>$E(t) = \delta(t-\tau)$（平推流）</td><td>平推流 $E(t)$（脉冲函数，所有分子停留时间相同）</td><td>4.1</td></tr>
+<tr><td>4-10</td><td>$E(t) = \dfrac{1}{\bar{t}}e^{-t/\bar{t}}$（全混流）</td><td>全混流 $E(t)$（指数分布）</td><td>4.1</td></tr>
+<tr><td>4-11</td><td>$F(t) = 1-e^{-t/\bar{t}}$（全混流）</td><td>全混流 $F(t)$</td><td>4.1</td></tr>
+<tr><td>4-12</td><td>$F(t) = \dfrac{C_A(t)}{C_{A0}}$</td><td>阶跃示踪法求 $F(t)$</td><td>4.1</td></tr>
+<tr><td>4-13</td><td>$\displaystyle\sum C_{Ai}\Delta t = M/v_0$</td><td>脉冲示踪法一致性检验</td><td>4.1</td></tr>
+<tr><td>4-14</td><td>$\sigma_\theta^2 = \dfrac{1}{N}$</td><td><b>多级串联全混流模型</b>（$N$=串联级数）</td><td>4.2</td></tr>
+<tr><td>4-15</td><td>$N = 1/\sigma_\theta^2$</td><td>由实验数据反推串联级数</td><td>4.2</td></tr>
+<tr><td>4-16</td><td>$D_a\dfrac{d^2C_A}{dz^2} - u\dfrac{dC_A}{dz} - (-r_A) = 0$</td><td>轴向扩散模型微分方程（$D_a$=轴向扩散系数，$u$=流速）</td><td>4.2</td></tr>
+<tr><td>4-17</td><td>$Pe = uL/D_a$</td><td>Peclet准数（对流速率/扩散速率；$Pe\to\infty$=PFR，$Pe\to0$=CSTR）</td><td>4.2</td></tr>
+<tr><td>4-18</td><td>$\sigma_\theta^2 = \dfrac{2}{Pe} - \dfrac{2}{Pe^2}(1-e^{-Pe})$</td><td>轴向扩散模型方差（闭-闭容器）</td><td>4.2</td></tr>
+<tr><td>4-19</td><td>$\sigma_\theta^2 \approx \dfrac{2}{Pe}$（$Pe$较大时）</td><td>轴向扩散模型简化（低返混近似）</td><td>4.2</td></tr>
+<tr><td>4-20</td><td>$\dfrac{\bar{C}_A}{C_{A0}} = \displaystyle\int_0^\infty \dfrac{C_A(t)}{C_{A0}}\cdot E(t)\,dt$</td><td>宏观混合（凝集流模型）转化率预测</td><td>4.2</td></tr>
+</table>
+
+<h3 class="sec">第5章 · 催化剂与催化动力学基础</h3>
+<table class="tbl formula-ref">
+<tr><th>序号</th><th>公式</th><th>用途</th><th>小节</th></tr>
+<tr><td>5-1</td><td>$\theta = \dfrac{KP}{1+KP}$</td><td><b>Langmuir吸附等温线</b>（均匀表面、单层、无相互作用）</td><td>5.4</td></tr>
+<tr><td>5-2</td><td>$q = K_F P^{1/n}$</td><td>Freundlich吸附等温线（经验公式，不均匀表面）</td><td>5.4</td></tr>
+<tr><td>5-3</td><td>$\dfrac{P}{V(P_0-P)} = \dfrac{1}{V_m C} + \dfrac{C-1}{V_m C}\cdot\dfrac{P}{P_0}$</td><td>BET等温线（多层吸附，用于测比表面积）</td><td>5.4</td></tr>
+<tr><td>5-4</td><td>$\theta = \dfrac{RT}{\Delta H}\ln(K_0 P)$</td><td>Temkin等温线（吸附热随覆盖率线性下降）</td><td>5.4</td></tr>
+<tr><td>5-5</td><td>$r = \dfrac{k K_A P_A}{1+K_A P_A + K_P P_P}$</td><td><b>L-H双曲线型速率方程</b>（含产物抑制）</td><td>5.6</td></tr>
+<tr><td>5-6</td><td>$r = \dfrac{k K_A P_A}{1+K_A P_A}$</td><td>L-H方程简化（产物吸附弱，$K_P P_P \ll 1$）</td><td>5.6</td></tr>
+<tr><td>5-7</td><td>$r = k$（$K_A P_A \gg 1$）</td><td>L-H方程简化：反应物吸附强→<b>零级</b></td><td>5.6</td></tr>
+<tr><td>5-8</td><td>$r = k K_A P_A$（$K_A P_A \ll 1$）</td><td>L-H方程简化：反应物吸附弱→<b>一级</b></td><td>5.6</td></tr>
+<tr><td>5-9</td><td>$r = \dfrac{k\cdot f(P_A, P_B, \cdots)}{[1 + K_A P_A + K_B P_B + K_P P_P + \cdots]^n}$</td><td>L-H方程一般形式（多组分吸附竞争）</td><td>5.6/5.7</td></tr>
+<tr><td>5-10</td><td>$\dfrac{1}{r} = \dfrac{1}{kK_A}\cdot\dfrac{1}{P_A} + \dfrac{1}{k}$</td><td>L-H方程线性化（用于参数推定求 $k$ 和 $K_A$）</td><td>5.7</td></tr>
+<tr><td>5-11</td><td>$\eta = \dfrac{r_{实际}}{r_{表面}}$</td><td>内扩散有效因子（$\eta=1$ 无内扩散阻力，$\eta\to0$ 内扩散严重）</td><td>5.5</td></tr>
+<tr><td>5-12</td><td>$\phi = L\sqrt{\dfrac{k}{D_{eff}}}$</td><td><b>Thiele模数</b>（$\phi$ 小→反应控制，$\phi$ 大→扩散控制）</td><td>5.5</td></tr>
+<tr><td>5-13</td><td>$S_g = \dfrac{V_m N_A \sigma}{22400 \times W}$</td><td>BET法计算催化剂比表面积</td><td>5.4</td></tr>
+<tr><td>5-14</td><td>$\bar{d} = 4V_g/S_g$</td><td>平均孔径计算（圆柱孔模型）</td><td>5.3</td></tr>
+</table>
+
+<p class="hint"><b>等级说明：</b>★★★ = 考试必考/计算核心；★★ = 常考概念；★ = 了解即可。第3章公式为全课计算核心，占考试60%以上。</p>
 
 <!-- ═══════════════ 高频简答题 ═══════════════ -->
 <h2 class="ch">📝 高频简答题汇编</h2>
@@ -2942,156 +3079,13 @@ function highlightCurrent(){
   var id=current.id;
   window._tocItems.forEach(function(a){
     a.classList.toggle('highlight',a.getAttribute('href')==='#'+id);
-<!-- ═══════════ PPT导航条 ═══════════ -->
-<div id="ppt-nav">
-<button id="btn-prev" title="上一页 (←键)">◀ 上一页</button>
-<span class="page-indicator" id="page-num">1/30</span>
-<button id="btn-next" title="下一页 (→键)">下一页 ▶</button>
-<button id="mode-toggle" title="切换滚动/翻页模式">📖 滚动</button>
-</div>
-
-<script>
-(function(){
-/* ── 自动切分slide ── */
-var content=document.querySelector('.content');
-if(!content)return;
-var nodes=[];
-var all=content.childNodes;
-var pages=[];
-var current=[];
-
-function isPageBreak(node){
-  if(node.nodeType!==1)return false;
-  var tag=node.tagName.toUpperCase();
-  if(tag==='H2'&&node.classList.contains('ch'))return true;
-  return false;
-}
-
-for(var i=0;i<all.length;i++){
-  var node=all[i];
-  if(isPageBreak(node)){
-    if(current.length>0){
-      pages.push(current);
-      current=[];
-    }
-  }
-  current.push(node);
-}
-if(current.length>0)pages.push(current);
-
-/* ── 创建slide容器 ── */
-var slides=[];
-var toc=[];
-for(var p=0;p<pages.length;p++){
-  var slide=document.createElement('section');
-  slide.className='slide'+(p===0?' active':'');
-  slide.setAttribute('data-page',p);
-  for(var j=0;j<pages[p].length;j++){
-    slide.appendChild(pages[p][j].cloneNode(true));
-  }
-  content.appendChild(slide);
-  slides.push(slide);
-  
-  /* 提取标题做导航 */
-  var h2=slide.querySelector('h2.ch, h2');
-  toc.push(h2?h2.textContent.replace(/^[0-9\s\.\-\[\]★🔷🔵🔴📖📝🧮🎯✏️]+/,'').trim().substring(0,30):('第'+(p+1)+'页'));
-}
-
-/* 清空原始内容（保留slide） */
-var origNodes=content.childNodes;
-for(var k=origNodes.length-1;k>=0;k--){
-  if(!origNodes[k].classList||!origNodes[k].classList.contains('slide')){
-    content.removeChild(origNodes[k]);
+  });
+  /* 滚动目录面板让高亮项可见 */
+  var active=document.querySelector('#toc-list .highlight');
+  if(active&&document.getElementById('toc-panel').classList.contains('show')){
+    active.scrollIntoView({block:'nearest'});
   }
 }
-
-/* ── 状态 ── */
-var currentPage=0;
-var totalPages=slides.length;
-var pptMode=true;
-
-var navBar=document.getElementById('ppt-nav');
-var btnPrev=document.getElementById('btn-prev');
-var btnNext=document.getElementById('btn-next');
-var pageNum=document.getElementById('page-num');
-var modeBtn=document.getElementById('mode-toggle');
-var body=document.body;
-
-function showPage(n){
-  if(n<0||n>=totalPages)return;
-  slides[currentPage].classList.remove('active');
-  currentPage=n;
-  slides[currentPage].classList.add('active');
-  pageNum.textContent=(currentPage+1)+'/'+totalPages;
-  window.scrollTo({top:0,behavior:'instant'});
-  /* 更新导航条标题 */
-  var titleEl=document.getElementById('slide-title-nav');
-  if(titleEl)titleEl.textContent=toc[currentPage];
-}
-
-function nextPage(){showPage(currentPage+1);}
-function prevPage(){showPage(currentPage-1);}
-
-btnPrev.addEventListener('click',prevPage);
-btnNext.addEventListener('click',nextPage);
-
-/* 键盘 */
-document.addEventListener('keydown',function(e){
-  if(!pptMode)return;
-  var tag=e.target.tagName.toUpperCase();
-  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
-  if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextPage();}
-  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevPage();}
-  if(e.key==='Home'){e.preventDefault();showPage(0);}
-  if(e.key==='End'){e.preventDefault();showPage(totalPages-1);}
-});
-
-/* 触屏滑动 */
-var touchStartX=0,touchStartY=0;
-document.addEventListener('touchstart',function(e){
-  touchStartX=e.touches[0].clientX;
-  touchStartY=e.touches[0].clientY;
-},{passive:true});
-document.addEventListener('touchend',function(e){
-  if(!pptMode)return;
-  var dx=e.changedTouches[0].clientX-touchStartX;
-  var dy=e.changedTouches[0].clientY-touchStartY;
-  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){
-    if(dx<0)nextPage();
-    else prevPage();
-  }
-});
-
-/* 模式切换 */
-modeBtn.addEventListener('click',function(){
-  pptMode=!pptMode;
-  if(pptMode){
-    body.classList.add('ppt-mode');
-    body.classList.remove('scroll-mode');
-    body.style.overflow='hidden';
-    navBar.style.display='flex';
-    showPage(currentPage);
-    modeBtn.textContent='📖 滚动';
-  }else{
-    body.classList.add('scroll-mode');
-    body.classList.remove('ppt-mode');
-    body.style.overflow='';
-    navBar.style.display='none';
-    for(var s=0;s<slides.length;s++)slides[s].style.display='block';
-    modeBtn.textContent='📄 翻页';
-  }
-});
-
-/* ── 初始化 ── */
-body.classList.add('ppt-mode');
-body.style.overflow='hidden';
-navBar.style.display='flex';
-showPage(0);
-pageNum.textContent='1/'+totalPages;
-
-console.log('PPT模式已启动，共'+totalPages+'页。← →翻页，按按钮切滚动模式。');
-})();
 </script>
-
 </body>
 </html>
