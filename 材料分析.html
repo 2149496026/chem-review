@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>材料分析测试方法 - 期末复习大纲</title>
+<script>
+MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']],processEscapes:true},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC","Microsoft YaHei",sans-serif;background:#fff;color:#222;line-height:1.8;max-width:860px;margin:0 auto}
+.hdr{background:linear-gradient(135deg,#1a5276,#2980b9);padding:1.6rem 1rem;text-align:center;border-radius:0 0 16px 16px;margin-bottom:1.3rem}
+.hdr h1{font-size:1.45rem;color:#fff;margin-bottom:.25rem}.hdr .sub{color:rgba(255,255,255,.86);font-size:.86rem}
+.content{padding:0 1rem 3rem}.intro{background:#eaf2f8;border-left:4px solid #2980b9;padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:.8rem 0 1.2rem;font-size:.95rem}
+h2.ch{font-size:1.28rem;color:#1a5276;border-bottom:2px solid #2980b9;padding-bottom:.25rem;margin:2rem 0 .8rem}
+h3.sec{font-size:1.08rem;color:#c0392b;margin:1.25rem 0 .5rem;padding-left:.5rem;border-left:3px solid #c0392b}
+h4.sub{font-size:1rem;color:#2c3e50;margin:1rem 0 .3rem}
+p{margin:.35rem 0}.hint{color:#7f8c8d;font-size:.9rem;font-style:italic;margin-bottom:.5rem}
+.eq{background:#f8f9fa;border:1px solid #dee2e6;border-radius:6px;padding:.55rem .9rem;margin:.5rem 0;text-align:center;overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;margin:.6rem 0;font-size:.9rem}table.tbl th{background:#2c3e50;color:#fff;padding:.45rem .55rem;text-align:center;border:1px solid #34495e}table.tbl td{padding:.38rem .55rem;border:1px solid #ddd;background:#fff;vertical-align:top}table.tbl tr:nth-child(even) td{background:#f8f9fa}
+.concept{background:#fafafa;border:1px solid #e0e0e0;border-radius:8px;padding:.75rem .95rem;margin:.75rem 0}.concept h4{margin:0 0 .35rem;font-size:1rem}.concept ul,.concept ol{margin:.3rem 0 .3rem 1.4rem}
+.qa{background:#f7f9fc;border-left:3px solid #2980b9;padding:.6rem .9rem;margin:.6rem 0;border-radius:0 6px 6px 0}.qa b{color:#1a5276}
+.example{background:#fef9e7;border-left:3px solid #f39c12;padding:.6rem .9rem;margin:.6rem 0;border-radius:0 6px 6px 0}.example b{color:#7d6608}
+.warn{background:#fff5f5;border-left:3px solid #e74c3c;padding:.6rem .9rem;margin:.6rem 0;border-radius:0 6px 6px 0}.tag{display:inline-block;background:#2980b9;color:#fff;border-radius:12px;padding:.05rem .45rem;font-size:.78rem;margin-right:.25rem}.hot{background:#c0392b}.calc{background:#7d3c98}.easy{background:#16a085}
+ul,ol{margin-left:1.4rem}.small{font-size:.9rem;color:#555}.toc a{color:#1a5276;text-decoration:none}.toc li{margin:.18rem 0}
+.exercise{background:#f4f6f7;padding:.55rem .85rem;margin:.55rem 0;border-radius:6px;border:1px solid #ddd}.exercise b{color:#2c3e50}.answer{background:#e8f8f5;padding:.45rem .75rem;margin:.35rem 0 0;border-radius:4px;border-left:3px solid #1abc9c;font-size:.9rem}.chain{background:#f8fbff;border:1px solid #d6eaf8;border-radius:8px;padding:.8rem 1rem;margin:.8rem 0}.chain b{color:#1a5276}
+#toc-toggle{position:fixed;bottom:20px;right:20px;z-index:999;width:48px;height:48px;border-radius:50%;border:none;background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+#back-top{position:fixed;bottom:80px;right:20px;z-index:999;width:40px;height:40px;border-radius:50%;border:none;background:#fff;color:#2980b9;font-size:1.1rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);display:none}
+#back-top.show{display:block}
+#toc-panel{position:fixed;top:0;left:0;width:100%;height:100%;z-index:998;background:rgba(0,0,0,.4);display:none}
+#toc-panel.show{display:block}
+#toc-box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(92vw,430px);max-height:82vh;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column}
+#toc-header{padding:12px 16px;background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+#toc-close{background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer}
+#toc-search{margin:8px 12px;padding:6px 10px;border:1px solid #ccc;border-radius:6px;font-size:.9rem;outline:none}
+#toc-list{overflow-y:auto;flex:1;padding:4px 0 12px}.toc-item{display:block;padding:6px 16px;text-decoration:none;color:#333;font-size:.88rem;border-left:3px solid transparent}.toc-item:hover{background:#eaf2f8;color:#2980b9;border-left-color:#2980b9}.toc-item.h2{font-weight:700;color:#1a5276}.toc-item.h3{padding-left:28px;font-weight:600}.toc-item.h4{padding-left:40px;color:#555}.toc-item.highlight{background:#fff3cd;border-left-color:#f39c12}
+@media(max-width:600px){body{font-size:15px}.content{padding:0 .65rem 3rem}table.tbl{font-size:.8rem}#toc-toggle{bottom:16px;right:16px;width:44px;height:44px}#back-top{bottom:70px;right:16px}}
+
+</style>
+</head>
+<body>
+<button id="toc-toggle" onclick="toggleTOC()" title="目录导航">☰</button>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+<div id="toc-panel" onclick="if(event.target===this)toggleTOC()">
+<div id="toc-box">
+  <div id="toc-header">📑 目录导航 <button id="toc-close" onclick="toggleTOC()">✕</button></div>
+  <input type="text" id="toc-search" placeholder="搜索章节/考点..." oninput="filterTOC(this.value)">
+  <div id="toc-list"></div>
+</div>
+</div>
+<div class="hdr">
+
+<h1>《材料分析测试方法》期末复习大纲</h1>
+<div class="sub">华北水利水电大学 · 材料学院 · 资源循环科学与工程 · 以老师PPT与期末复习为主</div>
+</div>
+<div class="content">
+
+<div class="intro">
+<p><b>复习策略：</b>本课程不是背仪器名就能过的水课。考试高频集中在 <b>XRD基础与应用、第8-12章电镜/电子探针/热分析</b>。历年题型显示：选择填空考概念，简答考原理与对比，应用题考 XRD 判相/消光/布拉格计算、TEM成像与衬度、SEM信号、EDS/WDS、DTA/TG曲线解释。</p>
+<ul>
+<li><span class="tag hot">必背</span>概念定义、仪器结构、信号来源、曲线含义、消光规律。</li>
+<li><span class="tag calc">会算</span>布拉格方程、立方晶系面间距、点阵常数、倒易矢量、Scherrer公式、TG失重率。</li>
+<li><span class="tag easy">会辨析</span>TEM/SEM、SE/BSE/TE、EDS/WDS、DTA/DSC/TG、明场/暗场。</li>
+</ul>
+</div>
+
+<h2 class="ch">一、最终版考试重点分级表：先救命，再拔高</h2>
+<div class="intro">
+<p><b>使用方法：</b>先把 🔴 背到能默写，再刷 🟠 的答题套路，🟡 用来保选择填空，⚪ 考前没时间就别碰。别平均用力，平均用力就是平均翻车。</p>
+</div>
+
+<table class="tbl">
+<tr><th>等级</th><th>内容</th><th>具体必须掌握</th><th>考试形式</th></tr>
+<tr><td><span class="tag hot">🔴 必背必会</span></td><td>XRD核心公式与证明</td><td>Bragg方程意义；Ewald球证明Bragg方程；倒易矢量两个性质；$d_{hkl}=a/\sqrt{h^2+k^2+l^2}$；$2d\sin\theta=n\lambda$</td><td>证明题、简答题、计算题</td></tr>
+<tr><td><span class="tag hot">🔴 必背必会</span></td><td>系统消光与指标化</td><td>P无消光；BCC：$H+K+L$偶数出现；FCC：全奇或全偶出现；由$\sin^2\theta$比判断简单/BCC/FCC；超点阵线含义</td><td>选择、判断、计算分析</td></tr>
+<tr><td><span class="tag hot">🔴 必背必会</span></td><td>XRD物相分析</td><td>由$2\theta$求$d$；用PDF卡片比对$d$和$I/I_1$；TiO₂金红石/锐钛矿判相：锐钛矿最强峰约$25.3^\circ$，金红石最强峰约$27.4^\circ$</td><td>简答分析题、大题</td></tr>
+<tr><td><span class="tag hot">🔴 必背必会</span></td><td>TEM成像/衍射操作</td><td>中间镜物平面与物镜像平面重合→成像；与物镜背焦面重合→衍射；能画光路；选区光阑放物镜像平面</td><td>简答+画图大题</td></tr>
+<tr><td><span class="tag hot">🔴 必背必会</span></td><td>SEM信号对比</td><td>SE/BSE/TE来源、深度、分辨率、用途；SE看形貌，BSE看原子序数衬度，TE用于薄样品透射扫描</td><td>简答题</td></tr>
+<tr><td><span class="tag hot">🔴 必背必会</span></td><td>EDS/WDS对比</td><td>EDS快、多元素、分辨率低；WDS慢、分辨率高、定量准；WDS多块分光晶体原因：$\lambda=2d\sin\theta$导致单晶体波长范围有限</td><td>简答题</td></tr>
+<tr><td><span class="tag hot">🔴 必背必会</span></td><td>热分析曲线解释</td><td>DTA/DSC/TG定义；DTA峰谷意义；TG平台/台阶/失重率；DTG峰；$CuSO_4\cdot5H_2O$、$CaC_2O_4\cdot H_2O$分解过程</td><td>简答、曲线分析题</td></tr>
+
+<tr><td><span class="tag calc">🟠 高概率考</span></td><td>X射线性质</td><td>连续谱/特征谱产生机理；短波限$\lambda_0=1.24/U$；$K_\alpha$与$K_\beta$关系；滤波片与靶材选择</td><td>填空、选择、简答</td></tr>
+<tr><td><span class="tag calc">🟠 高概率考</span></td><td>德拜法与衍射仪法</td><td>德拜相机57.3mm对应1mm=2°；正装/反装/偏装；$\theta-2\theta$连动；连续扫描/步进扫描区别</td><td>选择、填空</td></tr>
+<tr><td><span class="tag calc">🟠 高概率考</span></td><td>电磁透镜像差</td><td>球差、像散、色差原因和减小方法；色差看能量高低电子聚焦不同；像散可用消像散器校正；球差主要靠减小孔径角</td><td>看图简答题</td></tr>
+<tr><td><span class="tag calc">🟠 高概率考</span></td><td>TEM衬度</td><td>质厚衬度、衍射衬度、相位衬度、Z衬度；明场/暗场形成；电子衍射花样：单晶斑点、多晶圆环、非晶晕环</td><td>简答、选择</td></tr>
+<tr><td><span class="tag calc">🟠 高概率考</span></td><td>TEM vs SEM</td><td>用途、成像原理、样品要求、分辨率、信息类型对比；TEM内部结构/衍射，SEM表面形貌/断口</td><td>简答题</td></tr>
+<tr><td><span class="tag calc">🟠 高概率考</span></td><td>EPMA点线面分析</td><td>点分析看夹杂/第二相；线分析看浓度梯度；面分析看元素分布，亮区代表含量高；ZAF修正</td><td>简答、应用题</td></tr>
+
+<tr><td><span class="tag easy">🟡 选择填空了解</span></td><td>晶体学基础</td><td>七大晶系、14种布拉维点阵；晶向/晶面指数标定；晶带定律$hu+kv+lw=0$；六方四指数$i=-(h+k)$</td><td>选择、填空</td></tr>
+<tr><td><span class="tag easy">🟡 选择填空了解</span></td><td>强度影响因素</td><td>结构因子、多重性因子、角因子、吸收因子、温度因子；温度升高/高角度峰强度减弱</td><td>选择、填空</td></tr>
+<tr><td><span class="tag easy">🟡 选择填空了解</span></td><td>SEM性能与制样</td><td>放大倍数由显示屏尺寸/扫描场决定；大景深；非导电样品喷金，EDS/BSE常喷碳</td><td>选择、填空</td></tr>
+<tr><td><span class="tag easy">🟡 选择填空了解</span></td><td>DTA/TG影响因素</td><td>升温速率、气氛、试样量、粒度、装填、参比物；速率快峰向高温移，分辨率下降，灵敏度提高</td><td>选择、填空、简答补充</td></tr>
+
+<tr><td>⚪ 基本不优先</td><td>仪器品牌/历史人物/发展史</td><td>伦琴、劳厄、布拉格、仪器厂家、教材导入案例等，除非老师明说，否则别主攻</td><td>极低概率选择</td></tr>
+<tr><td>⚪ 基本不优先</td><td>复杂强度公式完整推导</td><td>粉末积分强度全公式会认即可，重点是知道各因子含义，不要求逐项推到吐血</td><td>低概率</td></tr>
+<tr><td>⚪ 基本不优先</td><td>教材第6、7章</td><td>本课程实际章节不含第6、7章，除物相分析内容已并入第5章外，不额外扩展</td><td>不主看</td></tr>
+</table>
+
+<div class="warn">
+<p><b>考前顺序：</b>先背 🔴 表格里的标准答案；再把 🟠 的对比题练一遍；最后用 🟡 保选择填空。你要是从⚪开始看，那不叫努力，那叫考前自毁程序。</p>
+</div>
+
+<h2 class="ch">二、课程知识链：别再散装背书</h2>
+<div class="chain">
+<p><b>主线一句话：</b>这门课就是“用射线、电子束和热信号去反推材料的结构、形貌、成分和热行为”。先问“信号从哪来”，再问“仪器怎么收”，最后问“图谱怎么解释”。</p>
+<ol>
+<li><b>X射线主线（第1-5章）：</b>X射线产生与物质作用 → 晶体有周期结构 → 满足Bragg/Laue/Ewald条件才衍射 → 强度由结构因子和实验因素决定 → 用粉末衍射图谱做物相、点阵参数、晶粒尺寸分析。</li>
+<li><b>电子显微主线（第8-10章）：</b>电子波长短所以分辨率高 → 电磁透镜聚焦但有像差 → TEM看透射电子和衍射，适合薄样内部结构 → SEM扫表面，靠SE/BSE等信号看形貌和成分衬度。</li>
+<li><b>成分分析主线（第11章）：</b>电子束激发特征X射线 → 波长或能量对应元素种类 → 强度对应含量 → EDS快但粗，WDS慢但准，定量要做ZAF修正。</li>
+<li><b>热分析主线（第12章）：</b>程序控温 → 试样发生相变、脱水、分解、氧化等 → DTA/DSC看热效应，TG/DTG看质量变化 → 结合峰位、峰向、台阶和失重率判断过程。</li>
+</ol>
+<p><b>答题套路：</b>看到图谱题，先识别“信号类型”——XRD峰、电子像/衍射斑、EDS谱、DTA/DSC/TG曲线；再写“物理来源”；最后落到“能分析什么”。这比你硬背一堆名词靠谱，别把脑子当U盘。</p>
+</div>
+
+<h2 class="ch">三、高频知识点速查表</h2>
+<table class="tbl">
+<tr><th>高频点</th><th>必须会写的核心句/公式</th><th>常见题型</th></tr>
+<tr><td>布拉格方程</td><td>$2d\sin\theta=n\lambda$；衍射仪读数通常为 $2\theta$</td><td>计算、意义简答</td></tr>
+<tr><td>立方晶系面间距</td><td>$d_{hkl}=a/\sqrt{h^2+k^2+l^2}$</td><td>由峰位求 $a$</td></tr>
+<tr><td>系统消光</td><td>BCC：$H+K+L$ 偶数；FCC：全奇或全偶</td><td>选择、判断、指标化</td></tr>
+<tr><td>倒易矢量</td><td>$g_{hkl}\perp(hkl)$，$|g|=1/d_{hkl}$</td><td>简答、证明</td></tr>
+<tr><td>Ewald图解</td><td>倒易点落在反射球上满足衍射条件，可推出Bragg方程</td><td>证明题</td></tr>
+<tr><td>Scherrer公式</td><td>$D=k\lambda/(\beta\cos\theta)$；峰越宽晶粒越小</td><td>计算、判断</td></tr>
+<tr><td>TEM模式</td><td>中间镜对准物镜像平面为成像；对准背焦面为衍射</td><td>简答</td></tr>
+<tr><td>明场/暗场</td><td>透射束成明场，衍射束成暗场</td><td>对比题</td></tr>
+<tr><td>SEM信号</td><td>SE看形貌且分辨率高；BSE看原子序数衬度；特征X射线看元素</td><td>对比题</td></tr>
+<tr><td>EDS/WDS</td><td>EDS快、多元素、分辨率低；WDS慢、分辨率高、定量准</td><td>必背简答</td></tr>
+<tr><td>DTA/DSC/TG</td><td>DTA测温差；DSC测热流；TG测质量</td><td>定义、曲线解释</td></tr>
+<tr><td>TG/DTG</td><td>TG台阶代表质量变化；DTG峰数对应失重步骤</td><td>曲线判读、失重计算</td></tr>
+</table>
+
+<h2 class="ch">四、总考点地图与优先级</h2>
+
+<table class="tbl">
+<tr><th>章节</th><th>核心内容</th><th>考试掌握深度</th></tr>
+<tr><td>第1章 X射线性质</td><td>连续谱/特征谱、短波限、相干/非相干散射、吸收限、滤波片和靶材选择</td><td>概念+简答，偶有选择填空</td></tr>
+<tr><td>第2章 晶体学基础</td><td>晶向晶面、面间距、晶带定律、倒易点阵</td><td>公式和判断题高频</td></tr>
+<tr><td>第3章 衍射方向</td><td>布拉格方程、劳厄方程、Ewald图解、衍射矢量方程</td><td>简答/证明大题重点</td></tr>
+<tr><td>第4章 衍射强度</td><td>结构因子、系统消光、强度影响因素</td><td>消光规律必背，强度公式理解</td></tr>
+<tr><td>第5章 多晶体分析</td><td>德拜法、衍射仪法、指标化、物相鉴定、点阵参数、晶粒尺寸</td><td>XRD应用题主战场</td></tr>
+<tr><td>第8章 电子光学</td><td>电子波、电磁透镜、像差、分辨率、景深焦长</td><td>公式+简答</td></tr>
+<tr><td>第9章 TEM</td><td>结构、光阑、成像/衍射操作、样品、电子衍射、衬度</td><td>大题高频</td></tr>
+<tr><td>第10章 SEM</td><td>电子-固体相互作用、SE/BSE/TE、结构、衬度、特点与制样</td><td>对比题/简答题高频</td></tr>
+<tr><td>第11章 EPMA</td><td>电子探针原理、WDS/EDS、点线面分析、ZAF修正</td><td>EDS/WDS对比必背</td></tr>
+<tr><td>第12章 热分析</td><td>DTA/DSC/TG定义、曲线解释、影响因素、DTG</td><td>定义+曲线解释+影响因素</td></tr>
+</table>
+<h2 class="ch">五、第1章 X射线的性质</h2>
+
+<h3 class="sec">1. X射线本质与特点</h3>
+<div class="concept">
+<ul>
+<li><b>本质：</b>X射线是波长约 $0.001\sim10\,\mathrm{nm}$ 的电磁波，具有波粒二象性。</li>
+<li><b>衍射分析常用硬X射线：</b>$\lambda\approx0.05\sim0.25\,\mathrm{nm}$，与晶体点阵常数同数量级。</li>
+<li><b>特点：</b>不可见、直线传播、不带电、不受电磁场偏转、可使胶片感光和气体电离、可被物质吸收、对生物有损伤。</li>
+</ul>
+</div>
+
+<h3 class="sec">2. X射线产生与X射线管</h3>
+<table class="tbl">
+<tr><th>部件/参数</th><th>作用</th></tr>
+<tr><td>阴极钨丝</td><td>加热发射电子</td></tr>
+<tr><td>阳极靶</td><td>高速电子突然减速，产生X射线；常用 Cr、Fe、Co、Ni、Cu、Mo、Ag、W 等</td></tr>
+<tr><td>铍窗</td><td>X射线射出窗口，铍对X射线吸收较小</td></tr>
+<tr><td>管电压</td><td>阴极与阳极之间高压，决定电子能量和短波限</td></tr>
+<tr><td>管电流</td><td>电子流强度，影响X射线强度</td></tr>
+</table>
+
+<h3 class="sec">3. 连续谱、特征谱与短波限</h3>
+<div class="qa">
+<p><b>连续X射线谱：</b>高速电子撞击靶材被阻挡减速，电子动能一部分转化为不同波长的X射线，形成连续谱。</p>
+<p><b>特征X射线谱：</b>靶原子内层电子被击出，外层电子跃迁填补空位，释放具有固定波长的X射线。L→K 为 $K_\alpha$，M→K 为 $K_\beta$。</p>
+</div>
+<div class="eq">$$eU=h\nu_{\max}=\frac{hc}{\lambda_0},\qquad \lambda_0=\frac{1.24}{U}\;(\mathrm{nm})$$</div>
+<ul>
+<li>$\lambda_0$ 为短波限，只与管电压 $U$ 有关，与靶材、管电流无关。</li>
+<li>连续谱总强度近似与 $iZU^2$ 有关；重元素靶连续谱强。</li>
+<li>$K_\alpha$ 强度约为 $K_\beta$ 的 5 倍；且 $\lambda_{K\alpha}>\lambda_{K\beta}$。</li>
+<li>产生特征谱必须超过临界激发电压。</li>
+</ul>
+
+<h3 class="sec">4. X射线与物质相互作用</h3>
+<table class="tbl">
+<tr><th>作用</th><th>本质</th><th>考试抓手</th></tr>
+<tr><td>相干散射/Thomson散射</td><td>波长、频率不变，仅方向改变，可发生干涉</td><td>XRD衍射基础</td></tr>
+<tr><td>非相干散射/Compton散射</td><td>与外层电子碰撞，能量降低、波长增加</td><td>形成衍射背底</td></tr>
+<tr><td>光电效应</td><td>X光子击出内层电子，产生光电子和荧光X射线</td><td>荧光背底、吸收限</td></tr>
+<tr><td>俄歇效应</td><td>跃迁能量用于击出另一电子，产生俄歇电子</td><td>表面元素分析依据</td></tr>
+<tr><td>吸收衰减</td><td>强度随厚度指数衰减</td><td>$I=I_0e^{-\mu x}$</td></tr>
+</table>
+<div class="eq">$$I=I_0e^{-\mu x},\qquad \mu_m=\frac{\mu}{\rho},\qquad \mu_m=K\lambda^3Z^3$$</div>
+
+<h3 class="sec">5. 滤波片与靶材选择</h3>
+<div class="concept">
+<h4>滤波片作用</h4>
+<p>滤掉 $K_\beta$，保留较强的 $K_\alpha$，获得近似单色X射线。</p>
+<ul>
+<li>滤波片吸收限应位于 $\lambda_{K\beta}$ 与 $\lambda_{K\alpha}$ 之间。</li>
+<li>经验：$Z_{\text{靶}}\lt 40$，$Z_{\text{片}}=Z_{\text{靶}}-1$；$Z_{\text{靶}}\ge 40$，$Z_{\text{片}}=Z_{\text{靶}}-2$。</li>
+
+<li>例：Co靶用Fe滤波片；Cu靶用Ni滤波片。</li>
+</ul>
+</div>
+<div class="concept">
+<h4>靶材选择</h4>
+<p>原则：靶的 $K_\alpha$ 波长稍大于试样吸收限并尽量靠近，使试样不产生强荧光，降低背底。</p>
+<p>常用规律：$Z_{\text{靶}}\leq Z_{\text{试样}}+1$。如分析Fe样品可选Co靶或Fe靶，通常不优先选Ni靶。</p>
+<div class="warn"><b>PPT补充考点：管电压选择</b>——衍射分析时管压通常选 $3\sim5$ 倍临界激发电压 $U_K$，以获得最大特征谱/连续谱强度比。不要以为电压越高越好，连续谱背底也会跟着涨。</div>
+</div>
+
+<div class="warn"><b>PPT补充考点：BCC/FCC的d修正公式。</b>BCC中若 $h+k+l$ 为奇数，实际晶面间距为 $d=\frac{a}{2\sqrt{h^2+k^2+l^2}}$，只有偶数才直接用 $d=a/\sqrt{h^2+k^2+l^2}$。FCC中若 $h,k,l$ 奇偶混杂，实际 $d=\frac{a}{2\sqrt{h^2+k^2+l^2}}$，全奇全偶才直接用原公式。这跟系统消光是一体两面——消光的晶面在衍射谱上不出现，但$d$值本身依然存在。</div>
+
+<h2 class="ch">六、第2章 晶体学基础</h2>
+
+<h3 class="sec">1. 晶体结构、点阵与晶胞</h3>
+<ul>
+<li><b>晶体结构 = 空间点阵 + 结构基元。</b></li>
+<li>七大晶系、14种布拉维点阵；常考 P、I、F、C 四类。</li>
+<li>简单P：$(0,0,0)$；体心I：$(0,0,0),(1/2,1/2,1/2)$；面心F：$(0,0,0),(1/2,1/2,0),(1/2,0,1/2),(0,1/2,1/2)$；底心C：$(0,0,0),(1/2,1/2,0)$。</li>
+</ul>
+
+<h3 class="sec">2. 晶向指数与晶面指数</h3>
+<div class="concept">
+<ul>
+<li><b>晶向指数 $[uvw]$：</b>取过原点的结点直线，找最近结点坐标，化为最小整数，用方括号。</li>
+<li><b>晶面指数 $(hkl)$：</b>求晶面在三轴上的截距，取倒数并化为互质整数，用圆括号。</li>
+<li><b>六方四指数：</b>晶面 $(hkil)$，其中 $i=-(h+k)$。</li>
+</ul>
+</div>
+
+<h3 class="sec">3. 晶面间距与晶面夹角</h3>
+<div class="eq">$$d_{hkl}^{\text{立方}}=\frac{a}{\sqrt{h^2+k^2+l^2}}$$</div>
+<div class="eq">$$d^{\text{四方}}=\frac{1}{\sqrt{\frac{h^2+k^2}{a^2}+\frac{l^2}{c^2}}}$$</div>
+<div class="eq">$$\cos\phi=\frac{h_1h_2+k_1k_2+l_1l_2}{\sqrt{h_1^2+k_1^2+l_1^2}\sqrt{h_2^2+k_2^2+l_2^2}}$$</div>
+<div class="example"><b>常考判断：</b>立方晶系中，指数平方和 $N=h^2+k^2+l^2$ 越小，$d$ 越大。如 $(101)$ 的 $N=2$，比 $(113)$、$(122)$、$(123)$ 面间距大。</div>
+
+<h3 class="sec">4. 晶带定律</h3>
+<div class="eq">$$hu+kv+lw=0$$</div>
+<ul>
+<li>若晶面 $(hkl)$ 属于晶带 $[uvw]$，则满足晶带定律。</li>
+<li>两晶面 $(h_1k_1l_1)$、$(h_2k_2l_2)$ 的晶带轴：
+$$u:v:w=(k_1l_2-k_2l_1):(l_1h_2-l_2h_1):(h_1k_2-h_2k_1)$$</li>
+</ul>
+
+<h3 class="sec">5. 倒易点阵</h3>
+<div class="eq">$$a^*=\frac{b\times c}{V},\quad b^*=\frac{c\times a}{V},\quad c^*=\frac{a\times b}{V}$$</div>
+<div class="eq">$$r^*=Ha^*+Kb^*+Lc^*$$</div>
+<div class="qa">
+<p><b>倒易矢量两大性质，必背：</b></p>
+<ol>
+<li>$r^*$ 垂直于正点阵中的 $(HKL)$ 晶面；</li>
+<li>$|r^*|=1/d_{HKL}$。</li>
+</ol>
+</div>
+<div class="example"><b>例：</b>若倒易矢量 $g=2a^*+b^*+c^*$，对应正空间晶面为 $(211)$。若 $d_{220}=0.193\,\mathrm{nm}$，则 $|g_{220}|=1/d_{220}=5.18\,\mathrm{nm^{-1}}$，方向垂直 $(220)$ 晶面。</div>
+<h2 class="ch">七、第3章 X射线衍射方向</h2>
+
+<h3 class="sec">1. 布拉格方程</h3>
+<div class="eq">$$2d\sin\theta=n\lambda$$</div>
+<div class="qa">
+<p><b>意义：</b>布拉格方程是晶体发生X射线衍射必须满足的基本条件，反映衍射方向 $\theta$、晶面间距 $d$ 和波长 $\lambda$ 的关系。测得衍射角即可求面间距，进一步确定晶胞参数、点阵类型和物相。</p>
+</div>
+<ul>
+<li><b>选择反射：</b>晶体中若干平行原子面反射波相干加强的结果。</li>
+<li><b>衍射极限：</b>$n\lambda/(2d)\le1$，一级反射时 $d\ge\lambda/2$。</li>
+<li><b>反射级数：</b>$n$ 为反射级数；$(hkl)$ 的 $n$ 级反射可看作 $(nh,nk,nl)$ 的一级反射。</li>
+<li><b>掠射角：</b>$\theta$ 是入射线或反射线与晶面的夹角；衍射仪常读 $2\theta$。</li>
+</ul>
+
+<h3 class="sec">2. 劳厄方程与衍射矢量方程</h3>
+<div class="eq">$$a\cdot(S-S_0)=h\lambda,\quad b\cdot(S-S_0)=k\lambda,\quad c\cdot(S-S_0)=l\lambda$$</div>
+<div class="eq">$$\frac{S-S_0}{\lambda}=ha^*+kb^*+lc^*=H_{hkl}$$</div>
+<p>劳厄方程从三维周期点阵出发，描述衍射方向的分立性；布拉格方程从平行晶面反射出发。两者本质一致。</p>
+
+<h3 class="sec">3. Ewald图解</h3>
+<ul>
+<li>以 $1/\lambda$ 为半径作反射球。</li>
+<li>倒易点落在Ewald球面上即满足衍射条件。</li>
+<li>倒易原点到倒易点的矢量 $g_{hkl}$ 满足 $|g_{hkl}|=1/d_{hkl}$。</li>
+</ul>
+<div class="eq">$$|k_s-k_0|=g_{hkl}=\frac{1}{d_{hkl}},\qquad |k_s-k_0|=\frac{2\sin\theta}{\lambda}$$</div>
+<div class="eq">$$\Rightarrow\frac{1}{d_{hkl}}=\frac{2\sin\theta}{\lambda}\Rightarrow 2d_{hkl}\sin\theta=\lambda$$</div>
+<div class="warn"><b>证明题套路：</b>先写散射矢量等于倒易矢量，再写二者模长，最后推出布拉格方程。别上来就画球不写公式，卷面像玄学占卜。</div>
+<h2 class="ch">八、第4章 X射线衍射强度</h2>
+
+<h3 class="sec">1. 结构因子</h3>
+<div class="eq">$$F_{HKL}=\sum_{j=1}^{n}f_j e^{i2\pi(HX_j+KY_j+LZ_j)}$$</div>
+<p>衍射强度与结构振幅平方成正比：$I_{HKL}\propto |F_{HKL}|^2$。结构因子反映晶胞内原子种类、个数和位置对衍射强度的影响。</p>
+
+<h3 class="sec">2. 系统消光规律（必背）</h3>
+<table class="tbl">
+<tr><th>点阵类型</th><th>出现反射</th><th>消失反射</th><th>例子</th></tr>
+<tr><td>简单P</td><td>全部</td><td>无</td><td>所有 $(hkl)$ 可出现</td></tr>
+<tr><td>底心C</td><td>$H,K$ 同奇或同偶</td><td>$H,K$ 奇偶混杂</td><td>$(111)$ 有，$(101)$ 无</td></tr>
+<tr><td>体心I/BCC</td><td>$H+K+L$ 为偶数</td><td>$H+K+L$ 为奇数</td><td>$(110),(200)$ 有；$(100),(111)$ 无</td></tr>
+<tr><td>面心F/FCC</td><td>$H,K,L$ 全奇或全偶</td><td>$H,K,L$ 奇偶混杂</td><td>$(111),(200),(220),(311)$ 有；$(210),(112)$ 无</td></tr>
+</table>
+<div class="example"><b>选择题秒杀：</b>FCC 中 $(210)$：2、1、0 奇偶混杂，所以不会出现。</div>
+
+<div class="warn"><b>PPT补充考点：超点阵结构。</b>如 $\mathrm{AuCu_3}$ 在 $395^\circ\mathrm{C}$ 以下有序化后，Au 原子占据顶点、Cu 原子占据面心。此时 $h,k,l$ 奇偶混杂的晶面（如 $(100),(110)$）结构因子不再为零（$F=f_{Au}-f_{Cu}\neq0$），会出现弱衍射线——<b>超点阵线</b>。真题考过类似逻辑：BCC合金有序化后破坏原有消光条件，原本消失的 $h+k+l$ 为奇数的衍射重新出现。务必理解这不是点阵消光规律变了，而是<b>结构消光</b>叠加的结果。</div>
+
+
+<h3 class="sec">3. 粉末多晶体积分强度影响因素</h3>
+<div class="eq">$$I_{\text{相对}}\propto |F|^2P\frac{1+\cos^2 2\theta}{\sin^2\theta\cos\theta}A(\theta)e^{-2M}$$</div>
+<table class="tbl">
+<tr><th>因子</th><th>含义</th><th>影响</th></tr>
+<tr><td>结构因子 $|F|^2$</td><td>原子种类、个数、位置</td><td>决定系统消光和强弱</td></tr>
+<tr><td>多重性因子 $P$</td><td>等同晶面数</td><td>$P$ 越大，强度越大</td></tr>
+<tr><td>角因子</td><td>洛伦兹-偏振因子</td><td>随 $\theta$ 改变强度</td></tr>
+<tr><td>吸收因子 $A(\theta)$</td><td>试样吸收</td><td>$A\le1$</td></tr>
+<tr><td>温度因子 $e^{-2M}$</td><td>热振动影响</td><td>温度越高、高角度峰越弱</td></tr>
+</table>
+
+<h3 class="sec">4. 晶粒尺寸测定</h3>
+<div class="eq">$$D_{hkl}=\frac{k\lambda}{\beta_{hkl}\cos\theta}$$</div>
+<p>Scherrer公式中，$D_{hkl}$ 为垂直 $(hkl)$ 面方向平均晶粒尺寸，$\beta$ 为半高宽或积分宽度，$k$ 常取 0.89（半高宽）。峰越宽，晶粒越小。</p>
+<h2 class="ch">九、第5章 多晶体分析方法</h2>
+
+<h3 class="sec">1. 粉末法与德拜-谢乐法</h3>
+<ul>
+<li>粉末法：用单色X射线照射粉末或多晶试样，总有部分晶粒的某些晶面满足布拉格条件，形成衍射圆锥。</li>
+<li>德拜花样：底片与衍射圆锥相交形成弧线对或衍射环。</li>
+<li>每条弧对对应一组 $(hkl)$ 晶面，由弧对间距求 $\theta$，再由布拉格方程求 $d$。</li>
+</ul>
+<table class="tbl">
+<tr><th>相机直径</th><th>圆周长</th><th>底片换算</th></tr>
+<tr><td>$57.3\,\mathrm{mm}$</td><td>$180\,\mathrm{mm}$</td><td>1 mm 对应 $2^\circ$ 圆心角</td></tr>
+<tr><td>$114.6\,\mathrm{mm}$</td><td>$360\,\mathrm{mm}$</td><td>1 mm 对应 $1^\circ$ 圆心角</td></tr>
+</table>
+
+<h3 class="sec">2. 底片安装方式</h3>
+<table class="tbl">
+<tr><th>方式</th><th>特点/用途</th></tr>
+<tr><td>正装法</td><td>X射线从底片接口处入射；几何关系简单，常用于物相分析</td></tr>
+<tr><td>反装法</td><td>高角线集中于孔眼，底片收缩误差小，适合点阵常数测定</td></tr>
+<tr><td>偏装法/不对称装法</td><td>可消除底片收缩、试样偏心、相机半径误差，较常用</td></tr>
+</table>
+
+<h3 class="sec">3. X射线衍射仪</h3>
+<ul>
+<li>核心：测角仪测角，计数管测强度。</li>
+<li>$\theta-2\theta$ 连动：样品转 $\theta$，计数管转 $2\theta$，保持入射角=反射角。</li>
+<li>Bragg-Brentano 聚焦：X光焦点、试样表面、接收光阑近似位于聚焦圆上。</li>
+<li>连续扫描：快，适合定性相分析；步进扫描：精度高，适合定量分析。</li>
+</ul>
+
+<h3 class="sec">4. 立方晶系指标化</h3>
+<div class="eq">$$\sin^2\theta=\frac{\lambda^2}{4a^2}(h^2+k^2+l^2)=C N$$</div>
+<p>同一物相各衍射线的 $\sin^2\theta$ 比等于 $N=h^2+k^2+l^2$ 的比。结合消光规律判断点阵类型。</p>
+<table class="tbl">
+<tr><th>点阵</th><th>允许的前几项 $N$ 序列</th><th>首几条衍射线</th></tr>
+<tr><td>简单立方</td><td>1,2,3,4,5,6,8,9,10,11...</td><td>100,110,111,200...</td></tr>
+<tr><td>体心立方</td><td>2,4,6,8,10,12,14,16...</td><td>110,200,211,220...</td></tr>
+<tr><td>面心立方</td><td>3,4,8,11,12,16,19,20...</td><td>111,200,220,311...</td></tr>
+</table>
+
+<h3 class="sec">5. 物相定性分析流程</h3>
+<ol>
+<li>测出各峰 $2\theta$ 和相对强度。</li>
+<li>由 $2d\sin\theta=\lambda$ 求 $d$ 值。</li>
+<li>选强峰，按 $d$ 和 $I/I_1$ 与PDF卡片比较。</li>
+<li>若 $d$ 和相对强度均吻合，即可确定物相。</li>
+<li>混合物要先确定主相，剔除主相峰，再分析剩余峰。</li>
+</ol>
+<div class="example"><b>TiO₂判相题思路：</b>把实验峰位与金红石、锐钛矿PDF卡片对比。锐钛矿最强峰常在 $2\theta\approx25.3^\circ$ 附近 $(101)$；金红石最强峰常在 $27.4^\circ$ 附近 $(110)$。看主要峰位和强度序列，不要只看一个峰。</div>
+
+<h3 class="sec">6. 点阵参数精确测定</h3>
+<div class="eq">$$a=\frac{\lambda\sqrt{H^2+K^2+L^2}}{2\sin\theta}$$</div>
+<ul>
+<li>误差主要来自 $\theta$ 测定误差；高角度线更适合精确测量。</li>
+<li>图解外推法：用多个高角线计算 $a$，对 $\cos^2\theta$ 或 Nelson-Riley 函数外推到 $\theta=90^\circ$。</li>
+<li>最小二乘法：用直线 $Y=a+bX$，截距为精确点阵参数。</li>
+</ul>
+<h2 class="ch">十、第8章 电子光学基础</h2>
+
+<h3 class="sec">1. 光镜分辨率极限与电子波</h3>
+<div class="eq">$$\Delta r_0=\frac{0.61\lambda}{n\sin\alpha}$$</div>
+<ul>
+<li>光镜受可见光波长限制，极限分辨率约 $0.2\,\mu m$。</li>
+<li>电子具有德布罗意波，波长远小于可见光。</li>
+</ul>
+<div class="eq">$$\lambda=\frac{h}{mv}=\frac{12.25}{\sqrt{V}}\;(\text{Å})$$</div>
+<p>高电压下需相对论修正。电压越高，电子波长越短。</p>
+
+<h3 class="sec">2. 电磁透镜</h3>
+<ul>
+<li>用旋转对称非均匀磁场使电子束聚焦成像。</li>
+<li>电磁透镜总是会聚透镜，焦距可通过激磁电流调节。</li>
+</ul>
+<div class="eq">$$\frac1f=\frac1{L_1}+\frac1{L_2},\qquad M=\frac{L_2}{L_1}=\frac{f}{L_1-f}=\frac{L_2-f}{f}$$</div>
+<div class="eq">$$f\approx K\frac{U_r}{(IN)^2}$$</div>
+
+<h3 class="sec">3. 像差与分辨率</h3>
+<table class="tbl">
+<tr><th>像差</th><th>原因</th><th>表达式</th><th>控制方法</th></tr>
+<tr><td>球差</td><td>远轴电子折射强、近轴电子折射弱</td><td>$\Delta r_s=\frac14 C_s\alpha^3$</td><td>减小孔径角、改善物镜</td></tr>
+<tr><td>像散</td><td>磁场非旋转对称，如极靴不圆、污染、轴线错位</td><td>$\Delta r_A=\Delta f_A\alpha$</td><td>消像散器校正</td></tr>
+<tr><td>色差</td><td>电子能量/波长不单一</td><td>$\Delta r_c=C_c\alpha|\Delta E/E|$</td><td>稳定加速电压、减小非弹性散射</td></tr>
+</table>
+<div class="eq">$$\alpha_0\approx 12.5\left(\frac{\lambda}{C_s}\right)^{1/4},\qquad \Delta r\approx0.49\lambda^{3/4}C_s^{1/4}$$</div>
+<div class="warn"><b>图像识别：</b>若图中能量高低电子聚焦位置不同，这是<b>色差</b>，原因是入射电子能量不一致。</div>
+
+<h3 class="sec">4. 景深与焦长</h3>
+<div class="eq">$$D_f=\frac{2\Delta r_0}{\tan\alpha}\approx\frac{2\Delta r_0}{\alpha}$$</div>
+<div class="eq">$$D_L=\frac{2\Delta r_0}{\alpha}M^2$$</div>
+<p>孔径角越小，景深和焦长越大。电镜采用小孔径角，因此景深大、焦长长。</p>
+<div class="warn"><b>PPT补充考点：电磁透镜焦距公式。</b>$f\approx K\frac{U_r}{(IN)^2}$。其中 $U_r$ 为相对论修正电压，$(IN)$ 为线圈安匝数。由于 $(IN)$ 以平方出现在分母，无论激磁电流方向如何 $f$ 始终为正——<b>电磁透镜总是会聚透镜</b>，这是与光学透镜可发散的重要区别。正因为是平方关系，调节激磁电流 $I$ 即可改变焦距和放大倍数（变焦透镜）。</div>
+<h2 class="ch">十一、第9章 透射电子显微镜 TEM</h2>
+
+<h3 class="sec">1. TEM定义、结构与特点</h3>
+<div class="concept">
+<p><b>TEM：</b>以波长极短的电子束为照明源，用电磁透镜聚焦成像的高分辨、高放大倍数仪器，可观察材料形貌、组织、结构并进行电子衍射。</p>
+<ul>
+<li>电子光学系统：照明系统、样品装置、成像系统、观察记录系统。</li>
+<li>辅助系统：电源与控制、真空、冷却系统。</li>
+<li>样品要求：薄膜，通常几十到几百 nm，直径约 3 mm。</li>
+</ul>
+</div>
+
+<h3 class="sec">2. TEM主要透镜与光阑</h3>
+<table class="tbl">
+<tr><th>部件</th><th>作用</th></tr>
+<tr><td>电子枪</td><td>产生电子束，常用热阴极或场发射电子枪</td></tr>
+<tr><td>聚光镜</td><td>会聚电子束，调节照明强度、孔径角、束斑大小</td></tr>
+<tr><td>物镜</td><td>第一级放大，形成第一幅高分辨像和电子衍射花样；决定TEM分辨率</td></tr>
+<tr><td>中间镜</td><td>可变倍率，控制放大倍数；决定成像/衍射操作</td></tr>
+<tr><td>投影镜</td><td>进一步放大像或衍射花样并投影到荧光屏</td></tr>
+<tr><td>第二聚光镜光阑</td><td>限制照明孔径角</td></tr>
+<tr><td>物镜光阑</td><td>位于物镜后焦面，增强衬度、减小像差；选择透射束或衍射束成像</td></tr>
+<tr><td>选区光阑</td><td>位于物镜像平面，选择样品微区进行选区衍射</td></tr>
+</table>
+
+<h3 class="sec">3. 成像操作与衍射操作</h3>
+<table class="tbl">
+<tr><th>模式</th><th>中间镜物平面重合位置</th><th>荧光屏得到</th><th>用途</th></tr>
+<tr><td>成像操作</td><td>物镜像平面</td><td>样品放大像</td><td>形貌、组织观察</td></tr>
+<tr><td>衍射操作</td><td>物镜背焦面</td><td>电子衍射花样</td><td>晶体结构、取向、物相分析</td></tr>
+</table>
+<div class="qa"><b>答题句式：</b>改变中间镜电流，使中间镜物平面在物镜像平面与物镜背焦面之间转换；对准像平面得到显微像，对准背焦面得到衍射谱。</div>
+
+<h3 class="sec">4. TEM样品制备</h3>
+<table class="tbl">
+<tr><th>样品类型</th><th>方法</th><th>适用</th></tr>
+<tr><td>粉末样品</td><td>超声分散后滴加到支持膜铜网上</td><td>纳米粉体、颗粒</td></tr>
+<tr><td>薄膜样品</td><td>机械减薄、电解抛光、离子轰击</td><td>金属、半导体、陶瓷等</td></tr>
+<tr><td>复型样品</td><td>碳一级复型、塑料-碳二级复型、萃取复型</td><td>表面/断口形貌、第二相分析</td></tr>
+</table>
+
+<h3 class="sec">5. 电子衍射</h3>
+<div class="eq">$$Rd=L\lambda=K$$</div>
+<ul>
+<li>$L$ 为相机长度，$K=L\lambda$ 为相机常数。</li>
+<li>单晶电子衍射：规则斑点，是倒易点阵二维截面的放大像。</li>
+<li>多晶电子衍射：同心圆环。</li>
+<li>非晶：弥散晕环。</li>
+</ul>
+<p><b>电子衍射与XRD异同：</b>都满足Bragg/Laue条件；电子波长短、散射强，适合微区、薄膜和微晶分析，但强度分析更复杂。</p>
+
+<h3 class="sec">6. TEM衬度</h3>
+<table class="tbl">
+<tr><th>衬度类型</th><th>产生原因</th><th>适用/用途</th></tr>
+<tr><td>质厚衬度</td><td>密度、原子序数或厚度不同导致透射电子强度不同</td><td>非晶薄膜、复型膜</td></tr>
+<tr><td>衍射衬度</td><td>晶体各区域满足Bragg条件程度不同</td><td>位错、晶界、层错、第二相</td></tr>
+<tr><td>相位衬度</td><td>透射波和散射波相位差经物镜像差/离焦转化为强度差</td><td>高分辨晶格像、结构像、原子像</td></tr>
+<tr><td>Z衬度</td><td>STEM环形暗场中强度与原子序数有关</td><td>原子柱、重元素分布</td></tr>
+</table>
+<div class="concept">
+<h4>明场像与暗场像</h4>
+<ul>
+<li><b>明场像 BF：</b>用透射束成像，图像明亮清晰。</li>
+<li><b>暗场像 DF：</b>用某一衍射束成像，可突出满足该衍射条件的区域。</li>
+<li>用物镜光阑套住中心透射斑得明场；套住衍射斑得暗场。</li>
+</ul>
+</div>
+
+<div class="warn"><b>PPT补充考点：选区衍射的实现。</b>选区光阑放在物镜像平面处，而非样品处。因为实际待分析微区只有μm级，直接在样品处做光阑工艺上极难，且光阑孔极易污染。经物镜放大（如50倍）后，$\phi50\mathrm{\mu m}$ 的光阑即可选择样品上 $\phi1\mathrm{\mu m}$ 的微区——效果等同于在样品处放光阑。真题考过"TEM既能选区成像又能选区衍射的原因"，本质是中间镜物平面可在物镜像平面（成像）与物镜背焦面（衍射）之间切换。</div>
+
+<h2 class="ch">十二、第10章 扫描电子显微镜 SEM</h2>
+
+<h3 class="sec">1. SEM工作原理</h3>
+<p>细聚焦电子束在样品表面作光栅扫描，与样品相互作用产生二次电子、背散射电子、吸收电子、特征X射线等信号；探测器收集信号，经放大后调制显示器亮度，形成扫描图像。</p>
+
+<h3 class="sec">2. 电子与固体相互作用信号</h3>
+<table class="tbl">
+<tr><th>信号</th><th>来源/能量</th><th>作用深度</th><th>主要信息</th></tr>
+<tr><td>俄歇电子</td><td>俄歇效应，50-500 eV</td><td>&lt;1 nm</td><td>极表层成分</td></tr>
+<tr><td>二次电子 SE</td><td>入射电子击出价电子，能量&lt;50 eV</td><td>约5-50 nm</td><td>表面形貌，高分辨</td></tr>
+<tr><td>背散射电子 BSE</td><td>入射电子被原子核/样品反弹</td><td>100 nm-数 μm</td><td>原子序数衬度、相分布，分辨率较低</td></tr>
+<tr><td>吸收电子 AE</td><td>被样品吸收的电子</td><td>较深</td><td>与BSE互补，可反映成分</td></tr>
+<tr><td>透射电子 TE</td><td>穿过薄样品</td><td>薄样品</td><td>透射扫描像，分辨率较高</td></tr>
+<tr><td>特征X射线</td><td>内层电子跃迁</td><td>约500 nm-5 μm</td><td>元素成分分析</td></tr>
+</table>
+<div class="eq">$$i_b+i_s+i_a+i_t=i_0,\qquad \eta+\delta+\alpha+\tau=1$$</div>
+
+<h3 class="sec">3. SE像与BSE像</h3>
+<table class="tbl">
+<tr><th>项目</th><th>二次电子像 SEI</th><th>背散射电子像 BSE</th></tr>
+<tr><td>主要衬度</td><td>形貌衬度</td><td>成分衬度+形貌衬度</td></tr>
+<tr><td>分辨率</td><td>高，通常作为SEM分辨率指标</td><td>较低，因作用体积大</td></tr>
+<tr><td>对原子序数</td><td>不明显</td><td>$Z$ 越大越亮</td></tr>
+<tr><td>用途</td><td>断口、粉体、表面三维形貌</td><td>相分布、元素差异、抛光面组织</td></tr>
+</table>
+<div class="eq">$$\delta=\frac{I_s}{I_0}\propto \frac{1}{\cos\theta}$$</div>
+<p>样品表面倾角越大，二次电子产额越高，棱角、凸起处更亮，形成形貌衬度。</p>
+
+<h3 class="sec">4. SEM结构与性能</h3>
+<ul>
+<li>结构：电子光学系统、扫描系统、信号收集/放大系统、图像显示记录系统、电源和真空系统。</li>
+<li>放大倍数：由显示屏尺寸与样品扫描场尺寸比决定，连续可调。</li>
+<li>分辨率受电子束直径、透镜像差、加速电压、信噪比、振动、杂散磁场等影响。</li>
+<li>景深大：长工作距离、小物镜光阑、低放大倍率有利于大景深。</li>
+<li>样品制备简单；非导电样品需喷金或喷碳，EDS/BSE分析常喷碳减少干扰。</li>
+</ul>
+
+<h3 class="sec">5. TEM与SEM对比</h3>
+<table class="tbl">
+<tr><th>项目</th><th>TEM</th><th>SEM</th></tr>
+<tr><td>成像信号</td><td>透射电子</td><td>二次电子、背散射电子等</td></tr>
+<tr><td>样品位置</td><td>电子束中间，电子穿透样品</td><td>电子束末端轰击表面</td></tr>
+<tr><td>样品要求</td><td>薄，几十至几百 nm</td><td>块体、粉末、断口均可</td></tr>
+<tr><td>主要信息</td><td>内部结构投影、晶体结构、衍射</td><td>表面形貌、成分衬度</td></tr>
+<tr><td>分辨率</td><td>更高，可达原子/晶格级</td><td>较高，场发射可达 nm 级</td></tr>
+<tr><td>景深</td><td>较大</td><td>非常大，立体感强</td></tr>
+</table>
+<div class="warn"><b>PPT补充考点：信号产额关系。</b>若样品接地，各信号电流之和等于入射电子束电流：$i_b+i_s+i_a+i_t=i_0$；对应产额 $\eta=\frac{i_b}{i_0}$（背散射电子产额）、$\delta=\frac{i_s}{i_0}$（二次电子产额）、$\alpha=\frac{i_a}{i_0}$（吸收电子产额）、$\tau=\frac{i_t}{i_0}$（透射电子产额），满足 $\eta+\delta+\alpha+\tau=1$。SEM景深 $D_f\approx\frac{2r_0}{\alpha}$，长工作距离、小物镜光阑、低放大倍率均可获得大景深——所以SEM断口照片立体感强。</div>
+
+<h2 class="ch">十三、第11章 电子探针 EPMA</h2>
+
+<h3 class="sec">1. 原理与结构</h3>
+<p>电子探针用细聚焦电子束轰击样品微区，激发特征X射线。分析特征X射线的波长或能量确定元素种类，分析强度确定元素含量。其电子光学系统和真空系统与SEM类似，核心差别是配备X射线谱仪。</p>
+<div class="eq">$$\sqrt{\nu}=K(Z-\sigma),\qquad \lambda\approx\frac{1.21\times10^3}{(Z-1)^2}\;(\text{Å})$$</div>
+
+<h3 class="sec">2. WDS波谱仪</h3>
+<ul>
+<li>利用分光晶体按布拉格方程 $2d\sin\theta=n\lambda$ 对不同波长X射线分光。</li>
+<li>需要晶体、探测器和机械传动系统。</li>
+<li>分光晶体检测范围由晶面间距 $d$ 和角度范围决定，理论上 $0\sim2d$，实际约 $0.4d\sim1.8d$。</li>
+<li>分析元素范围一般可达 Be-U。</li>
+</ul>
+
+<h3 class="sec">3. EDS能谱仪</h3>
+<ul>
+<li>利用不同元素特征X射线能量不同进行分析，常用 Si(Li) 或SDD探测器。</li>
+<li>X光子进入探测器产生电子-空穴对，脉冲高度与能量成正比，脉冲数与强度/含量相关。</li>
+</ul>
+<div class="eq">$$E=h\nu=\frac{hc}{\lambda},\qquad n=\frac{E}{\varepsilon},\quad \varepsilon\approx3.8\,\mathrm{eV}$$</div>
+
+<h3 class="sec">4. EDS与WDS比较（必背）</h3>
+<table class="tbl">
+<tr><th>项目</th><th>WDS</th><th>EDS</th></tr>
+<tr><td>分析依据</td><td>特征X射线波长</td><td>特征X射线能量</td></tr>
+<tr><td>分析速度</td><td>慢，逐元素测量</td><td>快，同时接收多元素</td></tr>
+<tr><td>分辨率</td><td>高，约5 eV</td><td>低，约130-150 eV</td></tr>
+<tr><td>检测极限</td><td>低，约0.01-0.1%</td><td>较高，约0.1-0.5%</td></tr>
+<tr><td>定量准确度</td><td>高</td><td>较低，峰重叠严重</td></tr>
+<tr><td>X射线收集效率</td><td>低</td><td>高</td></tr>
+<tr><td>样品表面要求</td><td>平整光滑</td><td>要求较低，适合粗糙表面</td></tr>
+<tr><td>适用场景</td><td>精确定量、微量元素、峰重叠严重时</td><td>快速定性、半定量、面扫</td></tr>
+</table>
+
+<h3 class="sec">5. EPMA分析方法</h3>
+<div class="warn"><b>PPT补充考点：为什么WDS需要多块分光晶体？</b>每块分光晶体只能覆盖有限波长范围（理论 $0\sim2d$，实际约 $0.4d\sim1.8d$）。为覆盖 Be~U 全元素范围，必须配备不同 $d$ 的晶体（如LiF、PET、TAP、STE等）。这道题真题考过简答（5分），不光要答"波长范围受限"，还要点出布拉格方程 $\lambda=2d\sin\theta$ 的限制和常用晶体名称。</div>
+<table class="tbl">
+<tr><th>方法</th><th>做法</th><th>用途</th></tr>
+<tr><td>点分析</td><td>电子束固定在感兴趣微区</td><td>晶界、夹杂、析出相、第二相成分</td></tr>
+<tr><td>线分析</td><td>电子束沿指定直线扫描</td><td>元素浓度梯度、扩散层、界面元素变化</td></tr>
+<tr><td>面分析</td><td>电子束二维光栅扫描，检测某元素X射线</td><td>元素分布图；亮区代表含量高</td></tr>
+</table>
+
+<h3 class="sec">6. 定量分析与ZAF修正</h3>
+<div class="eq">$$K_y=\frac{I_y}{I_0},\qquad C_y=ZAFK_y$$</div>
+<ul>
+<li>$Z$：原子序数修正；$A$：吸收修正；$F$：荧光修正。</li>
+<li>对 $Z>11$、含量大于10%的元素，修正后相对误差可小于约 $\pm2\%$。</li>
+<li>成分定量分析时非导电样品通常喷碳膜，避免金膜引入干扰。</li>
+</ul>
+<h2 class="ch">十四、第12章 热分析</h2>
+
+<h3 class="sec">1. 热分析概述</h3>
+<p><b>热分析：</b>在程序控温下测量物质物理性质与温度关系的一类方法。可研究加热或冷却过程中的脱水、分解、氧化还原、相变、熔融、结晶等。</p>
+<table class="tbl">
+<tr><th>技术</th><th>简称</th><th>测量量</th><th>曲线</th><th>主要用途</th></tr>
+<tr><td>差热分析</td><td>DTA</td><td>试样与参比物温差</td><td>$\Delta T-T$</td><td>定性分析热效应</td></tr>
+<tr><td>差示扫描量热</td><td>DSC</td><td>热流/补偿功率</td><td>$dQ/dt-T$</td><td>热焓、比热、相变热等定量</td></tr>
+<tr><td>热重分析</td><td>TG</td><td>质量</td><td>$m-T$</td><td>失重、分解、组分含量</td></tr>
+<tr><td>微分热重</td><td>DTG</td><td>质量变化速率</td><td>$dm/dt-T$</td><td>分辨重叠失重过程</td></tr>
+</table>
+
+<h3 class="sec">2. DTA差热分析</h3>
+<div class="eq">$$\Delta T=T_s-T_R$$</div>
+<ul>
+<li>试样无热效应：$T_s=T_R$，基线。</li>
+<li>试样吸热：$T_s<T_R$，$\Delta T<0$，形成向下谷。</li>
+<li>试样放热：$T_s>T_R$，$\Delta T>0$，形成向上峰。</li>
+<li>峰数：热效应次数；峰方向：吸/放热；峰面积：热效应量；峰位置：发生热效应温度。</li>
+</ul>
+<div class="qa"><b>转变点：</b>ICTA常采用外推起始温度，即基线与峰前最大斜率切线交点。</div>
+
+<h3 class="sec">3. DTA影响因素</h3>
+<table class="tbl">
+<tr><th>因素</th><th>影响规律</th></tr>
+<tr><td>升温速率</td><td>速率大，峰温向高温移动，峰尖锐狭长；分辨率下降，灵敏度提高</td></tr>
+<tr><td>压力与气氛</td><td>分解产物气相压力高，分解温度升高；氧化/还原气氛改变峰形</td></tr>
+<tr><td>试样用量</td><td>用量多，热滞后大，峰顶温度滞后，分辨率下降；常取5-10 mg</td></tr>
+<tr><td>粒度</td><td>颗粒大，受热不均，峰宽且峰温高；常用100-300目</td></tr>
+<tr><td>装填</td><td>薄而均匀，试样与参比物一致</td></tr>
+<tr><td>参比物</td><td>应在测试范围内热中性，常用 $\alpha-Al_2O_3$</td></tr>
+</table>
+
+<h3 class="sec">4. DTA应用</h3>
+<ul>
+<li>物相鉴定：根据峰位、峰形、峰数与标准曲线比较。</li>
+<li>含水矿物脱水：吸附水、结晶水、结构水失水温度不同。</li>
+<li>碳酸盐分解：如 $CaCO_3\rightarrow CaO+CO_2$，吸热伴失重。</li>
+<li>氧化还原：变价元素氧化常放热。</li>
+<li>非晶结晶：通常放热。</li>
+<li>晶型转变：可吸热或放热。</li>
+</ul>
+
+<h3 class="sec">5. DSC差示扫描量热</h3>
+<ul>
+<li><b>功率补偿式DSC：</b>保持试样与参比物 $\Delta T=0$，测补偿功率。</li>
+<li><b>热流式DSC：</b>测温差并换算成热流。</li>
+<li>DSC曲线纵坐标为热流速率 $dQ/dt$，峰面积代表热量变化。</li>
+</ul>
+<table class="tbl">
+<tr><th>DTA</th><th>DSC</th></tr>
+<tr><td>测 $\Delta T-T$</td><td>测 $dQ/dt-T$</td></tr>
+<tr><td>更偏定性</td><td>可较精确定量热焓、比热</td></tr>
+<tr><td>仪器和计算相对简单</td><td>定量精度更高</td></tr>
+</table>
+<div class="example"><b>例：</b>$Al_2O_3$、石英砂、$CaCO_3$ 混合物DSC在 $574^\circ C$ 和 $730^\circ C$ 附近吸热：前者为石英 $\alpha\rightarrow\beta$ 相变，后者为 $CaCO_3$ 热分解。</div>
+
+<h3 class="sec">6. TG与DTG</h3>
+<p><b>TG：</b>在程序控温下测量物质质量与温度/时间关系，$m=f(T或t)$。</p>
+<ul>
+<li>平台：质量稳定阶段。</li>
+<li>台阶：发生失重或增重过程。</li>
+<li>台阶高度：质量变化量。</li>
+<li>起始温度 $T_i$、终止温度 $T_f$ 表示反应温区。</li>
+</ul>
+<p><b>DTG：</b>对TG曲线求一阶导数，得到 $dm/dt-T$ 曲线。</p>
+<ul>
+<li>DTG峰数对应TG台阶数。</li>
+<li>峰顶对应质量变化速率最大温度。</li>
+<li>峰面积正比于失重量。</li>
+<li>更易分辨重叠反应、获得动力学资料。</li>
+</ul>
+
+<h3 class="sec">7. TG影响因素与应用</h3>
+<table class="tbl">
+<tr><th>因素</th><th>影响</th></tr>
+<tr><td>升温速率</td><td>速率越大，热滞后越严重，$T_i,T_f$ 偏高，温区加宽</td></tr>
+<tr><td>样品量</td><td>量多则受热不均、不利于中间产物检出；常取2-15 mg</td></tr>
+<tr><td>粒度/装填</td><td>粒度越细、铺得越平，受热越均匀</td></tr>
+<tr><td>气氛</td><td>影响氧化、分解、气相产物平衡；如 $CO_2$ 抑制 $CaCO_3$ 分解</td></tr>
+<tr><td>挥发物冷凝</td><td>造成假失重或失重偏低，应通气带走挥发物</td></tr>
+<tr><td>浮力</td><td>升温时气体密度变化导致表观增重，可做空白校正</td></tr>
+</table>
+<div class="example"><b>TG计算套路：</b>失重率 $=(m_0-m_i)/m_0\times100\%$。根据各台阶理论失重率判断反应过程，如 $CuSO_4\cdot5H_2O$ 分三步失水，$CaC_2O_4\cdot H_2O$ 分别失水、失CO、失CO₂。</div>
+
+<div class="warn"><b>PPT补充考点：$CuSO_4\cdot5H_2O$ 三步失水。</b>常用于TG台阶分析题。反应可写为：① $CuSO_4\cdot5H_2O\rightarrow CuSO_4\cdot3H_2O+2H_2O$，理论失重约 $2\times18/250=14.4\%$；② $CuSO_4\cdot3H_2O\rightarrow CuSO_4\cdot H_2O+2H_2O$，理论失重约 $14.4\%$；③ $CuSO_4\cdot H_2O\rightarrow CuSO_4+H_2O$，理论失重约 $18/250=7.2\%$。答题时按“平台—台阶—失重率—反应式”四步写。</div>
+
+<div class="warn"><b>PPT补充考点：$CaC_2O_4\cdot H_2O$ 三步分解。</b>① $CaC_2O_4\cdot H_2O\rightarrow CaC_2O_4+H_2O\uparrow$，理论失重约 $12.3\%$；② $CaC_2O_4\rightarrow CaCO_3+CO\uparrow$，理论失重约 $19.2\%$；③ $CaCO_3\rightarrow CaO+CO_2\uparrow$，理论失重约 $30.1\%$。DTG中三峰对应三次质量变化，峰顶温度为质量变化速率最大温度。老师要是出热分析大题，大概率就是这类“按曲线分阶段解释”。</div>
+
+<div class="warn"><b>高岭石/蒙脱石DSC-TG同步热分析题答题模板。</b>先看TG质量变化：低温失重多为吸附水/层间水脱除；中温吸热伴失重多为羟基脱除、结构水脱除或结构破坏；高温若DSC有峰但TG无明显失重，多为晶型转变或新相形成。再看DSC峰方向：吸热对应脱水、分解、熔融；放热常对应氧化、结晶、新相生成。最后写出峰值温度、起止温区、失重量和反应类型，别只写“发生变化”这种废话文学。</div>
+
+<h2 class="ch">十五、常考简答题标准答案骨架</h2>
+
+
+<h3 class="sec">1. 简述布拉格方程意义</h3>
+<div class="qa"><p>布拉格方程 $2d\sin\theta=n\lambda$ 是晶体X射线衍射的基本条件，表明只有当相邻晶面反射波程差为波长整数倍时才发生相干加强。它把晶体结构参数 $d$ 与衍射方向 $\theta$、入射波长 $\lambda$ 联系起来，因而可通过测定衍射角求晶面间距、点阵参数、晶体结构和物相。</p></div>
+
+<h3 class="sec">2. 写出倒易矢量两个性质</h3>
+<div class="qa"><p>倒易矢量 $g_{hkl}=ha^*+kb^*+lc^*$ 垂直于正空间中 $(hkl)$ 晶面；其长度等于该晶面间距倒数，即 $|g_{hkl}|=1/d_{hkl}$。</p></div>
+
+<h3 class="sec">3. 证明Ewald球与Bragg方程等价</h3>
+<div class="qa"><p>在Ewald图中，满足衍射时散射矢量 $k_s-k_0$ 等于倒易矢量 $g_{hkl}$。由于 $|k_s|=|k_0|=1/\lambda$，散射角为 $2\theta$，故 $|k_s-k_0|=2\sin\theta/\lambda$。又 $|g_{hkl}|=1/d_{hkl}$，于是 $1/d_{hkl}=2\sin\theta/\lambda$，整理得 $2d_{hkl}\sin\theta=\lambda$，即Bragg方程。</p></div>
+
+<h3 class="sec">4. TEM成像与衍射操作区别</h3>
+<div class="qa"><p>成像操作时，中间镜物平面与物镜像平面重合，荧光屏得到样品放大像；衍射操作时，中间镜物平面与物镜背焦面重合，荧光屏得到电子衍射花样。两者通过调节中间镜电流改变物平面位置实现。</p></div>
+
+<h3 class="sec">5. SEM中SE、BSE、TE比较</h3>
+<div class="qa"><p>SE为低能二次电子，来自表层，分辨率高，主要反映表面形貌；BSE为高能背散射电子，作用体积较大，分辨率较低，但产额随平均原子序数增大，可显示成分衬度；TE为透过薄样品的电子，可用于薄样品透射扫描成像，分辨率较高。</p></div>
+
+<h3 class="sec">6. EDS和WDS优缺点</h3>
+<div class="qa"><p>EDS按能量分散，速度快、可同时分析多元素、收集效率高、对样品表面要求低，但分辨率低、峰重叠严重、检测极限和定量准确度不如WDS。WDS按波长分散，分辨率高、峰背比高、检测极限低、定量准确，但分析慢、逐元素测量、X射线利用率低、要求样品表面平整。</p></div>
+
+<h3 class="sec">7. DTA/DSC/TG定义</h3>
+<div class="qa"><p>DTA是在程序控温下测量试样与参比物温差随温度变化的方法；DSC是在程序控温下测量维持试样与参比物温度相同所需热流或热流差随温度变化的方法；TG是在程序控温下测量试样质量随温度或时间变化的方法。</p></div>
+<h2 class="ch">十六、考前冲刺清单</h2>
+
+<div class="concept">
+<ol>
+<li>默写：$2d\sin\theta=n\lambda$、$d_{hkl}=a/\sqrt{h^2+k^2+l^2}$、$|g|=1/d$、$Rd=L\lambda$、Scherrer公式。</li>
+<li>默写：P/I/F/C消光规律，尤其 BCC 与 FCC。</li>
+<li>会做：由 $2\theta$ 求 $d$，再求 $a$；由 $\sin^2\theta$ 比判断立方点阵。</li>
+<li>会答：Bragg意义、Ewald等价证明、倒易矢量性质。</li>
+<li>会辨：明场/暗场、成像/衍射操作、SE/BSE、TEM/SEM、EDS/WDS、DTA/DSC/TG。</li>
+<li>会看：XRD图谱判物相，DTA/DSC/TG曲线判断吸热/放热/失重过程。</li>
+<li>别背偏：绪论、仪器品牌、历史人物只作了解，别在这上面卷，没必要给自己加戏。</li>
+</ol>
+</div>
+
+<div class="warn">
+<p><b>最后提醒：</b>今年题目不重复旧题，但出题套路会重复。历年已经明牌：XRD判相、消光、倒易矢量、TEM模式与衬度、SEM信号、EDS/WDS、热分析曲线，是老师最爱抓的几块。你把这些拿稳，基本就不是裸奔进考场。</p>
+</div>
+
+<h2 class="ch">十七、历年真题套路例题包：照这个味儿练</h2>
+
+<div class="intro">
+<p><b>说明：</b>这些不是照搬原题答案，而是按历年真题反复出现的题型整理的“同款解题模板”。今年题目可能换材料、换图、换数字，但答题骨架基本跑不掉。别死背题面，要背套路。</p>
+</div>
+
+<h3 class="sec">例题1：XRD判相——TiO₂金红石/锐钛矿</h3>
+<div class="exercise">
+<b>题型：</b>给出TiO₂薄膜XRD图谱和金红石、锐钛矿PDF卡片，判断样品晶型，并说明分析思路。
+<div class="answer">
+<b>答题模板：</b>
+<ol>
+<li>先读实验图谱中的主要衍射峰位置 $2\theta$ 和相对强度。</li>
+<li>由峰位与PDF卡片对照，不只看一个峰，要看<b>强峰位置+强度顺序</b>是否吻合。</li>
+<li>若最强峰在 $2\theta\approx25.3^\circ$，对应锐钛矿 $(101)$，且 $37.8^\circ、48.0^\circ、53.9^\circ、55.1^\circ$ 等峰也能对应，则判断为锐钛矿。</li>
+<li>若最强峰在 $2\theta\approx27.4^\circ$，对应金红石 $(110)$，并伴随 $36.1^\circ、41.2^\circ、54.3^\circ$ 等峰，则判断为金红石。</li>
+<li>若两类特征峰同时出现，则为混合晶型，并可根据峰强初步判断主相。</li>
+</ol>
+<b>卷面句：</b>该方法属于X射线物相定性分析，本质是利用不同物相具有特征的 $d$ 值和相对强度序列。
+</div>
+</div>
+
+<h3 class="sec">例题2：Ewald球图解证明Bragg方程</h3>
+<div class="exercise">
+<b>题型：</b>证明衍射分析中的厄瓦尔德球图解与布拉格方程等价。
+<div class="answer">
+<b>标准骨架：</b>
+<p>在Ewald图解中，入射波矢 $k_0$ 与衍射波矢 $k_s$ 的模均为 $1/\lambda$。满足衍射条件时，散射矢量等于倒易矢量：</p>
+<div class="eq">$$k_s-k_0=g_{hkl}$$</div>
+<p>由倒易矢量性质：</p>
+<div class="eq">$$|g_{hkl}|=\frac{1}{d_{hkl}}$$</div>
+<p>由几何关系，$k_s$ 与 $k_0$ 夹角为 $2\theta$，所以：</p>
+<div class="eq">$$|k_s-k_0|=\frac{2\sin\theta}{\lambda}$$</div>
+<p>于是：</p>
+<div class="eq">$$\frac{1}{d_{hkl}}=\frac{2\sin\theta}{\lambda}$$</div>
+<p>整理得：</p>
+<div class="eq">$$2d_{hkl}\sin\theta=\lambda$$</div>
+<p>若考虑$n$级反射，则为 $2d\sin\theta=n\lambda$。因此Ewald球图解与Bragg方程本质等价。</p>
+</div>
+</div>
+
+<h3 class="sec">例题3：TEM成像操作与衍射操作</h3>
+<div class="exercise">
+<b>题型：</b>分别说明TEM成像操作与衍射操作时各级透镜之间的相对位置关系，并画光路图。
+<div class="answer">
+<b>文字答案：</b>
+<ol>
+<li><b>成像操作：</b>中间镜的物平面与物镜像平面重合，物镜形成的样品一次放大像经中间镜、投影镜继续放大，最终在荧光屏上得到显微像。</li>
+<li><b>衍射操作：</b>中间镜的物平面与物镜背焦面重合，物镜背焦面上的电子衍射花样经中间镜、投影镜放大，最终在荧光屏上得到衍射谱。</li>
+<li><b>切换方式：</b>通过调节中间镜激磁电流，使其物平面在物镜像平面和物镜背焦面之间切换。</li>
+<li><b>选区衍射：</b>选区光阑位于物镜像平面，选择样品中某一微区，使其衍射花样与所选区域对应。</li>
+</ol>
+<b>画图提示：</b>画两列即可：样品→物镜→物镜像平面/背焦面→中间镜→投影镜→荧光屏。图不求美，位置关系不能错。
+</div>
+</div>
+
+<h3 class="sec">例题4：电磁透镜像差看图题</h3>
+<div class="exercise">
+<b>题型：</b>给一张远轴电子/近轴电子或高能/低能电子聚焦位置不同的图，问是哪种像差、原因、影响因素和减小方法。
+<div class="answer">
+<b>判断模板：</b>
+<ul>
+<li><b>远轴电子与近轴电子聚焦位置不同：</b>球差。原因是电磁透镜中心区和边缘区对电子折射能力不同，远轴电子折射强，近轴电子折射弱。减小方法：减小孔径角 $\alpha$，改善物镜结构，使用物镜光阑。</li>
+<li><b>不同方向聚焦能力不同、出现两个像平面：</b>像散。原因是磁场非旋转对称，如极靴不圆、轴线错位、污染等。减小方法：用消像散器校正。</li>
+<li><b>高能电子和低能电子聚焦位置不同：</b>色差。原因是电子能量/波长不单一。减小方法：稳定加速电压，减小非弹性散射，使用较薄样品。</li>
+</ul>
+<b>常用公式：</b>$\Delta r_s=\frac14C_s\alpha^3$，$\Delta r_A=\Delta f_A\alpha$，$\Delta r_c=C_c\alpha|\Delta E/E|$。
+</div>
+</div>
+
+<h3 class="sec">例题5：SE、BSE、TE比较</h3>
+<div class="exercise">
+<b>题型：</b>比较背散射电子、二次电子、透射电子的物理特性及应用。
+<div class="answer">
+<table class="tbl">
+<tr><th>信号</th><th>来源与特点</th><th>分辨率/深度</th><th>主要用途</th></tr>
+<tr><td>SE二次电子</td><td>入射电子击出样品价电子，能量低，通常<50 eV</td><td>来自表层，约5-50 nm，分辨率高</td><td>表面形貌、断口、粉体形貌；SEM最常用信号</td></tr>
+<tr><td>BSE背散射电子</td><td>入射电子被原子核或样品强散射后逸出，能量高</td><td>作用体积大，分辨率低于SE</td><td>原子序数衬度，相分布；$Z$大区域更亮</td></tr>
+<tr><td>TE透射电子</td><td>穿过薄样品的电子</td><td>薄样品，分辨率较高</td><td>透射扫描像、薄样品内部结构分析</td></tr>
+</table>
+</div>
+</div>
+
+<h3 class="sec">例题6：TEM与SEM对比</h3>
+<div class="exercise">
+<b>题型：</b>透射电镜和扫描电镜有什么相同和不同？从使用目的、成像原理、分辨率说明。
+<div class="answer">
+<b>答题模板：</b>
+<p><b>相同点：</b>均以电子束为照明源，均使用电磁透镜聚焦电子束，均需要真空系统，可用于材料微观形貌和组织结构分析。</p>
+<p><b>不同点：</b></p>
+<ul>
+<li><b>使用目的：</b>TEM主要观察薄样品内部组织、晶体结构和电子衍射；SEM主要观察块体/粉末/断口表面形貌，也可配合EDS做成分分析。</li>
+<li><b>成像原理：</b>TEM利用透射电子经物镜、中间镜、投影镜放大成像；SEM用细聚焦电子束在样品表面光栅扫描，收集SE/BSE等信号调制图像亮度。</li>
+<li><b>样品要求：</b>TEM样品必须很薄，几十到几百 nm；SEM样品制备简单，块体、粉末、断口均可，非导电样品需喷金或喷碳。</li>
+<li><b>分辨率：</b>TEM更高，可达晶格/原子级；SEM较低，但景深大、立体感强。</li>
+</ul>
+</div>
+</div>
+
+<h3 class="sec">例题7：EDS与WDS比较</h3>
+<div class="exercise">
+<b>题型：</b>比较能谱仪EDS和波谱仪WDS在成分分析中的优缺点。
+<div class="answer">
+<table class="tbl">
+<tr><th>项目</th><th>WDS</th><th>EDS</th></tr>
+<tr><td>分析依据</td><td>特征X射线波长</td><td>特征X射线能量</td></tr>
+<tr><td>分光/检测</td><td>分光晶体，满足 $\lambda=2d\sin\theta$</td><td>Si(Li)或SDD探测器，脉冲高度对应能量</td></tr>
+<tr><td>速度</td><td>慢，逐元素分析</td><td>快，同时分析多元素</td></tr>
+<tr><td>分辨率</td><td>高，约5 eV</td><td>低，约130-150 eV，峰重叠严重</td></tr>
+<tr><td>检测极限</td><td>低，约0.01-0.1%</td><td>较高，约0.1-0.5%</td></tr>
+<tr><td>定量准确度</td><td>高</td><td>较低，多用于快速定性/半定量</td></tr>
+<tr><td>样品要求</td><td>表面平整光滑</td><td>要求较低，适合粗糙表面</td></tr>
+</table>
+<b>加分句：</b>WDS需配备多块分光晶体，因为每块晶体的检测波长范围由晶面间距$d$和可变角度$\theta$决定，单块晶体不能覆盖全部元素特征X射线波长。
+</div>
+</div>
+
+<h3 class="sec">例题8：点阵参数外推法</h3>
+<div class="exercise">
+<b>题型：</b>给立方晶系高角线的 $H^2+K^2+L^2$ 与 $\sin^2\theta$，用 $a-\cos^2\theta$ 图解外推法求点阵常数。
+<div class="answer">
+<b>步骤模板：</b>
+<ol>
+<li>由 $\sin^2\theta$ 求 $\sin\theta$，进而求 $\theta$。</li>
+<li>由立方晶系公式：
+<div class="eq">$$a=\frac{\lambda\sqrt{H^2+K^2+L^2}}{2\sin\theta}$$</div>
+计算每条线对应的 $a_i$。</li>
+<li>计算每条线的 $\cos^2\theta$，以 $\cos^2\theta$ 为横坐标、$a_i$ 为纵坐标作图。</li>
+<li>用高角线拟合直线，并外推到 $\cos^2\theta=0$，即 $\theta=90^\circ$，纵截距为精确点阵常数。</li>
+<li>若用最小二乘法，令 $Y=a_i$，$X=\cos^2\theta$，拟合 $Y=a_0+bX$，截距 $a_0$ 即精确点阵参数。</li>
+</ol>
+<b>答题提醒：</b>老师真题要求“准确到4位有效数字”，最后一定写单位 nm，并说明高角线误差小。
+</div>
+</div>
+
+<h3 class="sec">例题9：FCC晶面是否参与衍射</h3>
+<div class="exercise">
+<b>题型：</b>铝为FCC，给若干晶面如 $(111),(200),(220),(311),(331),(420)$，判断是否可能参与衍射。
+<div class="answer">
+<b>第一步：系统消光。</b>FCC允许反射条件：$h,k,l$ 全奇或全偶。
+<ul>
+<li>$(111)$：全奇，允许。</li>
+<li>$(200)$：全偶，允许。</li>
+<li>$(220)$：全偶，允许。</li>
+<li>$(311)$：全奇，允许。</li>
+<li>$(331)$：全奇，允许。</li>
+<li>$(420)$：偶偶零，全偶，允许。</li>
+</ul>
+<b>第二步：</b>若题目还给波长和晶格常数，需要再用 $2d\sin\theta=n\lambda$ 判断是否满足 $\sin\theta\le1$。其中 $d=a/\sqrt{h^2+k^2+l^2}$。系统消光只是第一关，Bragg条件是第二关。
+</div>
+</div>
+
+<h3 class="sec">例题10：DSC-TG同步热分析曲线解释</h3>
+<div class="exercise">
+<b>题型：</b>给高岭石/蒙脱石/黏土矿物的DSC-TG曲线，要求分析各阶段反应过程、起止温度、失重量、峰值温度。
+<div class="answer">
+<b>答题模板：</b>
+<ol>
+<li><b>先看TG：</b>质量下降说明有挥发组分逸出，如水、CO₂、CO等；质量上升可能为氧化吸氧。</li>
+<li><b>再看DSC：</b>吸热峰多对应脱水、分解、熔融；放热峰多对应氧化、结晶、新相生成。</li>
+<li><b>分阶段写：</b>低温区（如100-200℃）多为吸附水或层间水脱除；中温区（约400-600℃）常为结构水/羟基脱除、晶体结构破坏；高温区（700℃以上）可能为相变、结晶或生成新相。</li>
+<li><b>每阶段必须写：</b>温度范围、峰值温度、质量变化百分比、热效应方向、可能反应类型。</li>
+</ol>
+<b>卷面句：</b>DTG峰顶温度表示质量变化速率最大温度；DSC峰面积与热效应量相关；TG台阶高度对应失重率。
+</div>
+</div>
+
+<h3 class="sec">例题11：$CuSO_4\cdot5H_2O$ TG三步失水</h3>
+<div class="exercise">
+<b>题型：</b>根据TG曲线台阶失重率推导五水硫酸铜脱水过程。
+<div class="answer">
+<b>反应过程：</b>
+<div class="eq">$$CuSO_4\cdot5H_2O\rightarrow CuSO_4\cdot3H_2O+2H_2O$$</div>
+<div class="eq">$$CuSO_4\cdot3H_2O\rightarrow CuSO_4\cdot H_2O+2H_2O$$</div>
+<div class="eq">$$CuSO_4\cdot H_2O\rightarrow CuSO_4+H_2O$$</div>
+<b>理论失重：</b>摩尔质量约 $250$，前两步各失 $2H_2O=36$，失重率约 $36/250=14.4\%$；第三步失 $18$，失重率约 $18/250=7.2\%$。
+<br><b>答题套路：</b>实验失重率若接近14.4%、14.4%、7.2%，即可判定三步失水。
+</div>
+</div>
+
+<h3 class="sec">例题12：$CaC_2O_4\cdot H_2O$ TG/DTG三步分解</h3>
+<div class="exercise">
+<b>题型：</b>根据TG/DTG曲线判断一水合草酸钙的分解过程。
+<div class="answer">
+<b>三步反应：</b>
+<div class="eq">$$CaC_2O_4\cdot H_2O\rightarrow CaC_2O_4+H_2O\uparrow$$</div>
+<div class="eq">$$CaC_2O_4\rightarrow CaCO_3+CO\uparrow$$</div>
+<div class="eq">$$CaCO_3\rightarrow CaO+CO_2\uparrow$$</div>
+<b>理论失重：</b>分别约为 $12.3\%$、$19.2\%$、$30.1\%$。DTG曲线上对应三个峰，峰顶为各步反应速率最大温度。
+<br><b>卷面句：</b>若实验失重率与理论值基本吻合，则可据此确定分解反应路径。
+</div>
+</div>
+
+<h2 class="ch">十八、配套练习题：按考试套路练，不是给你凑字数</h2>
+
+<h3 class="sec">A. 选择/判断型速练</h3>
+<div class="exercise"><b>1.</b> Cu靶X射线常用什么滤波片？为什么？<div class="answer">答：Ni滤波片。滤波片吸收限位于 $K_\beta$ 与 $K_\alpha$ 之间，可强烈吸收 $K_\beta$、保留 $K_\alpha$。</div></div>
+<div class="exercise"><b>2.</b> FCC结构中 $(210)$ 是否能发生衍射？<div class="answer">答：不能。FCC允许反射条件为 $H,K,L$ 全奇或全偶，$(210)$ 奇偶混杂，系统消光。</div></div>
+<div class="exercise"><b>3.</b> BCC结构中 $(111)$ 是否能出现？<div class="answer">答：不能。BCC要求 $H+K+L$ 为偶数，$(111)$ 的和为3，消光。</div></div>
+<div class="exercise"><b>4.</b> SEM中哪种信号主要反映表面形貌且分辨率最高？<div class="answer">答：二次电子SE。其能量低、逃逸深度浅，主要来自样品表层。</div></div>
+<div class="exercise"><b>5.</b> TG曲线一个台阶通常代表什么？DTG一个峰代表什么？<div class="answer">答：TG台阶代表一次质量变化过程；DTG峰对应质量变化速率最大的位置，峰数常对应失重步骤数。</div></div>
+
+<h3 class="sec">B. 计算型练习</h3>
+<div class="exercise"><b>1. Bragg计算：</b>已知 $\lambda=0.154\,\mathrm{nm}$，某峰 $2\theta=44.6^\circ$，求一级衍射的 $d$。<div class="answer">答：$\theta=22.3^\circ$，$d=\lambda/(2\sin\theta)=0.154/(2\sin22.3^\circ)\approx0.203\,\mathrm{nm}$。</div></div>
+<div class="exercise"><b>2. 立方晶系点阵常数：</b>若上题峰为BCC的 $(110)$，求 $a$。<div class="answer">答：$d_{110}=a/\sqrt2$，所以 $a=d\sqrt2\approx0.203\times1.414=0.287\,\mathrm{nm}$。</div></div>
+<div class="exercise"><b>3. Scherrer公式：</b>若 $\lambda=0.154\,\mathrm{nm}$，$\beta=0.01\,\mathrm{rad}$，$\theta=20^\circ$，$k=0.89$，求晶粒尺寸。<div class="answer">答：$D=k\lambda/(\beta\cos\theta)=0.89\times0.154/(0.01\cos20^\circ)\approx14.6\,\mathrm{nm}$。</div></div>
+<div class="exercise"><b>4. TG失重率：</b>样品从20.0 mg降到15.0 mg，失重率是多少？<div class="answer">答：失重率 $=(20.0-15.0)/20.0\times100\%=25\%$。</div></div>
+
+<h3 class="sec">C. 简答型练习</h3>
+<div class="exercise"><b>1. 简述XRD物相定性分析流程。</b><div class="answer">答：测得衍射峰 $2\theta$ 和相对强度；由Bragg方程计算 $d$；选取强峰与PDF卡片的 $d$ 值和相对强度比较；吻合则确定物相；混合物应先确定主相并剔除主相峰，再分析剩余峰。</div></div>
+<div class="exercise"><b>2. 比较TEM和SEM。</b><div class="answer">答：TEM用透射电子成像，样品必须很薄，可观察内部组织、晶体结构和电子衍射，分辨率高；SEM用细电子束扫描表面，检测SE/BSE等信号，样品制备简单，景深大，主要观察表面形貌和成分衬度。</div></div>
+<div class="exercise"><b>3. 比较EDS和WDS。</b><div class="answer">答：EDS按能量分散，速度快、可同时分析多元素、收集效率高，但能量分辨率低、峰重叠严重、定量准确度较低；WDS按波长分散，分辨率高、检测限低、定量准确，但速度慢、逐元素分析、对样品表面要求高。</div></div>
+<div class="exercise"><b>4. DTA、DSC、TG分别测什么？</b><div class="answer">答：DTA测试样与参比物温差随温度变化；DSC测热流或补偿功率随温度变化，可定量热效应；TG测质量随温度或时间变化，用于失重、分解、氧化等分析。</div></div>
+<div class="exercise"><b>5. 说明明场像和暗场像的形成。</b><div class="answer">答：在TEM中，用物镜光阑选择中心透射束成像得到明场像；选择某一衍射束成像得到暗场像，可突出满足该衍射条件的晶粒或缺陷区域。</div></div>
+
+</div>
+<script>
+function slug(s,i){return 'sec-'+i+'-'+s.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]+/g,'-').slice(0,30)}
+function buildTOC(){
+  var list=document.getElementById('toc-list'); if(!list)return;
+  list.innerHTML='';
+  var hs=document.querySelectorAll('.content h2.ch,.content h3.sec,.content h4.sub,.content .concept h4');
+  hs.forEach(function(h,i){
+    if(!h.id)h.id=slug(h.textContent,i);
+    var a=document.createElement('a');
+    a.href='#'+h.id; a.textContent=h.textContent.trim();
+    var tag=h.tagName.toLowerCase();
+    a.className='toc-item '+(tag==='h2'?'h2':tag==='h3'?'h3':'h4');
+    a.onclick=function(){toggleTOC(false)};
+    list.appendChild(a);
+  });
+}
+function toggleTOC(force){
+  var p=document.getElementById('toc-panel');
+  if(!p)return;
+  if(force===false)p.classList.remove('show'); else p.classList.toggle('show');
+}
+function filterTOC(q){
+  q=(q||'').trim().toLowerCase();
+  document.querySelectorAll('#toc-list .toc-item').forEach(function(a){
+    var hit=a.textContent.toLowerCase().indexOf(q)>-1;
+    a.style.display=hit?'block':'none';
+    a.classList.toggle('highlight',!!q&&hit);
+  });
+}
+window.addEventListener('DOMContentLoaded',buildTOC);
+window.addEventListener('scroll',function(){
+  var b=document.getElementById('back-top');
+  if(b)b.classList.toggle('show',window.scrollY>300);
+});
+</script>
+</body>
+</html>
